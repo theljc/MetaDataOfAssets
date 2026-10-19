@@ -1,11 +1,8 @@
-// EUW_MetaData.cpp — 编辑器工具控件基类实现
-
 #include "Widget/EUW_BaseUtilityWidget.h"
 #include "Widget/EUSS_WidgetManager.h"
 #include "Editor.h"
+#include "Log/MetaDataPluginLogChannel.h"
 #include "StructUtils/InstancedStruct.h"
-
-#define LOCTEXT_NAMESPACE "EditorUtilitySubsystem"
 
 void UEUW_BaseUtilityWidget::NativeConstruct()
 {
@@ -15,26 +12,30 @@ void UEUW_BaseUtilityWidget::NativeConstruct()
 	{
 		UEUSS_WidgetManager* WidgetManager = GEditor->GetEditorSubsystem<UEUSS_WidgetManager>();
 
+		// 用 UEUSS_WidgetManager 创建的控件，此处会直接 return
 		if (WidgetManager->GetInCreatingSubWidget()) return;
 
-		// 只有主窗口控件创建时，才需要在这里执行初始化
+		// 只有主控件创建时，并且不是通过插件提供的按钮创建时，才需要在这里执行初始化
 		// 等待下一帧执行，确保控件已注册到 TabManager，DoesTabExist 才能正常工作
 		GEditor->GetTimerManager()->SetTimerForNextTick([this, WidgetManager]()
 		{
-			FName TabID_1 = FName(*(GetClass()->ClassGeneratedBy->GetPathName() + LOCTEXT("ActiveTabSuffix", "_ActiveTab").ToString()));
+			// 为了确保即使不通过插件提供的按钮创建时，创建的控件也能被
+			// 构造两种 TabID（这两个是源代码中创建 EUW 时使用的 TabID）
+			FName TabID_1 = FName(*(GetClass()->ClassGeneratedBy->GetPathName() + NSLOCTEXT("MetaDataPlugin", "ActiveTabSuffix", "_ActiveTab").ToString()));
 			FName TabID_2 = FName(*(GetClass()->ClassGeneratedBy->GetPathName() + GetClass()->ClassGeneratedBy->GetFName().ToString()));
-			
+
+			// 鼠标右键创建时，使用 TabID_1
 			if (WidgetManager->DoesTabExist(TabID_1))
 			{
 				WidgetManager->AddTo_WidgetToTabName(this, TabID_1);
 			}
+			// 蓝图中的按钮创建时，使用 TabID_2
 			else if (WidgetManager->DoesTabExist(TabID_2))
 			{
 				WidgetManager->AddTo_WidgetToTabName(this, TabID_2);
 			}
 			
-			/** 主窗口控件创建时，才需要在这里执行初始化 */
-			// 这个类继承了 IWidgetInterface_MetaDataPlugin，所以 Interface 有效
+			// 主控件继承了 IWidgetInterface_MetaDataPlugin，所以 Interface 有效
 			TScriptInterface<IWidgetInterface_MetaDataPlugin> Interface(this);
 			if (Interface)
 			{
@@ -62,14 +63,14 @@ void UEUW_BaseUtilityWidget::NativeDestruct()
 
 void UEUW_BaseUtilityWidget::OnOpen_Implementation(const FInstancedStruct& Params)
 {
-	// 默认空实现 — 蓝图可重写此函数以接收初始化参数
-	UE_LOG(LogTemp, Verbose, TEXT("[UEUW_BaseUtilityWidget] OnOpen — 控件 [%s] 收到初始化参数"), *GetName());
+	// 默认空实现，蓝图可重写
+	UE_LOG(LogMetaDataPlugin, Verbose, TEXT("[%hs] : 控件 [%s] 被创建"), __FUNCTION__, *GetName());
 }
 
 void UEUW_BaseUtilityWidget::OnClose_Implementation()
 {
-	// 默认空实现 — 蓝图可重写此函数以进行清理
-	UE_LOG(LogTemp, Verbose, TEXT("[UEUW_BaseUtilityWidget] OnClose — 控件 [%s] 正在清理"), *GetName());
+	// 默认空实现，蓝图可重写
+	UE_LOG(LogMetaDataPlugin, Verbose, TEXT("[%hs] : 控件 [%s] 正在关闭"), __FUNCTION__, *GetName());
 }
 
 void UEUW_BaseUtilityWidget::OnInitialize(const FInstancedStruct& Params)
@@ -78,14 +79,14 @@ void UEUW_BaseUtilityWidget::OnInitialize(const FInstancedStruct& Params)
 	UEUSS_WidgetManager* WidgetManager = GEditor->GetEditorSubsystem<UEUSS_WidgetManager>();
 	if (!IsValid(WidgetManager))
 	{
-		UE_LOG(LogTemp, Error, TEXT("[UEUW_BaseUtilityWidget] OnInitialize 失败：WidgetManager不存在"));
+		UE_LOG(LogMetaDataPlugin, Error, TEXT("[%hs] : WidgetManager 无效"), __FUNCTION__);
 		return;
 	}
 	
 	// 确保已创建的控件中没有该控件
 	if (WidgetManager->GetActiveWidgets().Contains(this))
 	{
-		UE_LOG(LogTemp, Warning, TEXT("[UEUW_BaseUtilityWidget] OnInitialize 失败：已创建控件"));
+		UE_LOG(LogMetaDataPlugin, Log, TEXT("[%hs] : 控件 [%s] 已存在"), __FUNCTION__, *GetName());
 		return;
 	}
 	
@@ -93,41 +94,37 @@ void UEUW_BaseUtilityWidget::OnInitialize(const FInstancedStruct& Params)
 	WidgetManager->AddToActiveWidgets(this);
 	WidgetManager->OnWidgetInstanceCreated.Broadcast(this);
 	
-	/* 通过 EUW 蓝图中的 运行编辑器工具 按钮打开，TabID 是 UEditorUtilityWidgetBlueprint->GetFName()
-	 * GetClass()->GetFName();
-	 * 使用插件按钮，或者通过右键资产点击运行编辑器工具，TabID 如下
-	 * FName RegistrationName = NewTabID.IsNone() ? FName(*(InBlueprint->GetPathName() + LOCTEXT("ActiveTabSuffix", "_ActiveTab").ToString())) : FName(*(InBlueprint->GetPathName() + NewTabID.ToString()));
-	 */
-
-	// 手动构建 TabID，只适用于通过插件按钮和右键资产点击运行编辑器工具打开的控件
-	// FString RegistrationName = GetClass()->ClassGeneratedBy.GetPathName() + LOCTEXT("ActiveTabSuffix", "_ActiveTab").ToString();
-	// WidgetManager->AddTo_WidgetToTabName(this, FName(*RegistrationName));
-
-	// 蓝图可重写此接口，EUW 创建
+	// 调用接口
 	IWidgetInterface_MetaDataPlugin::Execute_OnOpen(this, Params);
 
-	UE_LOG(LogTemp, Log, TEXT("[UEUW_BaseUtilityWidget] OnInitialize — 已初始化控件 [%s]"), *GetName());
+	UE_LOG(LogMetaDataPlugin, Log, TEXT("[%hs] : 已初始化控件 [%s]"), __FUNCTION__, *GetName());
 	
 }
 
 void UEUW_BaseUtilityWidget::OnDeinitialize()
 {
+	// 获得 Subsystem
 	UEUSS_WidgetManager* WidgetManager = GEditor->GetEditorSubsystem<UEUSS_WidgetManager>();
 	if (!IsValid(WidgetManager)) return;
+
+	// 关闭时，确保控件存在
 	if (!WidgetManager->GetActiveWidgets().Contains(this)) return;
-	
+
+	// 调用接口
 	IWidgetInterface_MetaDataPlugin::Execute_OnClose(this);
-	
+
+	// 递归移除自身和子节点
 	WidgetManager->RemoveNodeAndDescendants(this);
 
+	// 从 ActiveWidgets 中移除
 	WidgetManager->RemoveFromActiveWidgets(this);
+	
+	// 从 WidgetToTabName 中移除
 	WidgetManager->RemoveFrom_WidgetToTabName(this);
 
-	
+	// 通知本控件被移除
 	WidgetManager->OnWidgetInstanceRemoved.Broadcast(this);
 	
-	UE_LOG(LogTemp, Verbose, TEXT("[UEUW_BaseUtilityWidget] OnDeinitialize — 已自动取消注册控件 [%s]"), *GetName());
+	UE_LOG(LogMetaDataPlugin, Log, TEXT("[%hs] : 已移除控件 [%s]"), __FUNCTION__, *GetName());
 
 }
-
-#undef LOCTEXT_NAMESPACE

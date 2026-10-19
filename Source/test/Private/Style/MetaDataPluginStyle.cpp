@@ -1,10 +1,8 @@
-﻿// Fill out your copyright notice in the Description page of Project Settings.
-
-
-#include "Style/TestStyle.h"
+﻿#include "Style/MetaDataPluginStyle.h"
 #include "Framework/Application/SlateApplication.h"
 #include "Styling/SlateStyleRegistry.h"
 #include "Interfaces/IPluginManager.h"
+#include "Log/MetaDataPluginLogChannel.h"
 
 TSharedPtr< FSlateStyleSet > FMetadataOfAssetsStyle::StyleInstance = NULL;
 const FVector2D Icon128x128(128.0f, 128.0f);
@@ -45,7 +43,7 @@ FString FMetadataOfAssetsStyle::GetPluginResourcesDir(const FString& ModuleName)
 	TSharedPtr<IPlugin> Plugin = IPluginManager::Get().FindPlugin(ModuleName);
 	if (!Plugin.IsValid())
 	{
-		UE_LOG(LogTemp, Error, TEXT("FMetadataOfAssetsStyle: 找不到插件 %s，无法设置资源目录"), *ModuleName);
+		UE_LOG(LogMetaDataPlugin, Error, TEXT("[%hs] : 找不到插件 %s"), __FUNCTION__, *ModuleName);
 		return TEXT("");
 	}
 

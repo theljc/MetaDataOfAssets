@@ -5,6 +5,7 @@
 #include "InstancedStruct.h"
 #include "EUSS_WidgetManager.generated.h"
 
+class FAssetSyncTask;
 struct FInstancedStruct;
 class UUserWidget;
 class UEditorUtilityWidget;
@@ -13,6 +14,7 @@ class UEditorUtilityWidgetBlueprint;
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnWidgetInstanceCreated, UUserWidget*, Widget);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnWidgetInstanceRemoved, UUserWidget*, Widget);
+// DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnTaskComplete);
 
 
 // 树节点
@@ -47,13 +49,17 @@ public:
 	virtual void Deinitialize() override;
 	
 	// Widget 被创建时触发，提供委托，但未使用
-	UPROPERTY(BlueprintAssignable, Category = "Widget Manager")
+	UPROPERTY(BlueprintAssignable, Category = "MetaDataPlugin", meta = (DisplayName = "OnWidgetCreated"))
 	FOnWidgetInstanceCreated OnWidgetInstanceCreated;
 
 	// Widget 被移除时触发，提供委托，但未使用
-	UPROPERTY(BlueprintAssignable, Category = "Widget Manager")
+	UPROPERTY(BlueprintAssignable, Category = "MetaDataPlugin", meta = (DisplayName = "OnWidgetRemoved"))
 	FOnWidgetInstanceRemoved OnWidgetInstanceRemoved;
 
+	// 资产的同步任务完成时触发
+	// UPROPERTY(BlueprintAssignable, Category = "元数据插件", meta = (DisplayName = "任务完成时"))
+	// FOnTaskComplete OnTaskComplete;
+	
 	/** 有资产被删除时触发 */
 	// UPROPERTY(BlueprintAssignable, Category = "Widget Manager")
 	// FOnAssetDeleted OnAssetDeleted;
@@ -65,7 +71,7 @@ public:
 	 * @param Params		创建时可以通过 FInstancedStruct 传递参数
 	 * @return				创建完成的实例
 	 */
-	UFUNCTION(BlueprintCallable, Category = "Widget Manager")
+	UFUNCTION(BlueprintCallable, Category = "MetaDataPlugin")
 	UUserWidget* CreateUserWidget(TSubclassOf<UUserWidget> WidgetClass, const FInstancedStruct& Params);
 
 	/**
@@ -75,7 +81,7 @@ public:
 	 * @param Params		创建时可以通过 FInstancedStruct 传递参数
 	 * @return				创建完成的实例
 	 */
-	UFUNCTION(BlueprintCallable, Category = "Widget Manager")
+	UFUNCTION(BlueprintCallable, Category = "MetaDataPlugin")
 	UEditorUtilityWidget* CreateEditorUtilityWidget(UEditorUtilityWidgetBlueprint* InBlueprint, const FInstancedStruct& Params);
 
 	/**
@@ -129,14 +135,14 @@ public:
 
 	TMap<TObjectPtr<UUserWidget>, FName> GetWidgetToTabName() const { return WidgetToTabName; }
 
-	TSoftObjectPtr<UEditorUtilityWidgetBlueprint> GetMainWidgetSoftPtr();
+	TSoftObjectPtr<UEditorUtilityWidgetBlueprint> GetMainWidgetSoftPtr() const { return MainWidgetSoftPtr; }
 
-	bool GetInCreatingSubWidget() { return bInSubWidgetCreating; }
+	bool GetInCreatingSubWidget() const { return bInSubWidgetCreating; }
 
 
 	/** Setter */
 	// UFUNCTION(BlueprintCallable, Category = "Widget Manager")
-	void SetMainWidgetSoftPtr(TSoftObjectPtr<UEditorUtilityWidgetBlueprint> InMainWidgetSoftPtr);
+	void SetMainWidgetSoftPtr(const TSoftObjectPtr<UEditorUtilityWidgetBlueprint>& InMainWidgetSoftPtr) { MainWidgetSoftPtr = InMainWidgetSoftPtr; }
 
 	// UFUNCTION(BlueprintCallable)
 	// void SetAssetRefs(const TArray<UObject *> NewAssetRefs) { AssetRefs = NewAssetRefs; }
@@ -145,11 +151,11 @@ public:
 
 	
 	// 创建树的根节点
-	UFUNCTION(BlueprintCallable)
+	UFUNCTION(BlueprintCallable, Category = "MetaDataPlugin")
 	void SetToRootNode(UUserWidget* InRootWidget);
 
 	// 往树中添加子节点
-	UFUNCTION(BlueprintCallable)
+	UFUNCTION(BlueprintCallable, Category = "MetaDataPlugin")
 	void AddToChildNode(UUserWidget* ParentWidget, UUserWidget* ChildWidget);
 
 	// UFUNCTION(BlueprintCallable)
@@ -167,6 +173,9 @@ public:
 
 	// 主控件资产移动或重命名时触发
 	void OnMainWidgetMoved(const FAssetData& AssetData, const FString& OldObjectPath);
+
+	void OnTaskStart();
+	void OnTaskComplete();
 	
 private:
 

@@ -2,28 +2,57 @@
 
 #include "MetadataOfAssets.h"
 
-#include "BlueprintEditorLibrary.h"
-#include "EditorUtilityWidgetBlueprint.h"
+// #include "BlueprintEditorLibrary.h"
+// #include "EditorUtilityWidgetBlueprint.h"
 #include "MetaData/EUSS_MetaDataManager.h"
 #include "LevelEditor.h"
-#include "Command/MetadataOfAssetsCommands.h"
-#include "Style/TestStyle.h"
-// #include "Settings/MetaDataPluginSettings.h"
+#include "Command/MetadataPluginCommands.h"
+#include "Style/MetaDataPluginStyle.h"
+#include "Settings/MetaDataPluginSettings.h"
+#include "ISettingsModule.h"
+#include "ISettingsSection.h"
 #include "AssetRegistry/AssetRegistryModule.h"
 #include "Widget/EUSS_WidgetManager.h"
 
 // 属性自定义
 #include "PropertyEditorModule.h"
+#include "Global/MetadataPluginGlobal.h"
 #include "Interfaces/IMainFrameModule.h"
-#include "Settings/MetaDataPluginSettings.h"
-#include "ThumbnailRendering/ThumbnailManager.h"
-#include "Utils/MetadataOfAssetsUtils.h"
-#include "Widgets/Layout/SConstraintCanvas.h"
+#include "Internationalization/StringTableRegistry.h"
+// #include "Settings/MetaDataPluginSettings.h"
+// #include "Task/FAssetScanTask.h"
+// #include "ThumbnailRendering/ThumbnailManager.h"
+// #include "../Public/Global/MetadataPluginGlobal.h"
+// #include "Widgets/Layout/SConstraintCanvas.h"
 
 #define LOCTEXT_NAMESPACE "FtestModule"
 
 void FMetadataOfAssetsModule::StartupModule()
 {
+	// 从 TODO:<Plugin>/Config/MetaDataPluginConfig.ini 读取配置
+	UMetaDataPluginSettings* PluginSettings = GetMutableDefault<UMetaDataPluginSettings>();
+	PluginSettings->LoadFromPluginConfig();
+
+	// 手动注册插件配置到项目设置页
+	ISettingsModule& SettingsModule = FModuleManager::LoadModuleChecked<ISettingsModule>(TEXT("Settings"));
+	ISettingsSectionPtr SettingsSection = SettingsModule.RegisterSettings(
+		PluginSettings->GetContainerName(),
+		PluginSettings->GetCategoryName(),
+		PluginSettings->GetSectionName(),
+		PluginSettings->GetSectionText(),
+		PluginSettings->GetSectionDescription(),
+		PluginSettings);
+
+	if (SettingsSection.IsValid())
+	{
+		// 项目设置页的改动保存到插件自己的 ini 配置文件
+		SettingsSection->OnSave().BindLambda([]() -> bool
+		{
+			return GetMutableDefault<UMetaDataPluginSettings>()->TryUpdateDefaultConfigFile(
+				UMetaDataPluginSettings::GetConfigFilePath());
+		});
+	}
+
 	// 注册命令
 	FMetadataOfAssetsCommands::Register();
 	// 初始化样式集
@@ -32,7 +61,14 @@ void FMetadataOfAssetsModule::StartupModule()
 	// 2. 注册 Tab 的生成器（通常在 StartupModule 中）
 	// FGlobalTabmanager::Get()->RegisterTabSpawner(MyTabName, FOnSpawnTab::CreateRaw(this, &FtestModule::SpawnMyTab))
 		// .SetDisplayName(FText::FromString("My Tab"));
-	
+
+	// 加载 csv 文件
+	FStringTableRegistry::Get().Internal_LocTableFromFile(
+		MetadataOfAssetsConstant::GetTableID(),
+		MetadataOfAssetsConstant::GetNamespace(),
+		FPaths::Combine(FPaths::ProjectPluginsDir(), MetadataOfAssetsConstant::GetLocalizationFilePath()),
+		FPaths::ProjectPluginsDir()
+	);
 	
 	// 创建命令列表
 	PluginCommands = MakeShareable(new FUICommandList);
@@ -128,7 +164,7 @@ void FMetadataOfAssetsModule::ShutdownModule()
 	// 	FPropertyEditorModule& PropertyEditor = FModuleManager::GetModuleChecked<FPropertyEditorModule>("PropertyEditor");
 	// 	PropertyEditor.UnregisterCustomPropertyTypeLayout(FTestPluginChord::StaticStruct()->GetFName());
 	// }
-
+	
 	FMetadataOfAssetsCommands::Unregister();
 	FMetadataOfAssetsStyle::Shutdown();
 }
@@ -188,11 +224,11 @@ void FMetadataOfAssetsModule::BindCommandActions()
 
 void FMetadataOfAssetsModule::ScanAssetsWithConfiguration()
 {
-	UEUSS_MetaDataManager* MetaDataManager = GEditor->GetEditorSubsystem<UEUSS_MetaDataManager>();
-	if (MetaDataManager)
-	{
-		MetaDataManager->SyncAssetsInDirectory();
-	}
+	// UEUSS_MetaDataManager* MetaDataManager = GEditor->GetEditorSubsystem<UEUSS_MetaDataManager>();
+	// if (MetaDataManager)
+	// {
+	// 	MetaDataManager->SyncAssetsInDirectory();
+	// }
 }
 
 void FMetadataOfAssetsModule::RemoveAllWidget()

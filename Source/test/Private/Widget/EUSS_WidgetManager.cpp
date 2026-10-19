@@ -10,15 +10,20 @@
 #include "Engine/World.h"
 #include "Framework/Application/SlateApplication.h"
 // #include "Settings/MetaDataPluginSettings.h"
+#include "Log/MetaDataPluginLogChannel.h"
 #include "Settings/MetaDataPluginSettings.h"
 #include "StructUtils/InstancedStruct.h"
-#include "Utils/MetadataOfAssetsUtils.h"
+// #include "../Private/Global/MetadataPluginGlobal.cpp"
+// #include "Internationalization/StringTableRegistry.h"
+// #include "Kismet/KismetStringTableLibrary.h"
+// #include "Task/FAssetScanTask.h"
+#include "Global/MetadataPluginGlobal.h"
 #include "Widgets/SWindow.h"
 
 void UEUSS_WidgetManager::SetMainWidgetPath()
 {
 	// 从配置文件读取主控件路径
-	UMetaDataPluginSettings* Settings = MetadataOfAssetsUtils::GetMetaDataPluginSettings();
+	UMetaDataPluginSettings* Settings = GetMutableDefault<UMetaDataPluginSettings>();
 	if (!Settings) return;
 	
 	// FString WidgetPath = MetadataOfAssetsUtils::GetWidgetPathFromConfigFile();
@@ -45,14 +50,13 @@ void UEUSS_WidgetManager::Initialize(FSubsystemCollectionBase& Collection)
 	Super::Initialize(Collection);
 
 	SetMainWidgetPath();
-	
-	UE_LOG(LogTemp, Log, TEXT("[UEUSS_WidgetManager] 初始化完成"));
+	UE_LOG(LogMetaDataPlugin, Log, TEXT("[%hs] : 初始化完成"), __FUNCTION__);
 }
 
 void UEUSS_WidgetManager::Deinitialize()
 {
 	// 清理所有仍处于活跃状态的控件
-	// UE_LOG(LogTemp, Log, TEXT("[UEUSS_WidgetManager] 子系统即将清空 %d 个活跃控件"), ActiveWidgets.Num());
+	// UE_LOG(LogMetaDataPlugin, Log, TEXT("[UEUSS_WidgetManager] 子系统即将清空 %d 个活跃控件"), ActiveWidgets.Num());
 	
 	// ActiveWidgets.Empty();
 
@@ -71,7 +75,7 @@ void UEUSS_WidgetManager::Deinitialize()
 // 	TSharedPtr<SWidget> CachedWidget = UtilityWidget->GetCachedWidget();
 // 	if (!CachedWidget.IsValid())
 // 	{
-// 		UE_LOG(LogTemp, Warning, TEXT("[UEUW_WidgetManager] FocusWidgetTab 失败：CachedWidget 无效"));
+// 		UE_LOG(LogMetaDataPlugin, Warning, TEXT("[UEUW_WidgetManager] FocusWidgetTab 失败：CachedWidget 无效"));
 // 		return false;
 // 	}
 //
@@ -79,7 +83,7 @@ void UEUSS_WidgetManager::Deinitialize()
 // 	TSharedPtr<SWidget> ParentWidget = CachedWidget->GetParentWidget();
 // 	if (!ParentWidget.IsValid())
 // 	{
-// 		UE_LOG(LogTemp, Warning, TEXT("[UEUW_WidgetManager] FocusWidgetTab 失败：ParentWidget 无效"));
+// 		UE_LOG(LogMetaDataPlugin, Warning, TEXT("[UEUW_WidgetManager] FocusWidgetTab 失败：ParentWidget 无效"));
 // 		return false;
 // 	}
 //
@@ -87,7 +91,7 @@ void UEUSS_WidgetManager::Deinitialize()
 // 	TSharedPtr<SWindow> WidgetWindow = FSlateApplication::Get().FindWidgetWindow(ParentWidgetRef);
 // 	if (!WidgetWindow.IsValid())
 // 	{
-// 		UE_LOG(LogTemp, Warning, TEXT("[UEUW_WidgetManager] FocusWidgetTab 失败：找不到 SWindow"));
+// 		UE_LOG(LogMetaDataPlugin, Warning, TEXT("[UEUW_WidgetManager] FocusWidgetTab 失败：找不到 SWindow"));
 // 		return false;
 // 	}
 //
@@ -98,21 +102,11 @@ void UEUSS_WidgetManager::Deinitialize()
 // 		FSlateApplication::Get().GetUserIndexForKeyboard(),
 // 		WidgetWindow->GetContent());
 //
-// 	UE_LOG(LogTemp, Log, TEXT("[UEUW_WidgetManager] FocusWidgetTab — 已聚焦窗口 [%s]"),
+// 	UE_LOG(LogMetaDataPlugin, Log, TEXT("[UEUW_WidgetManager] FocusWidgetTab — 已聚焦窗口 [%s]"),
 // 		*UtilityWidget->GetName());
 //
 // 	return true;
 // }
-
-TSoftObjectPtr<UEditorUtilityWidgetBlueprint> UEUSS_WidgetManager::GetMainWidgetSoftPtr()
-{
-	return MainWidgetSoftPtr;
-}
-
-void UEUSS_WidgetManager::SetMainWidgetSoftPtr(TSoftObjectPtr<UEditorUtilityWidgetBlueprint> InMainWidgetSoftPtr)
-{
-	MainWidgetSoftPtr = InMainWidgetSoftPtr;
-}
 
 void UEUSS_WidgetManager::SetToRootNode(UUserWidget* InRootWidget)
 {
@@ -134,7 +128,7 @@ void UEUSS_WidgetManager::SetToRootNode(UUserWidget* InRootWidget)
 	// 根节点没有父节点
 	NewRoot->Parent = nullptr;
 
-	UE_LOG(LogTemp, Log, TEXT("[UEUSS_WidgetManager] Root set to: %s"), *InRootWidget->GetName());
+	UE_LOG(LogMetaDataPlugin, Log, TEXT("[%hs] : 根节点被设置为: %s"), __FUNCTION__, *InRootWidget->GetName());
 
 }
 
@@ -153,8 +147,8 @@ void UEUSS_WidgetManager::AddToChildNode(UUserWidget* ParentWidget, UUserWidget*
 	ChildNode->Parent = ParentNode;
 	ParentNode->Children.AddUnique(ChildNode);
 
-	UE_LOG(LogTemp, Log, TEXT("[UEUSS_WidgetManager] %s 添加为 %s 的子节点"),
-		*ChildWidget->GetName(), *ParentWidget->GetName());
+	UE_LOG(LogMetaDataPlugin, Log, TEXT("[%hs] : %s 被添加为 %s 的子节点"),
+		__FUNCTION__, *ChildWidget->GetName(), *ParentWidget->GetName());
 }
 
 TArray<UUserWidget*> UEUSS_WidgetManager::GetAllDescendants(UUserWidget* InWidget)
@@ -246,7 +240,7 @@ void UEUSS_WidgetManager::RemoveNodeAndDescendants(UUserWidget* InWidget)
 
 void UEUSS_WidgetManager::OnMainWidgetMoved(const FAssetData& AssetData, const FString& OldObjectPath)
 {
-	UMetaDataPluginSettings* Settings = MetadataOfAssetsUtils::GetMetaDataPluginSettings();
+	UMetaDataPluginSettings* Settings = GetMutableDefault<UMetaDataPluginSettings>();
 	
 	// 判断移动的是否是主控件的资产
 	if (Settings->MainWidgetPath == OldObjectPath)
@@ -254,6 +248,24 @@ void UEUSS_WidgetManager::OnMainWidgetMoved(const FAssetData& AssetData, const F
 		MainWidgetPath = AssetData.GetSoftObjectPath().ToString();
 		// 保存主控件资产的路径
 		Settings->SaveMainWidgetPath(MainWidgetPath);
+	}
+}
+
+void UEUSS_WidgetManager::OnTaskStart()
+{
+	TArray<UUserWidget*> Loc_ActiveWidgets = GetActiveWidgets();
+	for (UUserWidget* Widget : Loc_ActiveWidgets)
+	{
+		Widget->SetIsEnabled(false);
+	}
+}
+
+void UEUSS_WidgetManager::OnTaskComplete()
+{
+	TArray<UUserWidget*> Loc_ActiveWidgets = GetActiveWidgets();
+	for (UUserWidget* Widget : Loc_ActiveWidgets)
+	{
+		Widget->SetIsEnabled(true);
 	}
 }
 
@@ -305,7 +317,7 @@ void UEUSS_WidgetManager::RemoveNodeFromTree(UUserWidget* Widget)
 	// 从映射中移除
 	WidgetToNodeMap.Remove(Widget);
 
-	UE_LOG(LogTemp, Log, TEXT("[UEUSS_WidgetManager] 移除节点: %s"), *Widget->GetName());
+	UE_LOG(LogMetaDataPlugin, Log, TEXT("[%hs] : 移除节点: %s"), __FUNCTION__, *Widget->GetName());
 }
 
 
@@ -360,7 +372,7 @@ void UEUSS_WidgetManager::RemoveNodeFromTree(UUserWidget* Widget)
 	// 	}
 	// }
 	//
-	// // UE_LOG(LogTemp, Log, TEXT("[EUW_MetaData] 真实 TabID = %hhd"), RealTabID);
+	// // UE_LOG(LogMetaDataPlugin, Log, TEXT("[EUW_MetaData] 真实 TabID = %hhd"), RealTabID);
 	// return RealTabID;
 
 // 	if (!Widget)
@@ -411,7 +423,7 @@ void UEUSS_WidgetManager::CreateMainWidget()
 		// 验证加载是否成功
 		if (!MainWidget_Ins)
 		{
-			UE_LOG(LogTemp, Error, TEXT("[UEUSS_WidgetManager] CreateMainWidget : 加载失败"));
+			UE_LOG(LogMetaDataPlugin, Error, TEXT("[%hs] : 加载失败"), __FUNCTION__);
 			return;
 		}
 		
@@ -458,20 +470,20 @@ UUserWidget* UEUSS_WidgetManager::CreateUserWidget(TSubclassOf<UUserWidget> Widg
 {
 	if (!GEditor)
 	{
-		UE_LOG(LogTemp, Error, TEXT("[UEUSS_WidgetManager] CreateUserWidget 失败：GEditor 不可用"));
+		UE_LOG(LogMetaDataPlugin, Error, TEXT("[%hs] : GEditor 无效"), __FUNCTION__);
 		return nullptr;
 	}
 
 	UWorld* EditorWorld = GEditor->GetEditorWorldContext().World();
 	if (!EditorWorld)
 	{
-		UE_LOG(LogTemp, Error, TEXT("[UEUSS_WidgetManager] CreateUserWidget 失败：无法获取编辑器 World"));
+		UE_LOG(LogMetaDataPlugin, Error, TEXT("[%hs] : EditorWorld 无效"), __FUNCTION__);
 		return nullptr;
 	}
 
 	if (!WidgetClass)
 	{
-		UE_LOG(LogTemp, Error, TEXT("[UEUSS_WidgetManager] CreateUserWidget 失败：WidgetClass 为空"));
+		UE_LOG(LogMetaDataPlugin, Error, TEXT("[%hs] : WidgetClass 无效"), __FUNCTION__);
 		return nullptr;
 	}
 
@@ -479,7 +491,7 @@ UUserWidget* UEUSS_WidgetManager::CreateUserWidget(TSubclassOf<UUserWidget> Widg
 	UUserWidget* Widget = CreateWidget<UUserWidget>(EditorWorld, WidgetClass);
 	if (!Widget)
 	{
-		UE_LOG(LogTemp, Error, TEXT("[UEUSS_WidgetManager] CreateUserWidget 失败：创建 Widget 失败"));
+		UE_LOG(LogMetaDataPlugin, Error, TEXT("[%hs] : 创建 Widget 失败"), __FUNCTION__);
 		return nullptr;
 	}
 
@@ -490,8 +502,8 @@ UUserWidget* UEUSS_WidgetManager::CreateUserWidget(TSubclassOf<UUserWidget> Widg
 		Interface->OnInitialize(Params);
 	}
 
-	UE_LOG(LogTemp, Log, TEXT("[UEUSS_WidgetManager] CreateUserWidget 成功创建控件 [%s]"),
-		*Widget->GetName());
+	UE_LOG(LogMetaDataPlugin, Log, TEXT("[%hs] : 成功创建控件: [%s]"),
+		__FUNCTION__, *Widget->GetName());
 
 	return Widget;
 }
@@ -500,20 +512,20 @@ UEditorUtilityWidget* UEUSS_WidgetManager::CreateEditorUtilityWidget(UEditorUtil
 {
 	if (!GEditor)
 	{
-		UE_LOG(LogTemp, Error, TEXT("[UEUSS_WidgetManager] CreateEditorUtilityWidget 失败：GEditor 不可用"));
+		UE_LOG(LogMetaDataPlugin, Error, TEXT("[%hs] : GEditor 无效"), __FUNCTION__);
 		return nullptr;
 	}
 
 	UWorld* EditorWorld = GEditor->GetEditorWorldContext().World();
 	if (!EditorWorld)
 	{
-		UE_LOG(LogTemp, Error, TEXT("[UEUSS_WidgetManager] CreateEditorUtilityWidget 失败：无法获取编辑器 World"));
+		UE_LOG(LogMetaDataPlugin, Error, TEXT("[%hs] : EditorWorld 无效"), __FUNCTION__);
 		return nullptr;
 	}
 
 	if (!InBlueprint)
 	{
-		UE_LOG(LogTemp, Error, TEXT("[UEUSS_WidgetManager] CreateEditorUtilityWidget 失败：InBlueprint 为空"));
+		UE_LOG(LogMetaDataPlugin, Error, TEXT("[%hs] : InBlueprint 无效"), __FUNCTION__);
 		return nullptr;
 	}
 
@@ -526,7 +538,7 @@ UEditorUtilityWidget* UEUSS_WidgetManager::CreateEditorUtilityWidget(UEditorUtil
 	{
 		SetInCreatingSubWidget(false);
 
-		UE_LOG(LogTemp, Error, TEXT("[UEUSS_WidgetManager] CreateEditorUtilityWidget 失败：无法创建 Widget"));
+		UE_LOG(LogMetaDataPlugin, Error, TEXT("[%hs] : 创建 Widget 失败"), __FUNCTION__);
 		return nullptr;
 	}
 
@@ -543,8 +555,8 @@ UEditorUtilityWidget* UEUSS_WidgetManager::CreateEditorUtilityWidget(UEditorUtil
 	
 	SetInCreatingSubWidget(false);
 	
-	UE_LOG(LogTemp, Log, TEXT("[UEUSS_WidgetManager] CreateEditorUtilityWidget 成功创建控件 [%s]，当前活跃控件数：%d"),
-		*Widget->GetName(), ActiveWidgets.Num());
+	UE_LOG(LogMetaDataPlugin, Log, TEXT("[%hs] : 成功创建控件: [%s]"),
+		__FUNCTION__, *Widget->GetName());
 	
 	// if (bOpenAsModal)
 	// {
@@ -576,7 +588,7 @@ UEditorUtilityWidget* UEUSS_WidgetManager::CreateEditorUtilityWidget(UEditorUtil
 // {
 // 	if (!Widget)
 // 	{
-// 		UE_LOG(LogTemp, Warning, TEXT("[UEUW_WidgetManager] RemoveWidget 失败：Widget 为空"));
+// 		UE_LOG(LogMetaDataPlugin, Warning, TEXT("[UEUW_WidgetManager] RemoveWidget 失败：Widget 为空"));
 // 		return;
 // 	}
 //
@@ -596,7 +608,7 @@ UEditorUtilityWidget* UEUSS_WidgetManager::CreateEditorUtilityWidget(UEditorUtil
 // 	// 3. 从父容器中移除（会触发 NativeDestruct，其中会做防重复检查）
 // 	Widget->RemoveFromParent();
 //
-// 	UE_LOG(LogTemp, Log, TEXT("[UEUW_WidgetManager] RemoveWidget 已移除控件，当前活跃控件数：%d"), ActiveWidgets.Num());
+// 	UE_LOG(LogMetaDataPlugin, Log, TEXT("[UEUW_WidgetManager] RemoveWidget 已移除控件，当前活跃控件数：%d"), ActiveWidgets.Num());
 // }
 
 void UEUSS_WidgetManager::AddToActiveWidgets(UUserWidget* Widget)
@@ -645,7 +657,16 @@ void UEUSS_WidgetManager::CloseAllWidgets()
 	if (!IsValid(RootNode) || !RootNode->Widget.IsValid()) return;
 
 	// 关闭根节点对应的控件，其下所有子节点控件会被一起关闭
-	RemoveNodeAndDescendants(RootNode->Widget.Get());
+	// RemoveNodeAndDescendants(RootNode->Widget.Get());
+	TArray<UUserWidget*> Loc_ActiveWidgets = GetActiveWidgets();
+	for (UUserWidget* Widget : Loc_ActiveWidgets)
+	{
+		FName* TabID = WidgetToTabName.Find(Widget);
+		if (TabID)
+		{
+			CloseTabByID(*TabID);
+		}
+	}
 	
 	// UUserWidget* RootWidget = RootNode->Widget.Get();
 	// if (WidgetToTabName.Find(RootWidget))

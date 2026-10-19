@@ -8,7 +8,7 @@ public class test : ModuleRules
 	{
 		PCHUsage = ModuleRules.PCHUsageMode.UseExplicitOrSharedPCHs;
 		OptimizeCode = CodeOptimization.Never;
-
+		
 		PublicIncludePaths.AddRange(
 			new string[] {
 				// ... add public include paths required here ...
@@ -51,6 +51,7 @@ public class test : ModuleRules
 				"AssetRegistry",
 				"StructUtils",
 				"DeveloperSettings",
+				"Settings",
 				"EditorScriptingUtilities",
 
 				// ... add private dependencies that you statically link with here ...

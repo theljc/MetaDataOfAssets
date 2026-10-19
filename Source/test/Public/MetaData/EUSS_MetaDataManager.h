@@ -1,6 +1,4 @@
-﻿// Fill out your copyright notice in the Description page of Project Settings.
-
-#pragma once
+﻿#pragma once
 
 #include "CoreMinimal.h"
 #include "Editor/Blutility/Public/EditorUtilitySubsystem.h"
@@ -20,8 +18,9 @@
 // 	UObject* Value;
 // };
 
+class FAssetSyncTask;
 class UMetaDataPluginSettings;
-struct FMetaDataPluginSetting;
+struct FScanDirectorySetting;
 class UWidget;
 
 // 创建 Widget 后，显示模态框前，将数据进行广播（因为模态框会暂停后续逻辑的执行）
@@ -33,9 +32,10 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnAssetSynced, UObject*, Asset);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnMetaDataAdded, UObject*, Asset);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnMetaDataDeleted, UObject*, Asset);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnMetaDataModified, UObject*, Asset);
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnMetaDataCopyed, UObject*, SourceAsset, UObject*, TargetAsset);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnMetaDataCopied, UObject*, SourceAsset, UObject*, TargetAsset);
 // DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnMetaDataAdded, UObject*, AddedObject, , MetaData);
 
+// DeleteMode
 USTRUCT()
 struct FMetaDataMap
 {
@@ -45,7 +45,7 @@ struct FMetaDataMap
 };
 
 /**
- * 
+ * 负责管理元数据
  */
 UCLASS()
 class TEST_API UEUSS_MetaDataManager : public UEditorUtilitySubsystem
@@ -55,50 +55,65 @@ public:
 	virtual void Initialize(FSubsystemCollectionBase& Collection) override;
 	virtual void Deinitialize() override;
 
-
-	UPROPERTY(BlueprintAssignable)
+	// 元数据被添加时的回调
+	UPROPERTY(BlueprintAssignable, Category = "MetaDataPlugin")
 	FOnMetaDataAdded OnMetaDataAdded;
-	
-	UPROPERTY(BlueprintAssignable)
+
+	// 元数据被删除时的回调
+	UPROPERTY(BlueprintAssignable, Category = "MetaDataPlugin")
 	FOnMetaDataDeleted OnMetaDataDeleted;
 
-	UPROPERTY(BlueprintAssignable)
+	// 元数据被修改时的回调
+	UPROPERTY(BlueprintAssignable, Category = "MetaDataPlugin")
 	FOnMetaDataModified OnMetaDataModified;
-	
-	UPROPERTY(BlueprintAssignable)
-	FOnMetaDataCopyed OnMetaDataCopyed;
-	
-	UPROPERTY(BlueprintAssignable)
+
+	// 元数据被复制时的回调
+	UPROPERTY(BlueprintAssignable, Category = "MetaDataPlugin")
+	FOnMetaDataCopied OnMetaDataCopied;
+
+	// 资产被同步时的回调（未使用）
+	UPROPERTY(BlueprintAssignable, Category = "MetaDataPlugin")
 	FOnAssetSynced OnAssetSynced;
 
-	UFUNCTION(BlueprintCallable)
+	// 资产删除回调
+	UPROPERTY(BlueprintAssignable, Category = "MetaDataPlugin")
+	FOnAssetDeleted OnAssetDeleted;
+	
+	// 添加元数据
+	UFUNCTION(BlueprintCallable, Category = "MetaDataPlugin")
 	void AddMetaData(UObject* Asset, FName TagToAdd, FString ValueToAdd);
 
-	UFUNCTION(BlueprintCallable)
+	// 修改元数据
+	UFUNCTION(BlueprintCallable, Category = "MetaDataPlugin")
 	void ModifyMetaData(UObject* Asset, FName TagToAdd, FString ValueToAdd);
 
-	UFUNCTION(BlueprintCallable)
+	// 删除元数据
+	UFUNCTION(BlueprintCallable, Category = "MetaDataPlugin")
 	void DeleteMetaData(UObject* Asset, FName TagToAdd);
 
-	UFUNCTION(BlueprintCallable)
+	// 复制元数据
+	UFUNCTION(BlueprintCallable, Category = "MetaDataPlugin")
 	void CopyMetaData(TArray<UObject*> SourceAsset, TArray<UObject*> TargetAsset);
 	
 	// 添加标签到资产注册表
-	UFUNCTION(BlueprintCallable)
+	UFUNCTION(BlueprintCallable, Category = "MetaDataPlugin")
 	void AddTagToRegisteredTags(const FName TagToAdd, UObject* Asset);
-	
+
+	// DeleteMode
 	// 从资产注册表移除标签
-	UFUNCTION(BlueprintCallable)
+	UFUNCTION(BlueprintCallable, Category = "MetaDataPlugin")
 	void RemoveTagFromRegisteredTags(const FName TagToRemove, UObject* Asset);
 	
 	// 注册标签到全局资产注册表
-	void AddTagToAssetRegistry(const FName TagToAdd, UObject* Asset);
-	
-	// 从全局资产注册表中移除
+	void AddTagToAssetRegistry(const FName TagToAdd);
+
+	// DeleteMode
+	// 从资产注册表中移除
 	void RemoveTagFromAssetRegistry(const FName TagToRemove, UObject* Asset);
 	// 从全局移除时，用于移除配置文件中的对应标签
-	FString RemoveTagFromMetaDataString(const FString& InputString, const FName& TagToRemove);
-	
+	// FString RemoveTagFromMetaDataString(const FString& InputString, const FName& TagToRemove);
+
+	// 同步资产元数据
 	void SyncAsset(UObject* Asset);
 	
 	// 打开模态框
@@ -128,36 +143,39 @@ public:
 
 	// UPROPERTY(BlueprintAssignable)
 	// FOnBatchAddWidgetCreated OnBatchAddWidgetCreated;
-
-	// 广播委托，外部可绑定
-	UPROPERTY(BlueprintAssignable)
-	FOnAssetDeleted OnAssetDeleted;
+	
 
 	// UFUNCTION(BlueprintCallable)
 	// void OnAssetSaved();
-	
-	UFUNCTION(BlueprintCallable)
-	void SetAssetRefs(const TArray<UObject *> NewAssetRefs) { AssetRefs = NewAssetRefs; }
-	
-	UFUNCTION(BlueprintCallable)
-	TArray<UObject *> GetAssetRefs() { return AssetRefs; }
 
 	
+	// 主控件关闭时，设置已添加的资产
+	UFUNCTION(BlueprintCallable, Category = "MetaDataPlugin")
+	void SetAddedAssets(const TArray<UObject*> NewAssetRefs) { AddedAssets = NewAssetRefs; }
+
+	// 获得上一次主控件关闭时已添加的资产
+	UFUNCTION(BlueprintCallable, Category = "MetaDataPlugin")
+	TArray<UObject*> GetAddedAssets() { return AddedAssets; }
+
+	// DeleteMode
 	// 扫描项目设置中配置路径的资产
-	// UFUNCTION(BlueprintCallable)
+	UFUNCTION(BlueprintCallable, Category = "MetaDataPlugin")
 	void SyncAssetsInDirectory();
 
 	// 获得项目设置中的配置
 	const UMetaDataPluginSettings* GetMetaDataPluginSettings();
-	UFUNCTION(BlueprintCallable)
-	TArray<FMetaDataPluginSetting> GetNormalizedPaths();
+
+	// 获得规范化的路径，确保没有重复的路径
+	UFUNCTION(BlueprintCallable, Category = "MetaDataPlugin")
+	TArray<FScanDirectorySetting> GetNormalizedPathSettings(const TArray<FScanDirectorySetting>& Settings);
 	
-	// 扫描已添加到主窗口中的资产
-	UFUNCTION(BlueprintCallable)
-	void SyncAssetsInMainWidget(TArray<UObject*> Assets);
+	// 扫描已添加到主控件中的资产
+	// UFUNCTION(BlueprintCallable)
+	// void SyncAssetsInMainWidget(TArray<UObject*> Assets);
 
 	void UpdateAssetTagStates(UObject* Asset);
 
+	// DeleteMode
 	// 资产被删除时，从已注册的标签中移除
 	void RemoveFromAssetTagStates(UObject* Asset);
 	// 资产删除回调
@@ -165,26 +183,43 @@ public:
 	
 	// UFUNCTION(BlueprintCallable)
 	// TArray<FName> GetCommonMetadataKeys(const TArray<UObject*>& Assets);
-	bool bRuntimeAllowManageMetaDataDelete;
+
+	// 在 Initialize 时从项目设置中同步值，用于确定是否要自动删除资产注册表中的 MetaData Tag
+	UPROPERTY(BlueprintReadOnly, Category = "MetaDataPlugin")
+	bool bAllowManageAssetRegistryTagsDelete;
+
+	void OnTaskFinished(FAssetSyncTask* FinishedTask);
 	
 private:
+	
+	// DeleteMode
 	void RemoveSavedMetaData(UObject* Asset, TMap<FName, uint32>* TagMapToAdd);
+
 	void AddActualMetaData(UObject* Asset, const TMap<FName, FString>& ObjectMetaDataMap, TMap<FName, uint32>* TagMapToAdd);
 	
-	TMap<FName, FString>* GetObjectMetaDataMap(UObject* Asset);
-	
+	// TMap<FName, FString>* GetObjectMetaDataMap(UObject* Asset);
+
+	// DeleteMode
 	// 以引用计数的方式保存已注册的标签
 	// UPROPERTY(Config)
 	TMap<FName, int32> RegisteredTags;
 	
 	// 保存所有已添加的资产
-	TArray<TObjectPtr<UObject>> AssetRefs;
+	UPROPERTY()
+	TArray<TObjectPtr<UObject>> AddedAssets;
 
+	// DeleteMode
 	// 此变量用于标记资产的元数据，外层 key 表示资产路径，内层 key 表示元数据的键，内层 value 表示元数据的值的哈希值
 	// UPROPERTY(Config)
 	TMap<FSoftObjectPath, FMetaDataMap> AssetTagStates;
 	
 	// 委托句柄，用于解绑
 	// FDelegateHandle AssetRemovedHandle;
+	
+
+	// 资产同步任务
+	TSharedPtr<FAssetSyncTask> AssetSyncTask;
+	// 每帧扫描的资产数量
+	// int32 BatchSize;
 	
 };
