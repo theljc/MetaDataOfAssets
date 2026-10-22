@@ -4,6 +4,7 @@
 #include "Log/MetaDataPluginLogChannel.h"
 #include "Misc/Paths.h"
 
+
 FString UMetaDataPluginSettings::GetConfigFilePath()
 {
 	// TODO:插件重命名
@@ -23,12 +24,21 @@ void UMetaDataPluginSettings::LoadFromPluginConfig()
 		return;
 	}
 
+	// 加载配置
 	LoadConfig(UMetaDataPluginSettings::StaticClass(), *ConfigFilePath);
 	UE_LOG(LogMetaDataPlugin, Log, TEXT("[%hs] : 已从插件配置文件加载：%s"), __FUNCTION__, *ConfigFilePath);
 }
 
-void UMetaDataPluginSettings::SaveMainWidgetPath(const FString& InMainWidgetPath)
+void UMetaDataPluginSettings::SetEnableDebug(bool bInEnableDebug)
+{
+	bEnableDebug = bInEnableDebug;
+	// 更新配置文件
+	TryUpdateDefaultConfigFile(GetConfigFilePath());
+}
+
+void UMetaDataPluginSettings::SetMainWidgetPath(const FString& InMainWidgetPath)
 {
 	MainWidgetPath = InMainWidgetPath;
+	// 更新配置文件
 	TryUpdateDefaultConfigFile(GetConfigFilePath());
 }

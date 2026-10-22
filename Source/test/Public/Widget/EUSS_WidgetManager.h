@@ -14,7 +14,6 @@ class UEditorUtilityWidgetBlueprint;
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnWidgetInstanceCreated, UUserWidget*, Widget);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnWidgetInstanceRemoved, UUserWidget*, Widget);
-// DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnTaskComplete);
 
 
 // 树节点
@@ -24,6 +23,7 @@ class TEST_API UEuwTreeNode : public UObject
 	GENERATED_BODY()
 
 public:
+	
 	// 对应的 EUW 实例
 	TWeakObjectPtr<UUserWidget> Widget;
 
@@ -36,6 +36,7 @@ public:
 	
 };
 
+
 /**
  * 负责统一管理所有通过本插件创建的控件
  */
@@ -45,24 +46,23 @@ class TEST_API UEUSS_WidgetManager : public UEditorUtilitySubsystem
 	GENERATED_BODY()
 
 public:
+	
 	virtual void Initialize(FSubsystemCollectionBase& Collection) override;
 	virtual void Deinitialize() override;
+
 	
-	// Widget 被创建时触发，提供委托，但未使用
+	// 控件被创建时触发，提供委托，但未使用
 	UPROPERTY(BlueprintAssignable, Category = "MetaDataPlugin", meta = (DisplayName = "OnWidgetCreated"))
 	FOnWidgetInstanceCreated OnWidgetInstanceCreated;
 
-	// Widget 被移除时触发，提供委托，但未使用
+	// 控件被移除时触发，提供委托，但未使用
 	UPROPERTY(BlueprintAssignable, Category = "MetaDataPlugin", meta = (DisplayName = "OnWidgetRemoved"))
 	FOnWidgetInstanceRemoved OnWidgetInstanceRemoved;
 
-	// 资产的同步任务完成时触发
-	// UPROPERTY(BlueprintAssignable, Category = "元数据插件", meta = (DisplayName = "任务完成时"))
-	// FOnTaskComplete OnTaskComplete;
-	
-	/** 有资产被删除时触发 */
-	// UPROPERTY(BlueprintAssignable, Category = "Widget Manager")
-	// FOnAssetDeleted OnAssetDeleted;
+
+	// 从配置中获取是否启用打印字符串设置
+	UFUNCTION(BlueprintCallable, BlueprintPure, Category = "MetaDataPlugin")
+	bool GetEnableDebugSetting();
 
 	/**
 	 * 用于创建 UserWidget
@@ -75,7 +75,7 @@ public:
 	UUserWidget* CreateUserWidget(TSubclassOf<UUserWidget> WidgetClass, const FInstancedStruct& Params);
 
 	/**
-	 * 用于创建 EUW
+	 * 用于创建 EditorUtilityWidget
 	 * 
 	 * @param InBlueprint   要创建的 EUW 类
 	 * @param Params		创建时可以通过 FInstancedStruct 传递参数
@@ -84,51 +84,45 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "MetaDataPlugin")
 	UEditorUtilityWidget* CreateEditorUtilityWidget(UEditorUtilityWidgetBlueprint* InBlueprint, const FInstancedStruct& Params);
 
-	/**
-	 * RemoveWidget — 移除 Widget，蓝图可调用，默认由 Widget 的 NativeDestruct 函数触发
-	 *
-	 * @param Widget 要移除的 Widget 实例
-	 */
-	// UFUNCTION(BlueprintCallable, Category = "Widget Manager")
-	// void RemoveWidget(UUserWidget* Widget);
+	// 创建树的根节点
+	UFUNCTION(BlueprintCallable, Category = "MetaDataPlugin")
+	void SetToRootNode(UUserWidget* InRootWidget);
 
-	// UFUNCTION(BlueprintCallable, Category = "Widget Manager")
+	// 往树中添加子节点
+	UFUNCTION(BlueprintCallable, Category = "MetaDataPlugin")
+	void AddToChildNode(UUserWidget* ParentWidget, UUserWidget* ChildWidget);
+
+	// 查找某节点下的所有子节点
+	TArray<UUserWidget*> GetAllDescendants(UUserWidget* InWidget);
+
+	// 在 EUW 的 NativeDestruct 中调用：关闭当前及所有子节点 Widget，并清理树节点
+	void RemoveNodeAndDescendants(UUserWidget* InWidget);
+	
+	// 创建主控件
+	void CreateMainWidget();
+	
+	// 主控件资产移动或重命名时触发，确保主窗口的资产移动后，下次启动编辑器依然能打开
+	void OnMainWidgetMoved(const FAssetData& AssetData, const FString& OldObjectPath);
+	
 	// 关闭所有已创建的控件
 	void CloseAllWidgets();
-	
-	// UFUNCTION(BlueprintCallable, Category = "Widget Manager")
 
-	// UFUNCTION(BlueprintCallable, Category = "Widget Manager")
-
-	// void OpenAsModalWindow(UUserWidget* Widget, FVector2D WindowSize);
+	// 开启和关闭调试模式
+	void DisableDebug();
+	void EnableDebug();
 	
+	// 添加和移除 ActiveWidgets
 	void AddToActiveWidgets(UUserWidget* Widget);
 	void RemoveFromActiveWidgets(UUserWidget* Widget);
 
+	// 添加和移除 WidgetToTabName
 	void AddTo_WidgetToTabName(UUserWidget* Widget, FName TabName);
 	void RemoveFrom_WidgetToTabName(UUserWidget* Widget);
 
-	// 创建主控件
-	void CreateMainWidget();
-
-	// 从配置文件获得主控件的路径
-	// FString GetWidgetPathFromConfigFile();
+	// 资产同步任务开始和完成时
+	void OnTaskStart();
+	void OnTaskComplete();
 	
-	/**
-	 * FocusWidgetTab — 将已存在的 EditorUtilityWidget 窗口聚焦到前台
-	 *
-	 * @param UtilityWidget 已存在的 EditorUtilityWidget 实例
-	 * @return 聚焦成功返回 true
-	 */
-	// bool FocusWidgetTab(UEditorUtilityWidget* UtilityWidget);
-
-	// 有资产被删除时触发
-	// void OnAssetRemoved(const FAssetData& AssetData);
-	
-	// UFUNCTION(BlueprintCallable)
-	// TArray<UObject *> GetAssetRefs() { return AssetRefs; }
-	
-	// UFUNCTION(BlueprintCallable, Category = "Widget Manager")
 	
 	/** Getter */
 	TArray<UUserWidget*> GetActiveWidgets() const { return ActiveWidgets; }
@@ -138,58 +132,32 @@ public:
 	TSoftObjectPtr<UEditorUtilityWidgetBlueprint> GetMainWidgetSoftPtr() const { return MainWidgetSoftPtr; }
 
 	bool GetInCreatingSubWidget() const { return bInSubWidgetCreating; }
-
-
+	
 	/** Setter */
-	// UFUNCTION(BlueprintCallable, Category = "Widget Manager")
 	void SetMainWidgetSoftPtr(const TSoftObjectPtr<UEditorUtilityWidgetBlueprint>& InMainWidgetSoftPtr) { MainWidgetSoftPtr = InMainWidgetSoftPtr; }
-
-	// UFUNCTION(BlueprintCallable)
-	// void SetAssetRefs(const TArray<UObject *> NewAssetRefs) { AssetRefs = NewAssetRefs; }
 
 	void SetInCreatingSubWidget(const bool bInCreating) { bInSubWidgetCreating = bInCreating; }
 
-	
-	// 创建树的根节点
-	UFUNCTION(BlueprintCallable, Category = "MetaDataPlugin")
-	void SetToRootNode(UUserWidget* InRootWidget);
-
-	// 往树中添加子节点
-	UFUNCTION(BlueprintCallable, Category = "MetaDataPlugin")
-	void AddToChildNode(UUserWidget* ParentWidget, UUserWidget* ChildWidget);
-
-	// UFUNCTION(BlueprintCallable)
-	// 查找某节点下的所有子节点
-	TArray<UUserWidget*> GetAllDescendants(UUserWidget* InWidget);
-
-	// 当某个 Widget 关闭时，从树中移除，同时移除所有子节点
-	// void RemoveNode(UEditorUtilityWidget* InWidget);
-	
-	// 在 EUW 的 NativeDestruct 中调用：关闭当前及所有子节点 Widget，并清理树节点
-	void RemoveNodeAndDescendants(UUserWidget* InWidget);
-
-	// UFUNCTION(BlueprintCallable)
-	// void test();
-
-	// 主控件资产移动或重命名时触发
-	void OnMainWidgetMoved(const FAssetData& AssetData, const FString& OldObjectPath);
-
-	void OnTaskStart();
-	void OnTaskComplete();
-	
 private:
 
+	// 用于判断是否正在创建 EUW
+	bool bInSubWidgetCreating = false;
+	
 	// 创建或查找树节点
 	UEuwTreeNode* CreateOrFindTreeNode(UUserWidget* Widget);
-
-	// 关闭一个 Widget 对应的 Tab
-	void CloseWidgetTab(UUserWidget* Widget);
 
 	// 从树中移除单个节点
 	void RemoveNodeFromTree(UUserWidget* Widget);
 	
-	// FName GetWidgetTabName(UUserWidget* Widget);
+	// 关闭一个 Widget 对应的 Tab
+	void CloseWidgetTab(UUserWidget* Widget);
+	
+	// 设置主控件资产的路径
+	void SetMainWidgetPath();
 
+	// 主控件资产的路径
+	FString MainWidgetPath;
+	
 	// 存储已创建的控件列表
 	UPROPERTY()
 	TArray<TObjectPtr<UUserWidget>> ActiveWidgets;
@@ -198,17 +166,10 @@ private:
 	UPROPERTY()
 	TSoftObjectPtr<UEditorUtilityWidgetBlueprint> MainWidgetSoftPtr;
 
-	// UEditorUtilityWidget 和 TabID 的映射
+	// EUW 和 TabID 的映射
 	UPROPERTY()
 	TMap<TObjectPtr<UUserWidget>, FName> WidgetToTabName;
-
-	// 用于判断是否正在创建 EUW
-	bool bInSubWidgetCreating = false;
-
-	/** 资产相关 */
-	// 保存所有已添加的资产
-	// TArray<TObjectPtr<UObject>> AssetRefs;
-
+	
 	// 存储根节点
 	UPROPERTY()
 	TObjectPtr<UEuwTreeNode> RootNode;
@@ -217,13 +178,7 @@ private:
 	UPROPERTY()
 	TMap<TWeakObjectPtr<UUserWidget>, TObjectPtr<UEuwTreeNode>> WidgetToNodeMap;
 
-	// 存储待移除的 Widget 列表
+	// 标记待移除的 Widget 列表
 	TSet<TWeakObjectPtr<UUserWidget>> PendingRemoval;
-
-	// 设置主控件资产的路径
-	void SetMainWidgetPath();
-
-	// 主控件资产的路径
-	FString MainWidgetPath;
 	
 };

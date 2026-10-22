@@ -26,6 +26,9 @@ public:
 
 private:
 
+	// 图标大小
+	static const FVector2D Icon128X128;
+	
 	// 创建单例
 	static TSharedRef<FSlateStyleSet> CreateStyle();
 

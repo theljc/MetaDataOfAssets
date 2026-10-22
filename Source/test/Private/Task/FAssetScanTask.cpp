@@ -25,7 +25,7 @@ void FAssetSyncTask::Start()
     
     // 进度条控件
     ProgressWidget = SNew(SProgressBarNotification_ScanAsset)
-        .ProgressText(NSLOCTEXT("AssetScanTask", "LoadingAssetProgress", "加载资产"));
+        .ProgressText(NSLOCTEXT("AssetScanTask", "LoadingAssetProgress", "Loading Assets"));
     
     // 创建通知信息
     FNotificationInfo Info(ProgressWidget);
@@ -80,35 +80,6 @@ void FAssetSyncTask::Cancel()
 
 bool FAssetSyncTask::Tick(float DeltaTime)
 {
-    // if (CurrentIndex >= Assets.Num())
-    // {
-    //     Finish(false);
-    //     return false; // 停止 Tick
-    // }
-    //
-    // // 处理一批
-    // const int32 End = FMath::Min(CurrentIndex + BatchSize, Assets.Num());
-    //
-    // for (int32 i = CurrentIndex; i < End; ++i)
-    // {
-    //     // GetAsset 会加载资产
-    //     UObject* Asset = Assets[i].GetAsset();
-    //     if (IsValid(Asset))
-    //     {
-    //         MetaDataManager->SyncAsset(Asset);
-    //     }
-    // }
-    // CurrentIndex = End;
-
-    // 更新进度条
-    // if (ProgressWidget.IsValid())
-    // {
-    //     float CurrentPercent = static_cast<float>(CurrentIndex) / static_cast<float>(TotalSize) * 100.f;
-    //     ProgressWidget->SetProgressPercent(CurrentPercent);
-    //     ProgressWidget->SetProgressText(FText::FromString(
-    //                 FString::Printf(TEXT("已处理 %d 个资产"), End)));
-    // }
-
     // 每帧更新进度条
     if (ProgressWidget.IsValid() && StreamableHandle.IsValid())
     {
@@ -154,11 +125,10 @@ void FAssetSyncTask::Finish(const bool bSuccess)
         }
     }
     
-    // FString a = NSLOCTEXT("AssetScanTask", "LoadingComplete", "加载完成").ToString();
-    UE_LOG(LogTemp, Log, TEXT("%s"), TEXT("加载完成"))
-    
     WidgetManager->OnTaskComplete();
     MetaDataManager->OnTaskFinished(this);
+    
+    UE_LOG(LogTemp, Log, TEXT("%s"), TEXT("加载完成"))
 }
 
 void FAssetSyncTask::OnLoadComplete()

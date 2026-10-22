@@ -4,6 +4,7 @@
 #include "Log/MetaDataPluginLogChannel.h"
 #include "StructUtils/InstancedStruct.h"
 
+
 void UEUW_BaseUtilityWidget::NativeConstruct()
 {
 	Super::NativeConstruct();

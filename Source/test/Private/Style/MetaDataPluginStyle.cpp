@@ -5,7 +5,7 @@
 #include "Log/MetaDataPluginLogChannel.h"
 
 TSharedPtr< FSlateStyleSet > FMetadataOfAssetsStyle::StyleInstance = NULL;
-const FVector2D Icon128x128(128.0f, 128.0f);
+const FVector2D FMetadataOfAssetsStyle::Icon128X128(128.0f, 128.0f);
 
 void FMetadataOfAssetsStyle::Initialize()
 {
@@ -64,7 +64,7 @@ TSharedRef< FSlateStyleSet > FMetadataOfAssetsStyle::CreateStyle()
 	Style->SetContentRoot(PluginResourcesDirectoryPath);
 
 	// 设置图标，命令集名称 + FUICommandInfo 变量名
-	Style->Set(FName(TEXT("MetadataOfAssets.Command_OpenMain")), new FSlateImageBrush(PluginResourcesDirectoryPath + TEXT("/Icon_MetadataOfAssets.png"), Icon128x128));
+	Style->Set(FName(TEXT("MetadataOfAssets.Command_OpenMain")), new FSlateImageBrush(PluginResourcesDirectoryPath + TEXT("/Icon_MetadataOfAssets.png"), Icon128X128));
 
 	return Style;
 }

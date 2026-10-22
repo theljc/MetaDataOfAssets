@@ -1,9 +1,19 @@
 #pragma once
 
+#include "CoreMinimal.h"
+
+#include "Widgets/DeclarativeSyntaxSupport.h"
+#include "Widgets/SBoxPanel.h"
+#include "Widgets/SCompoundWidget.h"
+#include "Widgets/SOverlay.h"
+#include "Widgets/Images/SImage.h"
+#include "Widgets/Input/SButton.h"
 #include "Widgets/Notifications/INotificationWidget.h"
 #include "Widgets/Notifications/SProgressBar.h"
+#include "Widgets/Text/STextBlock.h"
 
 class SProgressBar;
+
 
 class SProgressBarNotification_ScanAsset : public SCompoundWidget, public INotificationWidget
 {
@@ -13,7 +23,8 @@ public:
 	{}
 		SLATE_ARGUMENT(FText, ProgressText);
 	SLATE_END_ARGS()
-	
+
+	// 构造通知窗口
 	void Construct(const FArguments& InArgs)
 	{
 		ChildSlot[
@@ -50,6 +61,7 @@ public:
 		];
 	}
 
+	// 设置进度条百分比
 	void SetProgressPercent(const float Percent)
 	{
 		ProgressBar->SetPercent(Percent);
@@ -57,6 +69,7 @@ public:
 		PercentText->SetColorAndOpacity(FLinearColor::White);
 	}
 
+	// 设置进度条文本
 	void SetProgressText(const FText& InText)
 	{
 		if (ProgressTextBlock.IsValid())
@@ -76,6 +89,7 @@ public:
 // End INotificationWidget interface
 
 private:
+	
 	TSharedPtr<STextBlock> ProgressTextBlock;
 	TSharedPtr<SProgressBar> ProgressBar;
 	TSharedPtr<STextBlock> PercentText;

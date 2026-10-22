@@ -3,6 +3,7 @@
 #include "Editor.h"
 #include "Log/MetaDataPluginLogChannel.h"
 
+
 void UUW_BaseDataWidget::NativeConstruct()
 {
 	Super::NativeConstruct();

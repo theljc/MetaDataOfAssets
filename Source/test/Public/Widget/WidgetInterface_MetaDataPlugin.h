@@ -23,6 +23,7 @@ class TEST_API IWidgetInterface_MetaDataPlugin
 	GENERATED_BODY()
 
 public:
+	
 	/**
 	 * OnInitialize 时被调用，在蓝图中使用
 	 * 

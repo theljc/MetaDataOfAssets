@@ -8,8 +8,10 @@
 
 class FUICommandList;
 
+
 class FMetadataOfAssetsModule : public IModuleInterface
 {
+	
 public:
 
 	/** IModuleInterface implementation */
@@ -19,27 +21,22 @@ public:
 	// 点击插件的按钮
 	void OnButtonClicked();
 
-	// 确保主窗口的资产移动后，下次启动编辑器依然能打开
+	// 资产移动回调
 	void OnAssetMoved(const FAssetData& AssetData, const FString& OldObjectPath);
-	// 有资产被删除时
-	void OnAssetRemoved(const FAssetData& AssetData);
-	// 有资产被保存时
-	// void OnAssetSaved(const FString& String, UPackage* Package, FObjectPostSaveContext Context);
 
-	// 引擎初始化完成的回调
-	void OnPostEngineInit();
+	// 资产删除回调
+	void OnAssetRemoved(const FAssetData& AssetData);
 
 	// 关闭所有创建的窗口
 	void RemoveAllWidget();
 
-	// 项目设置中快捷键被修改时，重新绑定快捷键（热重载）
+	// 绑定快捷键对应的操作
 	void BindCommandActions();
 
-	// 加载主窗口的资产
-	// void LoadMainEUWBP();
-	
-	// 扫描配置路径中的资产
-	void ScanAssetsWithConfiguration();
+	// 注册自定义控制台命令
+	void RegisterCustomConsoleCommand();
+	void DisableDebug();
+	void EnableDebug();
 
 private:
 	

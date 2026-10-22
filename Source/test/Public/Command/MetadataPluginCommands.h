@@ -8,7 +8,9 @@
  */
 class TEST_API FMetadataOfAssetsCommands : public TCommands<FMetadataOfAssetsCommands>
 {
+	
 public:
+	
 	FMetadataOfAssetsCommands();
 
 	// 注册命令
@@ -16,6 +18,7 @@ public:
 
 	// 打开主窗口命令
 	TSharedPtr<FUICommandInfo> Command_OpenMain;
+	
 	// 关闭所有控件命令
 	TSharedPtr<FUICommandInfo> Command_CloseAll;
 	

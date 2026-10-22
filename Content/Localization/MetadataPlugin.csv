@@ -1,0 +1,61 @@
+﻿Key,SourceString
+Add,Add
+Modify,Modify
+Delete,Delete
+Sync,Sync
+Copy,Copy
+None,None
+Succeed,Succeed
+Duplicate Keys Exist,Duplicate Keys Exist
+Key or Value Is Empty,Key or Value Is Empty
+Prompt,Prompt
+The configuration path contains an empty path,The configuration path contains an empty path
+Configuration is empty,Configuration is empty
+ Input Key , Input Key 
+ Input Value , Input Value 
+Number of metadata :,Number of metadata :
+Asset Name :,Asset Name :
+Name,Name
+Num,Num
+Select the Tag to be modified,Select the Tag to be modified
+No Value,No Value
+Value is empty. Please re-enter.,Value is empty. Please re-enter.
+Input New Value,Input New Value
+Confirm,Confirm
+Cancel,Cancel
+Clear,Clear
+Name ,Name 
+Key :,Key :
+Value,Value
+Value :,Value :
+Clear all,Clear all
+Add selected assets,Add selected assets
+Batch operation,Batch operation
+Sync assets in configured path,Sync assets in configured path
+The [{Tag}] tag already exists on asset [{Asset Name}]. Overwrite its value?,The [{Tag}] tag already exists on asset [{Asset Name}]. Overwrite its value?
+"Overwrite all values for this asset? (Yes)
+Overwrite all values for all assets? (No)","Overwrite all values for this asset? (Yes)
+Overwrite all values for all assets? (No)"
+"Do not overwrite any values for this asset? (Yes)
+Do not overwrite any values for all assets? (No)","Do not overwrite any values for this asset? (Yes)
+Do not overwrite any values for all assets? (No)"
+Invalid assets are included. Skip invalid assets?,Invalid assets are included. Skip invalid assets?
+No data added,No data added
+Tag and value cannot be empty,Tag and value cannot be empty
+Duplicate tag: {Tag},Duplicate tag: {Tag}
+Confirm Add,Confirm Add
+Deletion failed: Asset [{Asset Name}] does not contain key [{Tag Name}],Deletion failed: Asset [{Asset Name}] does not contain key [{Tag Name}]
+Confirm Delete,Confirm Delete
+Modification failed: Key is empty,Modification failed: Key is empty
+Confirm Modify,Confirm Modify
+Number of selected assets:,Number of selected assets:
+Add data row,Add data row
+Batch Modify,Batch Modify
+Batch Delete,Batch Delete
+Select Mode,Select Mode
+Batch Sync,Batch Sync
+Batch Copy,Batch Copy
+Batch Add,Batch Add
+Select assets for {Select Mode},Select assets for {Select Mode}
+Select source assets,Select source assets
+Select target assets,Select target assets

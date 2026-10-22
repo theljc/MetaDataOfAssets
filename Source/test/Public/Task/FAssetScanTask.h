@@ -2,12 +2,14 @@
 
 #include "CoreMinimal.h"
 #include "AssetRegistry/AssetData.h"
+#include "Containers/Ticker.h"
 #include "Widgets/Notifications/SNotificationList.h"
 
 struct FStreamableHandle;
 class UEUSS_MetaDataManager;
 class SProgressBarNotification_ScanAsset;
 class STestProgressBarNotification;
+
 
 class FAssetSyncTask : public TSharedFromThis<FAssetSyncTask>
 {
