@@ -4,6 +4,7 @@
 #include "Editor.h"
 #include "EditorUtilityWidget.h"
 #include "EditorUtilityWidgetBlueprint.h"
+#include "LevelEditor.h"
 #include "Engine/World.h"
 #include "Framework/Application/SlateApplication.h"
 #include "Log/MetaDataPluginLogChannel.h"
@@ -187,6 +188,34 @@ void UEUSS_WidgetManager::OnMainWidgetMoved(const FAssetData& AssetData, const F
 	}
 }
 
+bool UEUSS_WidgetManager::CloseEditorUtilityTab(FName TabID)
+{
+	if (!IsRunningCommandlet())
+	{
+		FLevelEditorModule& LevelEditor = FModuleManager::GetModuleChecked<FLevelEditorModule>(TEXT("LevelEditor"));
+		if (TSharedPtr<FTabManager> Manager = LevelEditor.GetLevelEditorTabManager())
+		{
+			if (TSharedPtr<SDockTab> Tab = Manager->FindExistingLiveTab(TabID))
+			{
+				Tab->RequestCloseTab();
+				return true;
+			}
+		}
+
+		/**
+		 * 由于 Nomad Tab 由 FGlobalTabmanager 管理，
+		 * 而 UEditorUtilitySubsystem::CloseTabByID 在 5.6 版本之前没有处理，所以手动调用关闭
+		 */
+		if (TSharedPtr<SDockTab> NomadTab = FGlobalTabmanager::Get()->FindExistingLiveTab(TabID))
+		{
+			NomadTab->RequestCloseTab();
+			return true;
+		}
+	}
+	
+	return false;
+}
+
 void UEUSS_WidgetManager::OnTaskStart()
 {
 	// 任务开始时，禁用所有已创建的 Widget
@@ -217,8 +246,8 @@ void UEUSS_WidgetManager::CloseWidgetTab(UUserWidget* Widget)
 	if (!TabIdPtr || TabIdPtr->IsNone()) return;
 
 	// 关闭 Tab
-	CloseTabByID(*TabIdPtr);
-
+	CloseEditorUtilityTab(*TabIdPtr);
+	
 }
 
 void UEUSS_WidgetManager::RemoveNodeFromTree(UUserWidget* Widget)
@@ -355,7 +384,7 @@ UEditorUtilityWidget* UEUSS_WidgetManager::CreateEditorUtilityWidget(UEditorUtil
 		UE_LOG(LogMetaDataPlugin, Error, TEXT("[%hs] : 创建 Widget 失败"), __FUNCTION__);
 		return nullptr;
 	}
-
+	
 	// 添加 Widget 和 TabID 的映射
 	AddTo_WidgetToTabName(Widget, TabID);
 	
@@ -406,7 +435,7 @@ void UEUSS_WidgetManager::CloseAllWidgets()
 		FName* TabID = WidgetToTabName.Find(Widget);
 		if (TabID)
 		{
-			CloseTabByID(*TabID);
+			CloseEditorUtilityTab(*TabID);
 		}
 	}
 }

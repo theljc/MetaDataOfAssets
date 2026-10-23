@@ -53,7 +53,6 @@ void FMetadataOfAssetsModule::StartupModule()
 	}
 	
 
-	// 加载 csv 文件
 	// FStringTableRegistry::Get().Internal_LocTableFromFile(
 	// 	MetadataOfAssetsConstant::GetTableID(),
 	// 	MetadataOfAssetsConstant::GetNamespace(),
@@ -61,6 +60,7 @@ void FMetadataOfAssetsModule::StartupModule()
 	// 	FPaths::ProjectPluginsDir()
 	// );
 
+	// 加载 csv 文件
 	LOCTABLE_FROMFILE_GAME(
 		"MetadataPluginTableID",
 		"MetadataPluginNamespace",

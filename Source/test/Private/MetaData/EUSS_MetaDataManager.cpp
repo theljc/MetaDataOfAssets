@@ -276,7 +276,7 @@ void UEUSS_MetaDataManager::AddMetaData(UObject* Asset, FName TagToAdd, FString 
 	}
 	else
 	{
-		// Note:仅添加模式，添加到 AssetRegistry
+		// 仅添加模式，添加到 AssetRegistry
 		AddTagToRegisteredTags(TagToAdd, Asset);
 	}
 	
