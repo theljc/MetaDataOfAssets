@@ -13,6 +13,15 @@
 
 ## 目录
 
+- [视频教程](#视频教程)
+- [简介](#简介)
+- [插件设置](#插件设置)
+- [使用方法](#使用方法)
+- [扩展](#扩展)
+  - [目录结构](#目录结构)
+  - [扩展建议](#扩展建议)
+- [注意事项](#注意事项)
+
 
 
 
@@ -91,8 +100,8 @@
 
 - 控制台命令
 
-   - **MetaDataOfAssets.EnableDebug：**开启本插件相关的 UE_LOG 和 PrintString 输出（默认为开启状态）
-   - **MetaDataOfAssets.DisableDebug：**关闭本插件相关的 UE_LOG 和 PrintString 输出
+   - **MetaDataOfAssets.EnableDebug**：开启本插件相关的 UE_LOG 和 PrintString 输出（默认为开启状态）
+   - **MetaDataOfAssets.DisableDebug**：关闭本插件相关的 UE_LOG 和 PrintString 输出
 
 
 
@@ -107,29 +116,29 @@ MetaDataOfAssets/
 	Content/
 		EUW_MainWidget.uasset	# 主控件资产
 		Widget/					# 包含所有子控件
-    	Data/					# 包含所有数据
-    	Localization/			# 本插件相关的本地化数据
-    Source/MetaDataOfAssets/
-		Command/                # 定义插件命令
+		Data/					# 包含所有数据
+		Localization/			# 本插件相关的本地化数据
+	Source/MetaDataOfAssets/
+		Command/				# 定义插件命令
 		Style/					# 定义插件样式
 		Log/					# 自定义 Log 分类
-        Global/					# 全局属性
+		Global/					# 全局属性
 		MetaData/				# 包含 MetaDataManager，处理元数据相关
-		Settings/               # 项目设置中的可配置属性
-        Task/					# 资产同步任务
-		Widget/                 # 包含控件管理类与控件基类
+		Settings/				# 项目设置中的可配置属性
+		Task/					# 资产同步任务
+		Widget/					# 包含控件管理类与控件基类
 ```
 
 ### 扩展建议
 
 - **规范**
-  1. 创建 UserWidget 时，必须使用 UEUSS_WidgetManager::CreateUserWidget，使用 InstancedStruct 构建参数
-  2. 创建 EditorUtilityWidget 时，必须使用 UEUSS_WidgetManager::CreateEditorUtilityWidget，使用 InstancedStruct 构建参数
-  3. 新增的 UserWidget 必须继承 UUW_BaseDataWidget
-  4. 新增的 EditorUtilityWidget 必须继承 UEUW_BaseUtilityWidget
-  5. 新增的控件可重写 OnOpen 接口用于接收参数并初始化，OnClose 接口用于控件销毁时的清理
-  6. 如果想让控件在父类被关闭时，自己也一起被关闭，则可以在控件的 OnOpen 中使用 UEUSS_WidgetManager::AddToChildNode 节点将自身添加到节点树中。ParentWidget 传入父类控件，ChildWidget 传入自身
-  7. 建议不要修改现有的父子节点关系
+  - 创建 UserWidget 时，必须使用 UEUSS_WidgetManager::CreateUserWidget，使用 InstancedStruct 构建参数
+  - 创建 EditorUtilityWidget 时，必须使用 UEUSS_WidgetManager::CreateEditorUtilityWidget，使用 InstancedStruct 构建参数
+  - 新增的 UserWidget 必须继承 UUW_BaseDataWidget
+  - 新增的 EditorUtilityWidget 必须继承 UEUW_BaseUtilityWidget
+  - 新增的控件可重写 OnOpen 接口用于接收参数并初始化，OnClose 接口用于控件销毁时的清理
+  - 如果想让控件在父类被关闭时，自己也一起被关闭，则可以在控件的 OnOpen 中使用 UEUSS_WidgetManager::AddToChildNode 节点将自身添加到节点树中。ParentWidget 传入父类控件，ChildWidget 传入自身
+  - 建议不要修改现有的父子节点关系
 
 
 
