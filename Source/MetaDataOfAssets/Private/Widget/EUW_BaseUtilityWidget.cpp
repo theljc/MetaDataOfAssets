@@ -74,6 +74,8 @@ void UEUW_BaseUtilityWidget::OnInitialize(const FInstancedStruct& Params)
 	// 确保已创建的控件中没有该控件
 	if (WidgetManager->GetActiveWidgets().Contains(this))
 	{
+		WidgetManager->FocusEditorUtilityTab(WidgetManager->GetWidgetToTabName()[this]);
+
 		UE_LOG(LogMetaDataOfAssets, Log, TEXT("[%hs] : 控件 [%s] 已存在"), __FUNCTION__, *GetName());
 		return;
 	}

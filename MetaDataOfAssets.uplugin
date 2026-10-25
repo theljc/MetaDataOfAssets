@@ -20,5 +20,19 @@
 			"Type": "Editor",
 			"LoadingPhase": "Default"
 		}
+	],
+	"LocalizationTargets": [
+		{
+			"Name": "MetaDataPlugin_DisplayNameAndCategory",
+			"LoadingPolicy": "Editor"
+		},
+		{
+			"Name": "MetaDataPlugin_ToolTip",
+			"LoadingPolicy": "Editor"
+		},
+		{
+			"Name": "MetaDataPlugin_TextFiles",
+			"LoadingPolicy": "Editor"
+		}
 	]
 }

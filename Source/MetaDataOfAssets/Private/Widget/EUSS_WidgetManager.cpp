@@ -11,6 +11,7 @@
 #include "Settings/MetaDataOfAssetsSettings.h"
 #include "StructUtils/InstancedStruct.h"
 #include "Widgets/SWindow.h"
+// #include "Widgets/Docking/SDockTab.h"
 
 
 void UEUSS_WidgetManager::SetMainWidgetPath()
@@ -120,6 +121,49 @@ TArray<UUserWidget*> UEUSS_WidgetManager::GetAllDescendants(UUserWidget* InWidge
 	}
 
 	return Result;
+}
+
+bool UEUSS_WidgetManager::FocusEditorUtilityTab(FName TabID)
+{
+	TSharedPtr<SDockTab> Tab;
+
+	// 根据 TabID 查找 Tab
+	if (FLevelEditorModule* LevelEditor = FModuleManager::GetModulePtr<FLevelEditorModule>(TEXT("LevelEditor")))
+	{
+		if (TSharedPtr<FTabManager> Manager = LevelEditor->GetLevelEditorTabManager())
+		{
+			Tab = Manager->FindExistingLiveTab(TabID);
+		}
+	}
+
+	// Nomad Tab 由 GlobalTabManager 管理
+	if (!Tab)
+	{
+		Tab = FGlobalTabmanager::Get()->FindExistingLiveTab(TabID);
+	}
+
+	if (!Tab)
+	{
+		return false;
+	}
+
+	if (TSharedPtr<SWindow> Window = Tab->GetParentWindow())
+	{
+		// 窗口是否最小化
+		if (Window->IsWindowMinimized())
+		{
+			// 最小化则恢复
+			Window->Restore();
+		}
+
+		// 将窗口置于最上层
+		Window->BringToFront();
+	}
+
+	// 激活 Tab
+	Tab->ActivateInParent(ETabActivationCause::SetDirectly);
+	
+	return true;
 }
 
 UEuwTreeNode* UEUSS_WidgetManager::CreateOrFindTreeNode(UUserWidget* Widget)
@@ -425,8 +469,6 @@ void UEUSS_WidgetManager::RemoveFrom_WidgetToTabName(UUserWidget* Widget)
 
 void UEUSS_WidgetManager::CloseAllWidgets()
 {
-	if (!IsValid(RootNode) || !RootNode->Widget.IsValid()) return;
-
 	// 通过 WidgetToTabName 查找 TabID，通过 TabID 关闭控件
 	TArray<UUserWidget*> Loc_ActiveWidgets = GetActiveWidgets();
 	for (UUserWidget* Widget : Loc_ActiveWidgets)

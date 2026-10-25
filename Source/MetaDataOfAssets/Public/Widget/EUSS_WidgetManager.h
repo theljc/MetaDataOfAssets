@@ -100,7 +100,10 @@ public:
 	
 	// 创建主控件
 	void CreateMainWidget();
-	
+
+	// 聚焦到指定的 EUW 控件
+	bool FocusEditorUtilityTab(FName TabID);
+
 	// 主控件资产移动或重命名时触发，确保主窗口的资产移动后，下次启动编辑器依然能打开
 	void OnMainWidgetMoved(const FAssetData& AssetData, const FString& OldObjectPath);
 	
