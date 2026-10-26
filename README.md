@@ -1,10 +1,10 @@
 <div align="center">
 <h1>MetaData of Assets Plugin</h1>
 
-![UE版本](https://img.shields.io/badge/UE-5.3%2B-blue)
+![UE版本](https://img.shields.io/badge/UE-5.0%2B-blue)
 [![许可证](https://img.shields.io/badge/License-MIT-green)](LICENSE)
 
-
+[English Version](README_EN.md)
 
 </div>
 
@@ -25,11 +25,9 @@
 
 
 
-
-
 ## 视频教程
 
-**[链接待补充]**
+**链接待补充（录制中）**
 
 
 
@@ -37,10 +35,12 @@
 
 - **功能**
   - 用于在 UE 编辑器中批量管理资产的元数据，并自动注册到资产注册表
+- **适用版本**
+  - UE 5.0 以上
 
 - **下载**
   - 方法一：FAB 商城直接下载：**[链接待补充]**
-  - 方法二：**[链接待补充]** 下载对应的版本，解压到项目的 Plugins 文件中
+  - 方法二：https://github.com/theljc/MetaDataOfAssets/releases 下载压缩包，其中包含了UE5所有版本的对应插件，将需要的版本解压到项目的 `Plugins` 文件夹中
 
 - **启用**
   - 打开项目，在 [插件] 面板中搜索 **MetaDataOfAssets** 启用本插件
@@ -51,7 +51,7 @@
 
 > [!IMPORTANT]
 >
-> 由于内部使用引用计数机制，所以在启用 **是否允许管理资产注册表标签的删除** 后，需要同步现有的资产中的元数据（项目设置中配置好路径，并在主控件中点击"同步配置路径中的资产"按钮），否则会导致元数据被错误删除
+> 由于内部使用引用计数机制，所以在启用 **是否允许管理资产注册表标签的删除** 后，需要同步现有的资产中的元数据（项目设置中配置好路径，并在主控件中点击 **同步配置路径中的资产** 按钮），否则会导致资产注册表中的元数据标签被错误删除
 
 - [项目设置->资产元数据]
   - **是否允许管理资产注册表标签的删除**：用于决定是否需要自动删除资产注册表中的标签（默认关闭），切换后需要重启编辑器
@@ -84,7 +84,7 @@
 
 - 选择需要的操作
 
-   ​	可以直接在主控件中对单个资产进行操作，也可点击批量操作按钮对已添加到控件中的资产进行批量操作
+   ​	可以直接在主控件中对单个资产进行操作，也可点击 **批量操作** 按钮对已添加到控件中的资产进行批量操作
 
    - **添加**：为选择的资产添加元数据。批量添加时，会逐个为资产添加每条元数据。勾选 **是否允许管理资产注册表标签的删除** 时（在项目设置中），会使内部引用计数加一
    - **修改**：修改元数据的值。批量修改时，只会修改选择的资产共有的元数据
@@ -132,12 +132,12 @@ MetaDataOfAssets/
 ### 扩展建议
 
 - **规范**
-  - 创建 UserWidget 时，必须使用 UEUSS_WidgetManager::CreateUserWidget，使用 InstancedStruct 构建参数
-  - 创建 EditorUtilityWidget 时，必须使用 UEUSS_WidgetManager::CreateEditorUtilityWidget，使用 InstancedStruct 构建参数
-  - 新增的 UserWidget 必须继承 UUW_BaseDataWidget
-  - 新增的 EditorUtilityWidget 必须继承 UEUW_BaseUtilityWidget
-  - 新增的控件可重写 OnOpen 接口用于接收参数并初始化，OnClose 接口用于控件销毁时的清理
-  - 如果想让控件在父类被关闭时，自己也一起被关闭，则可以在控件的 OnOpen 中使用 UEUSS_WidgetManager::AddToChildNode 节点将自身添加到节点树中。ParentWidget 传入父类控件，ChildWidget 传入自身
+  - 创建 UserWidget 时，必须使用 `UEUSS_WidgetManager::CreateUserWidget`，使用 `InstancedStruct` 构建参数
+  - 创建 EditorUtilityWidget 时，必须使用 `UEUSS_WidgetManager::CreateEditorUtilityWidget`，使用 `InstancedStruct` 构建参数
+  - 新增的 UserWidget 必须继承 `UUW_BaseDataWidget`
+  - 新增的 EditorUtilityWidget 必须继承 `UEUW_BaseUtilityWidget`
+  - 新增的控件可重写 `OnOpen` 接口用于接收参数并初始化，`OnClose` 接口用于控件销毁时的清理
+  - 如果想让控件在父类被关闭时，自己也一起被关闭，则可以在控件的 `OnOpen` 中使用 `UEUSS_WidgetManager::AddToChildNode` 节点将自身添加到节点树中。`ParentWidget` 传入父类控件，`ChildWidget` 传入自身
   - 建议不要修改现有的父子节点关系
 
 
@@ -145,13 +145,14 @@ MetaDataOfAssets/
 ## 注意事项
 
 - 本插件为编辑器插件
-- 本插件做了中文和英语本地化，在 [编辑器偏好设置] 中切换语言时会自动更改
+- 启用本插件需要同时启用 `Struct Utils` 和 `Editor Scripting Utilities` 插件
+- 本插件做了中文和英语本地化，在 [编辑器偏好设置 -> 区域和语言] 中切换编辑器语言时会自动更改
 - 本插件涉及的项目配置都保存在本插件目录的 [Config/DefaultMetaDataOfAssets.ini] 文件中
-  - [/Script/MetaDataOfAssets.MetaDataPluginSettings] 分段
-    - bAllowManageAssetRegistryTagsDelete：是否允许自动删除 AssetRegistry 的标签
-    - ScanSettings：同步资产时使用的扫描路径
-    - bEnableDebug：是否开启本插件相关的 UE_LOG 和 PrintString 输出
-    - MainWidgetPath：主控件资产的路径。禁止手动修改，否则无法使用编辑器工具栏中的按钮打开主控件
+  - `[/Script/MetaDataOfAssets.MetaDataOfAssetsSettings]` 分段
+    - `bAllowManageAssetRegistryTagsDelete`：是否允许自动删除资产注册表的标签
+    - `ScanSettings`：同步资产时使用的扫描路径
+    - `bEnableDebug`：是否开启本插件相关的 UE_LOG 和 PrintString 输出
+    - `MainWidgetPath`：主控件资产的路径。禁止手动修改，否则无法使用编辑器工具栏中的按钮打开主控件
 - 将资产添加到主控件中，以及点击 **同步配置路径中的资产** 按钮时，都会加载这个资产
 - 点击 **同步配置路径中的资产** 按钮时，会在编辑器中分帧加载资产，右下角会显示加载进度
 

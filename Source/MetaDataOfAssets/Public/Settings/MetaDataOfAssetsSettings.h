@@ -11,11 +11,11 @@ struct FScanDirectorySetting
 	GENERATED_BODY()
 
 	// 扫描路径
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, meta = (ContentDir, DisplayName = "Directory"))
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "MetaDataOfAssets", meta = (ContentDir, DisplayName = "Directory"))
 	FDirectoryPath Directory;
 
 	// 是否递归
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, meta = (DisplayName = "Recursive"))
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "MetaDataOfAssets", meta = (DisplayName = "Recursive"))
 	bool bRecursive = false;
 };
 
@@ -32,11 +32,11 @@ public:
 	UMetaDataOfAssetsSettings() {};
 	
 	// 用于确定是否要自动删除资产注册表中的 MetaData Tag，修改配置需要重启编辑器
-	UPROPERTY(Config, EditAnywhere, meta = (ConfigRestartRequired=true))
+	UPROPERTY(Config, EditAnywhere, Category = "MetaDataOfAssets", meta = (ConfigRestartRequired = true))
 	bool bAllowManageAssetRegistryTagsDelete = false;
 
 	// 扫描配置
-	UPROPERTY(Config, EditAnywhere, meta = (EditCondition = "bAllowManageAssetRegistryTagsDelete"))
+	UPROPERTY(Config, EditAnywhere, Category = "MetaDataOfAssets", meta = (EditCondition = "bAllowManageAssetRegistryTagsDelete"))
 	TArray<FScanDirectorySetting> ScanSettings;
 
 	// 是否启用调试

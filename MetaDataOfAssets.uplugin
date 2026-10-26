@@ -1,15 +1,15 @@
 {
 	"FileVersion": 3,
 	"Version": 1,
-	"VersionName": "1.0",
-	"FriendlyName": "MetaDataOfAssets",
-	"Description": "",
-	"Category": "Other",
-	"CreatedBy": "",
-	"CreatedByURL": "",
-	"DocsURL": "",
+	"VersionName": "1.0.0",
+	"FriendlyName": "MetaData Of Assets",
+	"Description": "An editor plugin for batch managing asset metadata and synchronizing metadata tags with the Asset Registry.",
+	"Category": "Editor",
+	"CreatedBy": "ljc",
+	"CreatedByURL": "https://github.com/theljc",
+	"DocsURL": "https://github.com/theljc/MetaDataPlugin",
 	"MarketplaceURL": "",
-	"SupportURL": "",
+	"SupportURL": "https://github.com/theljc/MetaDataPlugin/issues",
 	"CanContainContent": true,
 	"IsBetaVersion": false,
 	"IsExperimentalVersion": false,
@@ -18,7 +18,20 @@
 		{
 			"Name": "MetaDataOfAssets",
 			"Type": "Editor",
-			"LoadingPhase": "Default"
+			"LoadingPhase": "Default",
+			"PlatformAllowList": [
+				"Win64"
+			]
+		}
+	],
+	"Plugins": [
+		{
+			"Name": "StructUtils",
+			"Enabled": true
+		},
+		{
+			"Name": "EditorScriptingUtilities",
+			"Enabled": true
 		}
 	],
 	"LocalizationTargets": [

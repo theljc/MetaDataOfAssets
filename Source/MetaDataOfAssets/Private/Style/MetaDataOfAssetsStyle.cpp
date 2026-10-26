@@ -63,7 +63,7 @@ TSharedRef< FSlateStyleSet > FMetaDataOfAssetsStyle::CreateStyle()
 	Style->SetContentRoot(PluginResourcesDirectoryPath);
 
 	// 设置图标，命令集名称 + FUICommandInfo 变量名
-	Style->Set(FName(TEXT("MetadataOfAssets.Command_OpenMain")), new FSlateImageBrush(PluginResourcesDirectoryPath + TEXT("/Icon_MetadataOfAssets.png"), Icon128X128));
+	Style->Set(FName(TEXT("MetadataOfAssets.Command_OpenMain")), new FSlateImageBrush(PluginResourcesDirectoryPath + TEXT("/Icon128.png"), Icon128X128));
 
 	return Style;
 }
