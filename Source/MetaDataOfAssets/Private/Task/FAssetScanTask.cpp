@@ -1,3 +1,5 @@
+// Copyright 2026 ljc
+
 #include "MetaDataOfAssets/Public/Task/FAssetScanTask.h"
 
 #include "Framework/Notifications/NotificationManager.h"
@@ -5,17 +7,27 @@
 #include "Editor.h"
 #include "Engine/AssetManager.h"
 #include "Engine/StreamableManager.h"
+#include "Log/MetaDataOfAssetsLogChannel.h"
 #include "MetaData/EUSS_MetaDataManager.h"
 #include "Task/SProgressBarNotification_ScanAsset.h"
 #include "Widget/EUSS_WidgetManager.h"
 
+
 void FAssetSyncTask::Start()
 {
+    // 创建一个强引用，防止执行时被释放
+    // 局部变量，出函数后释放
+    TSharedRef<FAssetSyncTask> KeepAlive = AsShared();
+    
+    if (!GEditor || bFinished)
+    {
+        Cancel();
+        return;
+    }
+    
     UEUSS_WidgetManager* WidgetManager = GEditor->GetEditorSubsystem<UEUSS_WidgetManager>();
     
-    if (!GEditor
-        || Assets.Num() == 0
-        || !WidgetManager)
+    if (Assets.Num() == 0 || !WidgetManager)
     {
         Cancel();
         return;
@@ -41,28 +53,37 @@ void FAssetSyncTask::Start()
     {
         LoadedItems.AddUnique(Asset.GetSoftObjectPath());
     }
-
+    
+    TWeakPtr<FAssetSyncTask> WeakTask = AsShared();
+    
     // 加载资产
-    FStreamableManager& Streamable = UAssetManager::Get().GetStreamableManager();;
+    FStreamableManager& Streamable = UAssetManager::Get().GetStreamableManager();
     StreamableHandle = Streamable.RequestAsyncLoad(
         LoadedItems,
-        FStreamableDelegate::CreateLambda([this]()
+        FStreamableDelegate::CreateLambda([WeakTask]()
         {
-            // 加载完成后的回调
-            OnLoadComplete();
+            if (TSharedPtr<FAssetSyncTask> Task = WeakTask.Pin())
+            {
+                // 加载完成后的回调
+                Task->OnLoadComplete();
+            }
         })
     );
     
-    // 每帧执行 Tick
+    // 每隔 0.1 秒执行一次 Tick，更新进度条
     TickHandle = FTSTicker::GetCoreTicker().AddTicker(
         FTickerDelegate::CreateSP(AsShared(), &FAssetSyncTask::Tick),
-        0.0f
+        0.1f
     );
     
 }
 
 void FAssetSyncTask::Cancel()
 {
+    TSharedRef<FAssetSyncTask> KeepAlive = AsShared();
+
+    if (bFinished) return;
+    
     if (StreamableHandle.IsValid())
     {
         StreamableHandle->CancelHandle();
@@ -80,9 +101,11 @@ void FAssetSyncTask::Cancel()
 
 bool FAssetSyncTask::Tick(float DeltaTime)
 {
-    // 每帧更新进度条
+    if (bFinished) return false;
+    
     if (ProgressWidget.IsValid() && StreamableHandle.IsValid())
     {
+        // 更新进度条
         ProgressWidget->SetProgressPercent(StreamableHandle->GetProgress());
     }
     
@@ -91,6 +114,12 @@ bool FAssetSyncTask::Tick(float DeltaTime)
 
 void FAssetSyncTask::Finish(const bool bSuccess)
 {
+    TSharedRef<FAssetSyncTask> KeepAlive = AsShared();
+
+    if (bFinished) return;
+    
+    bFinished = true;
+    
     // 停止 Tick
     if (TickHandle.IsValid())
     {
@@ -121,18 +150,24 @@ void FAssetSyncTask::Finish(const bool bSuccess)
         if (IsValid(Asset))
         {
             MetaDataManager->SyncAsset(Asset);
-            UE_LOG(LogTemp, Log, TEXT("加载资产: %s"), *Asset->GetName())
+            UE_LOG(LogMetaDataOfAssets, Log, TEXT("加载资产: %s"), *Asset->GetName())
         }
     }
     
     WidgetManager->OnTaskComplete();
     MetaDataManager->OnTaskFinished(this);
     
-    UE_LOG(LogTemp, Log, TEXT("%s"), TEXT("加载完成"))
+    UE_LOG(LogMetaDataOfAssets, Log, TEXT("%s"), TEXT("加载完成"))
 }
 
 void FAssetSyncTask::OnLoadComplete()
 {
-    ProgressWidget->SetProgressPercent(StreamableHandle->GetProgress());
+    if (bFinished) return;
+    
+    if (ProgressWidget.IsValid() && StreamableHandle.IsValid())
+    {
+        ProgressWidget->SetProgressPercent(StreamableHandle->GetProgress());
+    }
+    
     Finish(true);
 }

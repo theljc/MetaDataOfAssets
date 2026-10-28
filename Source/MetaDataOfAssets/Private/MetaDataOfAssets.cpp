@@ -1,4 +1,4 @@
-// Copyright Epic Games, Inc. All Rights Reserved.
+// Copyright 2026 ljc
 
 #include "MetaDataOfAssets.h"
 
@@ -95,6 +95,9 @@ void FMetaDataOfAssetsModule::StartupModule()
 	// 移动资产时也会触发重命名事件
 	AssetRegistry.OnAssetRenamed().AddRaw(this, &FMetaDataOfAssetsModule::OnAssetMoved);
 
+	// FCoreDelegates::OnPostEngineInit.AddRaw(this, &FMetaDataOfAssetsModule::OnPostEngineInit);
+	FEditorDelegates::OnEditorInitialized.AddRaw(this, &FMetaDataOfAssetsModule::OnPostEngineInit);
+	// FEditorDelegates::OnAssetsDeleted.AddRaw(this, &FMetaDataOfAssetsModule::OnAssetsDeleted);
 }
 
 void FMetaDataOfAssetsModule::ShutdownModule()
@@ -202,6 +205,15 @@ void FMetaDataOfAssetsModule::OnAssetRemoved(const FAssetData& AssetData)
 	if (MetaDataManager)
 	{
 		MetaDataManager->OnAssetRemoved(AssetData);
+	}
+}
+
+void FMetaDataOfAssetsModule::OnPostEngineInit(double Double)
+{
+	UEUSS_MetaDataManager* MetaDataManager = GEditor->GetEditorSubsystem<UEUSS_MetaDataManager>();
+	if (MetaDataManager)
+	{
+		MetaDataManager->SyncAssetsInDirectory();
 	}
 }
 

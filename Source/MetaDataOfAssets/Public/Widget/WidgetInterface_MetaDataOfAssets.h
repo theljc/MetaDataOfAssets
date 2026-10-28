@@ -1,4 +1,4 @@
-// WidgetInterface.h — 提供所有控件都需要的通用接口
+// Copyright 2026 ljc
 
 #pragma once
 

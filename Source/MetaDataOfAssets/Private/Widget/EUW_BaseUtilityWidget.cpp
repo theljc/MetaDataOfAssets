@@ -1,3 +1,5 @@
+// Copyright 2026 ljc
+
 #include "Widget/EUW_BaseUtilityWidget.h"
 #include "Widget/EUSS_WidgetManager.h"
 #include "Editor.h"

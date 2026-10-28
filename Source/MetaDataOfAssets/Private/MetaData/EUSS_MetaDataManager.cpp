@@ -1,3 +1,5 @@
+// Copyright 2026 ljc
+
 #include "MetaData/EUSS_MetaDataManager.h"
 #include "EditorAssetLibrary.h"
 #include "Settings/MetaDataOfAssetsSettings.h"
@@ -101,9 +103,9 @@ void UEUSS_MetaDataManager::SyncAssetsInDirectory()
 
 		AssetDataList.Append(AssetDataList_Sub);
 	}
-
+	
 	// 防止重复启动任务
-	if (AssetSyncTask.IsValid()) return;
+	if (AssetSyncTask.IsValid() || AssetDataList.IsEmpty()) return;
 
 	// 创建并启动资产同步任务
 	AssetSyncTask = MakeShared<FAssetSyncTask>(AssetDataList);
@@ -421,11 +423,7 @@ void UEUSS_MetaDataManager::RemoveTagFromRegisteredTags(const FName TagToRemove,
 
 	// 获得当前 Tag 的引用计数
 	int32* CountPtr = RegisteredTags.Find(TagToRemove);
-	if (!CountPtr)
-	{
-		UE_LOG(LogMetaDataOfAssets, Error, TEXT("[%hs] : RegisteredTags 中没有 %s"), __FUNCTION__, *TagToRemove.ToString());
-		return;
-	}
+	if (!CountPtr) return;
 
 	int32& Count = *CountPtr;
 	if (Count <= 0)

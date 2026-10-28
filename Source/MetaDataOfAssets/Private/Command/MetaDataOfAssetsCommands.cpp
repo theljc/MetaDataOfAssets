@@ -1,3 +1,5 @@
+// Copyright 2026 ljc
+
 #include "Command/MetaDataOfAssetsCommands.h"
 
 #include "Style/MetaDataOfAssetsStyle.h"

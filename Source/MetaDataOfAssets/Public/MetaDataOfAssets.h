@@ -1,4 +1,4 @@
-// Copyright Epic Games, Inc. All Rights Reserved.
+// Copyright 2026 ljc
 
 #pragma once
 
@@ -26,6 +26,9 @@ public:
 
 	// 资产删除回调
 	void OnAssetRemoved(const FAssetData& AssetData);
+
+	// 引擎初始化完成的回调
+	void OnPostEngineInit(double Double);
 
 	// 关闭所有创建的窗口
 	void RemoveAllWidget();

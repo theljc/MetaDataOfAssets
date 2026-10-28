@@ -1,4 +1,6 @@
-﻿#pragma once
+﻿// Copyright 2026 ljc
+
+#pragma once
 
 #include "CoreMinimal.h"
 #include "Styling/SlateStyle.h"

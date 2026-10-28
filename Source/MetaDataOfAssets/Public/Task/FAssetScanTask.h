@@ -1,3 +1,5 @@
+// Copyright 2026 ljc
+
 #pragma once
 
 #include "CoreMinimal.h"
@@ -45,5 +47,8 @@ private:
 	
 	FTSTicker::FDelegateHandle TickHandle;
 	TSharedPtr<FStreamableHandle> StreamableHandle;
+
+	// 防止重复执行
+	bool bFinished = false;
 	
 };

@@ -1,3 +1,5 @@
+// Copyright 2026 ljc
+
 #include "Style/MetaDataOfAssetsStyle.h"
 #include "Framework/Application/SlateApplication.h"
 #include "Styling/SlateStyleRegistry.h"

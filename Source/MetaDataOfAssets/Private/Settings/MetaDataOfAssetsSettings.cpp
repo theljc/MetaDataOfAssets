@@ -1,3 +1,5 @@
+// Copyright 2026 ljc
+
 #include "Settings/MetaDataOfAssetsSettings.h"
 
 #include "Interfaces/IPluginManager.h"

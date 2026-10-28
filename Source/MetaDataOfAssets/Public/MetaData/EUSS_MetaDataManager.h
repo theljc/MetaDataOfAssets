@@ -1,3 +1,5 @@
+// Copyright 2026 ljc
+
 #pragma once
 
 #include "CoreMinimal.h"
@@ -102,6 +104,10 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "MetaDataOfAssets")
 	void CopyMetaData(TArray<UObject*> SourceAsset, TArray<UObject*> TargetAsset);
 	
+	// 同步资产元数据
+	UFUNCTION(BlueprintCallable, Category = "MetaDataOfAssets")
+	void SyncAsset(UObject* Asset);
+	
 	// 添加标签到资产注册表
 	void AddTagToRegisteredTags(const FName TagToAdd, UObject* Asset);
 
@@ -119,9 +125,6 @@ public:
 
 	// 资产被删除时，从已注册的标签中移除
 	void RemoveFromAssetTagStates(UObject* Asset);
-
-	// 同步资产元数据
-	void SyncAsset(UObject* Asset);
 
 	// 资产删除回调
 	void OnAssetRemoved(const FAssetData& AssetData);

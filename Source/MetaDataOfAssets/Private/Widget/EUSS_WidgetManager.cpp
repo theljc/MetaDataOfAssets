@@ -1,3 +1,5 @@
+// Copyright 2026 ljc
+
 #include "Widget/EUSS_WidgetManager.h"
 #include "Widget/WidgetInterface_MetaDataOfAssets.h"
 #include "Blueprint/UserWidget.h"
@@ -6,12 +8,12 @@
 #include "EditorUtilityWidgetBlueprint.h"
 #include "LevelEditor.h"
 #include "Engine/World.h"
-#include "Framework/Application/SlateApplication.h"
 #include "Log/MetaDataOfAssetsLogChannel.h"
+#include "Modules/ModuleManager.h"
 #include "Settings/MetaDataOfAssetsSettings.h"
 #include "StructUtils/InstancedStruct.h"
 #include "Widgets/SWindow.h"
-// #include "Widgets/Docking/SDockTab.h"
+#include "Widgets/Docking/SDockTab.h"
 
 
 void UEUSS_WidgetManager::SetMainWidgetPath()
@@ -298,8 +300,10 @@ void UEUSS_WidgetManager::RemoveNodeFromTree(UUserWidget* Widget)
 	if (!IsValid(Widget)) return;
 
 	// 查找节点
-	UEuwTreeNode* Node = *WidgetToNodeMap.Find(Widget);
-	if (!IsValid(Node)) return;
+	TObjectPtr<UEuwTreeNode>* NodePtr = WidgetToNodeMap.Find(Widget);
+	if (!NodePtr || !IsValid(*NodePtr)) return;
+	
+	UEuwTreeNode* Node = *NodePtr;
 	
 	// 从父节点的 Children 中移除自己
 	if (UEuwTreeNode* Parent = Node->Parent.Get())

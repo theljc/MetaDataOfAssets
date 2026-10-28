@@ -1,3 +1,5 @@
+// Copyright 2026 ljc
+
 #include "Widget/WidgetInterface_MetaDataOfAssets.h"
 
 

@@ -1,3 +1,5 @@
+// Copyright 2026 ljc
+
 #pragma once
 
 #include "CoreMinimal.h"
