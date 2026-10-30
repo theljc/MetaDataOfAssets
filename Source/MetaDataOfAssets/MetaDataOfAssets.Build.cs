@@ -57,7 +57,6 @@ public class MetaDataOfAssets : ModuleRules
 				"DeveloperSettings",
 				"Settings",
 				"EditorScriptingUtilities",
-
 			}
 		);
 

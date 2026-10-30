@@ -52,6 +52,8 @@ public:
 	virtual void Initialize(FSubsystemCollectionBase& Collection) override;
 	virtual void Deinitialize() override;
 
+	UFUNCTION(BlueprintCallable)
+	void TestFun();
 	
 	// 控件被创建时触发，提供委托，但未使用
 	UPROPERTY(BlueprintAssignable, Category = "MetaDataOfAssets", meta = (DisplayName = "OnWidgetCreated"))
@@ -102,6 +104,9 @@ public:
 	
 	// 创建主控件
 	void CreateMainWidget();
+
+	// 关闭旧的控件
+	void CloseOldWidget(UEditorUtilityWidgetBlueprint* InBlueprint);
 
 	// 聚焦到指定的 EUW 控件
 	bool FocusEditorUtilityTab(FName TabID);

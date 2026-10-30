@@ -280,6 +280,7 @@ void UEUSS_MetaDataManager::AddMetaData(UObject* Asset, FName TagToAdd, FString 
 	{
 		// 仅添加模式，添加到 AssetRegistry
 		AddTagToRegisteredTags(TagToAdd, Asset);
+		UEditorAssetLibrary::SaveLoadedAsset(Asset, false);
 	}
 	
 }
@@ -301,6 +302,10 @@ void UEUSS_MetaDataManager::ModifyMetaData(UObject* Asset, FName TagToAdd, FStri
 		
 		SyncAsset(Asset);
 	}
+	else
+	{
+		UEditorAssetLibrary::SaveLoadedAsset(Asset, false);
+	}
 	
 	OnMetaDataModified.Broadcast(Asset);
 }
@@ -321,9 +326,11 @@ void UEUSS_MetaDataManager::DeleteMetaData(UObject* Asset, FName TagToAdd)
 		// 删除时没有被同步过
 		if (!TagMap) return;
 
-		TagMap->Map.Remove(TagToAdd);
-
 		SyncAsset(Asset);
+	}
+	else
+	{
+		UEditorAssetLibrary::SaveLoadedAsset(Asset, false);
 	}
 	
 	OnMetaDataDeleted.Broadcast(Asset);
@@ -375,6 +382,7 @@ void UEUSS_MetaDataManager::SyncAsset(UObject* Asset)
 		}
 	}
 	
+	UEditorAssetLibrary::SaveLoadedAsset(Asset, false);
 	OnAssetSynced.Broadcast(Asset);
 }
 

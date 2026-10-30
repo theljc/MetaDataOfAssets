@@ -7,6 +7,7 @@
 #include "EditorUtilityWidget.h"
 #include "EditorUtilityWidgetBlueprint.h"
 #include "LevelEditor.h"
+#include "StatusBarSubsystem.h"
 #include "Engine/World.h"
 #include "Log/MetaDataOfAssetsLogChannel.h"
 #include "Modules/ModuleManager.h"
@@ -53,6 +54,12 @@ void UEUSS_WidgetManager::Initialize(FSubsystemCollectionBase& Collection)
 void UEUSS_WidgetManager::Deinitialize()
 {
 	Super::Deinitialize();
+}
+
+void UEUSS_WidgetManager::TestFun()
+{
+	// GEditor->GetEditorSubsystem<UStatusBarSubsystem>()
+	// ->ToggleContentBrowserDrawer();
 }
 
 void UEUSS_WidgetManager::SetToRootNode(UUserWidget* InRootWidget)
@@ -338,13 +345,13 @@ void UEUSS_WidgetManager::CreateMainWidget()
 			UE_LOG(LogMetaDataOfAssets, Error, TEXT("[%hs] : 加载失败"), __FUNCTION__);
 			return;
 		}
-		
-		CreateEditorUtilityWidget(MainWidget_Ins, FInstancedStruct());
+
+		SpawnAndRegisterTab(MainWidget_Ins);
 		
 		return;
 	}
 	
-	CreateEditorUtilityWidget(GetMainWidgetSoftPtr().Get(), FInstancedStruct());
+	SpawnAndRegisterTab(GetMainWidgetSoftPtr().Get());
 	
 }
 
@@ -419,10 +426,13 @@ UEditorUtilityWidget* UEUSS_WidgetManager::CreateEditorUtilityWidget(UEditorUtil
 		return nullptr;
 	}
 
+	// 每次创建新 EUW 时都关闭旧的
+	CloseOldWidget(InBlueprint);
+	
 	// 为了防止 NativeConstruct 中重复创建
 	SetInCreatingSubWidget(true);
-
-	FName TabID;
+	
+	FName TabID = FName(*FGuid::NewGuid().ToString());
 	UEditorUtilityWidget* Widget = SpawnAndRegisterTabAndGetID(InBlueprint, TabID);
 	if (!Widget)
 	{
@@ -469,6 +479,20 @@ void UEUSS_WidgetManager::AddTo_WidgetToTabName(UUserWidget* Widget, FName TabNa
 void UEUSS_WidgetManager::RemoveFrom_WidgetToTabName(UUserWidget* Widget)
 {
 	WidgetToTabName.Remove(Widget);
+}
+
+void UEUSS_WidgetManager::CloseOldWidget(UEditorUtilityWidgetBlueprint* InBlueprint)
+{
+	UEditorUtilityWidget* OldWidget = FindUtilityWidgetFromBlueprint(InBlueprint);
+	FName OldTabID = NAME_None;
+	if (OldWidget)
+	{
+		if (FName* TabIdPtr = WidgetToTabName.Find(OldWidget))
+		{
+			OldTabID = *TabIdPtr;
+			CloseEditorUtilityTab(OldTabID);
+		}
+	}
 }
 
 void UEUSS_WidgetManager::CloseAllWidgets()
