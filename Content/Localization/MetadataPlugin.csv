@@ -7,7 +7,7 @@ Copy,Copy
 None,None
 Succeed,Succeed
 Duplicate Keys Exist,Duplicate Keys Exist
-Key or Value Is Empty,Key or Value Is Empty
+Key Is Empty,Key Is Empty
 Prompt,Prompt
 The configuration path contains an empty path,The configuration path contains an empty path
 Configuration is empty,Configuration is empty
@@ -19,7 +19,6 @@ Name,Name
 Num,Num
 Select the Tag to be modified,Select the Tag to be modified
 No Value,No Value
-Value is empty. Please re-enter.,Value is empty. Please re-enter.
 Input New Value,Input New Value
 Confirm,Confirm
 Cancel,Cancel
@@ -40,7 +39,7 @@ Do not overwrite any values for all assets? (No)","Do not overwrite any values f
 Do not overwrite any values for all assets? (No)"
 Invalid assets are included. Skip invalid assets?,Invalid assets are included. Skip invalid assets?
 No data added,No data added
-Tag and value cannot be empty,Tag and value cannot be empty
+Key cannot be empty,Key cannot be empty
 Duplicate tag: {Tag},Duplicate tag: {Tag}
 Confirm Add,Confirm Add
 Deletion failed: Asset [{Asset Name}] does not contain key [{Tag Name}],Deletion failed: Asset [{Asset Name}] does not contain key [{Tag Name}]

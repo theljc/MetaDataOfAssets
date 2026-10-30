@@ -7,7 +7,6 @@
 #include "EditorUtilityWidget.h"
 #include "EditorUtilityWidgetBlueprint.h"
 #include "LevelEditor.h"
-#include "StatusBarSubsystem.h"
 #include "Engine/World.h"
 #include "Log/MetaDataOfAssetsLogChannel.h"
 #include "Modules/ModuleManager.h"
