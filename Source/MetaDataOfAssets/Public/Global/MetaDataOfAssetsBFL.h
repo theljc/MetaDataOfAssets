@@ -24,5 +24,14 @@ public:
 	// 判断命名是否为空
 	UFUNCTION(BlueprintPure, Category = "MetaDataOfAssets")
 	static bool IsNameBlank(const FName& InName);
+
+	/**
+	 * 计算资产中所有元数据的交集
+	 *
+	 * @param InAssets 资产数组
+	 * @return 共同的元数据
+	 */
+	UFUNCTION(BlueprintPure, Category = "MetaDataOfAssets")
+	static TArray<FName> CalcIntersectionOfMetaData(const TArray<UObject*>& InAssets);
 	
 };
