@@ -27,8 +27,8 @@ public:
 	// 资产删除回调
 	void OnAssetRemoved(const FAssetData& AssetData);
 
-	// 引擎初始化完成的回调
-	void OnPostEngineInit(double Double);
+	// 编辑器初始化完成的回调
+	void OnEditorInitialized(double Double);
 
 	// 关闭所有创建的窗口
 	void RemoveAllWidget();
@@ -38,6 +38,8 @@ public:
 
 	// 注册自定义控制台命令
 	void RegisterCustomConsoleCommand();
+
+	// 开启和关闭调试模式
 	void DisableDebug();
 	void EnableDebug();
 

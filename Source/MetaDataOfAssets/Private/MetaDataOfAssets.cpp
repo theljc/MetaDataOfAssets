@@ -95,16 +95,16 @@ void FMetaDataOfAssetsModule::StartupModule()
 	// 移动资产时也会触发重命名事件
 	AssetRegistry.OnAssetRenamed().AddRaw(this, &FMetaDataOfAssetsModule::OnAssetMoved);
 
-	// FCoreDelegates::OnPostEngineInit.AddRaw(this, &FMetaDataOfAssetsModule::OnPostEngineInit);
-	FEditorDelegates::OnEditorInitialized.AddRaw(this, &FMetaDataOfAssetsModule::OnPostEngineInit);
-	// FEditorDelegates::OnAssetsDeleted.AddRaw(this, &FMetaDataOfAssetsModule::OnAssetsDeleted);
+	// 编辑器初始化完成的回调
+	FEditorDelegates::OnEditorInitialized.AddRaw(this, &FMetaDataOfAssetsModule::OnEditorInitialized);
 }
 
 void FMetaDataOfAssetsModule::ShutdownModule()
 {
 	// 取消注册控制台命令
-	IConsoleManager::Get().UnregisterConsoleObject(*MetaDataOfAssetsConstant::GetDisableDebugConsoleCommand());
-	IConsoleManager::Get().UnregisterConsoleObject(*MetaDataOfAssetsConstant::GetEnableDebugConsoleCommand());
+	IConsoleManager::Get().UnregisterConsoleObject(MetaDataOfAssetsConstant::GetDisableDebugConsoleCommand());
+	IConsoleManager::Get().UnregisterConsoleObject(MetaDataOfAssetsConstant::GetEnableDebugConsoleCommand());
+
 	FMetaDataOfAssetsCommands::Unregister();
 	FMetaDataOfAssetsStyle::Shutdown();
 }
@@ -139,14 +139,14 @@ void FMetaDataOfAssetsModule::BindCommandActions()
 void FMetaDataOfAssetsModule::RegisterCustomConsoleCommand()
 {
 	IConsoleManager::Get().RegisterConsoleCommand(
-		*MetaDataOfAssetsConstant::GetDisableDebugConsoleCommand(),
+		MetaDataOfAssetsConstant::GetDisableDebugConsoleCommand(),
 		TEXT("Disable UE_LOG and PrintString of the MetaDataPlugin"),
 		FConsoleCommandDelegate::CreateRaw(this, &FMetaDataOfAssetsModule::DisableDebug),
 		ECVF_Default
 	);
 
 	IConsoleManager::Get().RegisterConsoleCommand(
-		*MetaDataOfAssetsConstant::GetEnableDebugConsoleCommand(),
+		MetaDataOfAssetsConstant::GetEnableDebugConsoleCommand(),
 		TEXT("Enable UE_LOG and PrintString of the MetaDataPlugin"),
 		FConsoleCommandDelegate::CreateRaw(this, &FMetaDataOfAssetsModule::EnableDebug),
 		ECVF_Default
@@ -208,11 +208,13 @@ void FMetaDataOfAssetsModule::OnAssetRemoved(const FAssetData& AssetData)
 	}
 }
 
-void FMetaDataOfAssetsModule::OnPostEngineInit(double Double)
+void FMetaDataOfAssetsModule::OnEditorInitialized(double Double)
 {
 	UEUSS_MetaDataManager* MetaDataManager = GEditor->GetEditorSubsystem<UEUSS_MetaDataManager>();
-	if (MetaDataManager)
+	UEUSS_WidgetManager* WidgetManager = GEditor->GetEditorSubsystem<UEUSS_WidgetManager>();
+	if (MetaDataManager && WidgetManager)
 	{
+		WidgetManager->RegisterSpawner();
 		MetaDataManager->SyncAssetsInDirectory();
 	}
 }

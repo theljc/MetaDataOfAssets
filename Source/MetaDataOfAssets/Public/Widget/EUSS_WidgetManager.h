@@ -52,8 +52,9 @@ public:
 	virtual void Initialize(FSubsystemCollectionBase& Collection) override;
 	virtual void Deinitialize() override;
 
-	UFUNCTION(BlueprintCallable)
-	void TestFun();
+	// 注册主控件
+	void RegisterSpawner();
+	bool RegisterMainWidgetSpawner();
 	
 	// 控件被创建时触发，提供委托，但未使用
 	UPROPERTY(BlueprintAssignable, Category = "MetaDataOfAssets", meta = (DisplayName = "OnWidgetCreated"))
@@ -108,8 +109,8 @@ public:
 	// 关闭旧的控件
 	void CloseOldWidget(UEditorUtilityWidgetBlueprint* InBlueprint);
 
-	// 聚焦到指定的 EUW 控件
-	bool FocusEditorUtilityTab(FName TabID);
+	// 尝试聚焦到指定的 EUW 控件，返回是否聚焦成功
+	bool TryFocusEditorUtilityTab(FName TabID);
 
 	// 主控件资产移动或重命名时触发，确保主窗口的资产移动后，下次启动编辑器依然能打开
 	void OnMainWidgetMoved(const FAssetData& AssetData, const FString& OldObjectPath);
@@ -162,12 +163,25 @@ private:
 	// 从树中移除单个节点
 	void RemoveNodeFromTree(UUserWidget* Widget);
 	
+	void CloseDescendantTabs(UUserWidget* RootWidget);
+	
 	// 关闭一个 Widget 对应的 Tab
 	void CloseWidgetTab(UUserWidget* Widget);
+
+	// 加载主控件的资产
+	UEditorUtilityWidgetBlueprint* LoadMainWidget();
+
+	// 构建主控件的 TabID
+	FName MakeMainWidgetTabID(const UEditorUtilityWidgetBlueprint* Blueprint);
 	
 	// 设置主控件资产的路径
 	void SetMainWidgetPath();
 
+	void OnMainWidgetTabClosed(TSharedRef<SDockTab> ClosedTab, TWeakObjectPtr<UUserWidget> WeakWidget);
+	
+	// 创建主控件的标签页
+	TSharedRef<SDockTab> SpawnMainWidgetTab(const FSpawnTabArgs& Args);
+	
 	// 主控件资产的路径
 	FString MainWidgetPath;
 	
@@ -175,10 +189,14 @@ private:
 	UPROPERTY()
 	TArray<TObjectPtr<UUserWidget>> ActiveWidgets;
 
-	// 主控件蓝图资产
+	// 主控件蓝图资产软引用对象
 	UPROPERTY()
 	TSoftObjectPtr<UEditorUtilityWidgetBlueprint> MainWidgetSoftPtr;
 
+	// 主控件蓝图资产
+	UPROPERTY()
+	TObjectPtr<UEditorUtilityWidgetBlueprint> MainWidget;
+	
 	// EUW 和 TabID 的映射
 	UPROPERTY()
 	TMap<TObjectPtr<UUserWidget>, FName> WidgetToTabName;

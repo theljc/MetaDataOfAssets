@@ -19,6 +19,7 @@ void UEUW_BaseUtilityWidget::NativeConstruct()
 		// 用 UEUSS_WidgetManager 创建的控件，此处会直接 return
 		if (WidgetManager->GetInCreatingSubWidget()) return;
 
+		/** 由于 EUW 有多种创建方式，需要确保创建的控件能够被正确管理 */
 		UEditorUtilityWidgetBlueprint* Blueprint =
 				Cast<UEditorUtilityWidgetBlueprint>(GetClass()->ClassGeneratedBy);
 
@@ -76,8 +77,6 @@ void UEUW_BaseUtilityWidget::OnInitialize(const FInstancedStruct& Params)
 	// 确保已创建的控件中没有该控件
 	if (WidgetManager->GetActiveWidgets().Contains(this))
 	{
-		WidgetManager->FocusEditorUtilityTab(WidgetManager->GetWidgetToTabName()[this]);
-
 		UE_LOG(LogMetaDataOfAssets, Log, TEXT("[%hs] : 控件 [%s] 已存在"), __FUNCTION__, *GetName());
 		return;
 	}
@@ -106,7 +105,7 @@ void UEUW_BaseUtilityWidget::OnDeinitialize()
 	IWidgetInterface_MetaDataOfAssets::Execute_OnClose(this);
 
 	// 递归移除自身和子节点
-	WidgetManager->RemoveNodeAndDescendants(this);
+	// WidgetManager->RemoveNodeAndDescendants(this);
 
 	// 从 ActiveWidgets 中移除
 	WidgetManager->RemoveFromActiveWidgets(this);

@@ -8,16 +8,13 @@
 namespace MetaDataOfAssetsConstant
 {
 	// 自定义控制台命令
-	inline const FString& GetEnableDebugConsoleCommand()
+	inline const TCHAR* GetEnableDebugConsoleCommand()
 	{
-		static const FString EnableConsoleCmd(TEXT("MetaDataOfAssets.EnableDebug"));
-		return EnableConsoleCmd;
+		return TEXT("MetaDataOfAssets.EnableDebug");
 	}
 
-	inline const FString& GetDisableDebugConsoleCommand()
+	inline const TCHAR* GetDisableDebugConsoleCommand()
 	{
-		static const FString DisableConsoleCmd(TEXT("MetaDataOfAssets.DisableDebug"));
-		return DisableConsoleCmd;
+		return TEXT("MetaDataOfAssets.DisableDebug");
 	}
-	
 }
