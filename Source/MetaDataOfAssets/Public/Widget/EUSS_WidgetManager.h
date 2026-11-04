@@ -19,24 +19,24 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnWidgetInstanceRemoved, UUserWidge
 
 
 // 树节点
-UCLASS()
-class METADATAOFASSETS_API UEuwTreeNode : public UObject
-{
-	GENERATED_BODY()
-
-public:
-	
-	// 对应的 EUW 实例
-	TWeakObjectPtr<UUserWidget> Widget;
-
-	// 父节点
-	TWeakObjectPtr<UEuwTreeNode> Parent;
-
-	// 子节点
-	UPROPERTY()
-	TArray<TObjectPtr<UEuwTreeNode>> Children;
-	
-};
+// UCLASS()
+// class METADATAOFASSETS_API UEuwTreeNode : public UObject
+// {
+// 	GENERATED_BODY()
+//
+// public:
+// 	
+// 	// 对应的 EUW 实例
+// 	TWeakObjectPtr<UUserWidget> Widget;
+//
+// 	// 父节点
+// 	TWeakObjectPtr<UEuwTreeNode> Parent;
+//
+// 	// 子节点
+// 	UPROPERTY()
+// 	TArray<TObjectPtr<UEuwTreeNode>> Children;
+// 	
+// };
 
 
 /**
@@ -90,18 +90,18 @@ public:
 	UEditorUtilityWidget* CreateEditorUtilityWidget(UEditorUtilityWidgetBlueprint* InBlueprint, const FInstancedStruct& Params);
 
 	// 创建树的根节点
-	UFUNCTION(BlueprintCallable, Category = "MetaDataOfAssets")
-	void SetToRootNode(UUserWidget* InRootWidget);
+	// UFUNCTION(BlueprintCallable, Category = "MetaDataOfAssets")
+	// void SetToRootNode(UUserWidget* InRootWidget);
 
 	// 往树中添加子节点
-	UFUNCTION(BlueprintCallable, Category = "MetaDataOfAssets")
-	void AddToChildNode(UUserWidget* ParentWidget, UUserWidget* ChildWidget);
+	// UFUNCTION(BlueprintCallable, Category = "MetaDataOfAssets")
+	// void AddToChildNode(UUserWidget* ParentWidget, UUserWidget* ChildWidget);
 
 	// 查找某节点下的所有子节点
-	TArray<UUserWidget*> GetAllDescendants(UUserWidget* InWidget);
+	// TArray<UUserWidget*> GetAllDescendants(UUserWidget* InWidget);
 
 	// 在 EUW 的 NativeDestruct 中调用：关闭当前及所有子节点 Widget，并清理树节点
-	void RemoveNodeAndDescendants(UUserWidget* InWidget);
+	// void RemoveNodeAndDescendants(UUserWidget* InWidget);
 	
 	// 创建主控件
 	void CreateMainWidget();
@@ -158,12 +158,12 @@ private:
 	bool bInSubWidgetCreating = false;
 	
 	// 创建或查找树节点
-	UEuwTreeNode* CreateOrFindTreeNode(UUserWidget* Widget);
+	// UEuwTreeNode* CreateOrFindTreeNode(UUserWidget* Widget);
 
 	// 从树中移除单个节点
-	void RemoveNodeFromTree(UUserWidget* Widget);
+	// void RemoveNodeFromTree(UUserWidget* Widget);
 	
-	void CloseDescendantTabs(UUserWidget* RootWidget);
+	// void CloseDescendantTabs(UUserWidget* RootWidget);
 	
 	// 关闭一个 Widget 对应的 Tab
 	void CloseWidgetTab(UUserWidget* Widget);
@@ -177,7 +177,7 @@ private:
 	// 设置主控件资产的路径
 	void SetMainWidgetPath();
 
-	void OnMainWidgetTabClosed(TSharedRef<SDockTab> ClosedTab, TWeakObjectPtr<UUserWidget> WeakWidget);
+	// void OnMainWidgetTabClosed(TSharedRef<SDockTab> ClosedTab, TWeakObjectPtr<UUserWidget> WeakWidget);
 	
 	// 创建主控件的标签页
 	TSharedRef<SDockTab> SpawnMainWidgetTab(const FSpawnTabArgs& Args);
@@ -202,14 +202,14 @@ private:
 	TMap<TObjectPtr<UUserWidget>, FName> WidgetToTabName;
 	
 	// 存储根节点
-	UPROPERTY()
-	TObjectPtr<UEuwTreeNode> RootNode;
-
-	// 用于通过 Widget 找到树节点
-	UPROPERTY()
-	TMap<TWeakObjectPtr<UUserWidget>, TObjectPtr<UEuwTreeNode>> WidgetToNodeMap;
-
-	// 标记待移除的 Widget 列表
-	TSet<TWeakObjectPtr<UUserWidget>> PendingRemoval;
+	// UPROPERTY()
+	// TObjectPtr<UEuwTreeNode> RootNode;
+	//
+	// // 用于通过 Widget 找到树节点
+	// UPROPERTY()
+	// TMap<TWeakObjectPtr<UUserWidget>, TObjectPtr<UEuwTreeNode>> WidgetToNodeMap;
+	//
+	// // 标记待移除的 Widget 列表
+	// TSet<TWeakObjectPtr<UUserWidget>> PendingRemoval;
 	
 };

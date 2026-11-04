@@ -10,7 +10,7 @@
 #include "StatusBarSubsystem.h"
 #include "Engine/World.h"
 // #include "Global/MetaDataOfAssetsGlobal.h"
-#include "IBlutilityModule.h"
+// #include "IBlutilityModule.h"
 #include "Log/MetaDataOfAssetsLogChannel.h"
 #include "Modules/ModuleManager.h"
 #include "Settings/MetaDataOfAssetsSettings.h"
@@ -42,8 +42,8 @@ void UEUSS_WidgetManager::SetMainWidgetPath()
 	
 }
 
-void UEUSS_WidgetManager::OnMainWidgetTabClosed(TSharedRef<SDockTab> ClosedTab, TWeakObjectPtr<UUserWidget> WeakWidget)
-{
+// void UEUSS_WidgetManager::OnMainWidgetTabClosed(TSharedRef<SDockTab> ClosedTab, TWeakObjectPtr<UUserWidget> WeakWidget)
+// {
 	// UUserWidget* Widget = WeakWidget.Get();
 	//
 	// // 关闭子控件对应的 Tab
@@ -59,7 +59,7 @@ void UEUSS_WidgetManager::OnMainWidgetTabClosed(TSharedRef<SDockTab> ClosedTab, 
 	// 	MainWidget->UpdateRespawnListIfNeeded(ClosedTab);
 	// }
 
-}
+// }
 
 void UEUSS_WidgetManager::Initialize(FSubsystemCollectionBase& Collection)
 {
@@ -135,75 +135,75 @@ bool UEUSS_WidgetManager::RegisterMainWidgetSpawner()
 	return false;
 }
 
-void UEUSS_WidgetManager::SetToRootNode(UUserWidget* InRootWidget)
-{
-	if (!IsValid(InRootWidget)) return;
+// void UEUSS_WidgetManager::SetToRootNode(UUserWidget* InRootWidget)
+// {
+	// if (!IsValid(InRootWidget)) return;
+	//
+	// // 找到或创建该 Widget 对应的节点
+	// UEuwTreeNode* NewRoot = CreateOrFindTreeNode(InRootWidget);
+	//
+	// // 设置为新的根节点
+	// RootNode = NewRoot;
+	// // 根节点没有父节点
+	// NewRoot->Parent = nullptr;
+	//
+	// UE_LOG(LogMetaDataOfAssets, Log, TEXT("[%hs] : 根节点被设置为: %s"), __FUNCTION__, *InRootWidget->GetName());
 
-	// 找到或创建该 Widget 对应的节点
-	UEuwTreeNode* NewRoot = CreateOrFindTreeNode(InRootWidget);
+// }
 
-	// 设置为新的根节点
-	RootNode = NewRoot;
-	// 根节点没有父节点
-	NewRoot->Parent = nullptr;
+// void UEUSS_WidgetManager::AddToChildNode(UUserWidget* ParentWidget, UUserWidget* ChildWidget)
+// {
+	// if (!IsValid(ParentWidget) || !IsValid(ChildWidget)) return;
+	//
+	// // 找到或创建父节点和子节点
+	// UEuwTreeNode* ParentNode = CreateOrFindTreeNode(ParentWidget);
+	// UEuwTreeNode* ChildNode = CreateOrFindTreeNode(ChildWidget);
+	//
+	// // 防止把自己加为自己子节点
+	// if (ParentNode == ChildNode) return;
+	//
+	// // 建立父子关系
+	// ChildNode->Parent = ParentNode;
+	// ParentNode->Children.AddUnique(ChildNode);
+	//
+	// UE_LOG(LogMetaDataOfAssets, Log, TEXT("[%hs] : %s 被添加为 %s 的子节点"),
+	// 	__FUNCTION__, *ChildWidget->GetName(), *ParentWidget->GetName());
+// }
 
-	UE_LOG(LogMetaDataOfAssets, Log, TEXT("[%hs] : 根节点被设置为: %s"), __FUNCTION__, *InRootWidget->GetName());
-
-}
-
-void UEUSS_WidgetManager::AddToChildNode(UUserWidget* ParentWidget, UUserWidget* ChildWidget)
-{
-	if (!IsValid(ParentWidget) || !IsValid(ChildWidget)) return;
-
-	// 找到或创建父节点和子节点
-	UEuwTreeNode* ParentNode = CreateOrFindTreeNode(ParentWidget);
-	UEuwTreeNode* ChildNode = CreateOrFindTreeNode(ChildWidget);
-
-	// 防止把自己加为自己子节点
-	if (ParentNode == ChildNode) return;
-	
-	// 建立父子关系
-	ChildNode->Parent = ParentNode;
-	ParentNode->Children.AddUnique(ChildNode);
-
-	UE_LOG(LogMetaDataOfAssets, Log, TEXT("[%hs] : %s 被添加为 %s 的子节点"),
-		__FUNCTION__, *ChildWidget->GetName(), *ParentWidget->GetName());
-}
-
-TArray<UUserWidget*> UEUSS_WidgetManager::GetAllDescendants(UUserWidget* InWidget)
-{
-	TArray<UUserWidget*> Result;
-	if (!IsValid(InWidget)) return Result;
-
-	// 查找当前节点
-	TObjectPtr<UEuwTreeNode>* NodePtr = WidgetToNodeMap.Find(InWidget);
-	if (!NodePtr || !IsValid(*NodePtr)) return Result;
-
-	UEuwTreeNode* Node = *NodePtr;
-
-	// 深度优先遍历（迭代法）
-	TArray<UEuwTreeNode*> Stack;
-	Stack.Add(Node);
-
-	while (Stack.Num() > 0)
-	{
-		UEuwTreeNode* Current = Stack.Pop();
-		if (!Current) continue;
-
-		for (UEuwTreeNode* ChildNode : Current->Children)
-		{
-			if (!IsValid(ChildNode)) continue;
-
-			if (UUserWidget* ChildWidget = ChildNode->Widget.Get())
-			{
-				Result.Add(ChildWidget);
-			}
-			Stack.Add(ChildNode);
-		}
-	}
-
-	return Result;
-}
+// TArray<UUserWidget*> UEUSS_WidgetManager::GetAllDescendants(UUserWidget* InWidget)
+// {
+	// TArray<UUserWidget*> Result;
+	// if (!IsValid(InWidget)) return Result;
+	//
+	// // 查找当前节点
+	// TObjectPtr<UEuwTreeNode>* NodePtr = WidgetToNodeMap.Find(InWidget);
+	// if (!NodePtr || !IsValid(*NodePtr)) return Result;
+	//
+	// UEuwTreeNode* Node = *NodePtr;
+	//
+	// // 深度优先遍历（迭代法）
+	// TArray<UEuwTreeNode*> Stack;
+	// Stack.Add(Node);
+	//
+	// while (Stack.Num() > 0)
+	// {
+	// 	UEuwTreeNode* Current = Stack.Pop();
+	// 	if (!Current) continue;
+	//
+	// 	for (UEuwTreeNode* ChildNode : Current->Children)
+	// 	{
+	// 		if (!IsValid(ChildNode)) continue;
+	//
+	// 		if (UUserWidget* ChildWidget = ChildNode->Widget.Get())
+	// 		{
+	// 			Result.Add(ChildWidget);
+	// 		}
+	// 		Stack.Add(ChildNode);
+	// 	}
+	// }
+	//
+	// return Result;
+// }
 
 bool UEUSS_WidgetManager::TryFocusEditorUtilityTab(FName TabID)
 {
@@ -261,14 +261,6 @@ TSharedRef<SDockTab> UEUSS_WidgetManager::SpawnMainWidgetTab(const FSpawnTabArgs
 
 	// 取出原生 EUW 的内容
 	TSharedRef<SWidget> EUWContent = Tab->GetContent();
-
-	UEditorUtilityWidget* Widget = MainWidget->GetCreatedWidget();
-	
-	Tab->SetOnTabClosed(
-	SDockTab::FOnTabClosedCallback::CreateUObject(
-		this,
-		&UEUSS_WidgetManager::OnMainWidgetTabClosed,
-		TWeakObjectPtr<UUserWidget>(Widget)));
 	
 	// 创建 ContentBrowserDrawer
 	TSharedRef<SWidget> StatusBar =
@@ -297,57 +289,57 @@ TSharedRef<SDockTab> UEUSS_WidgetManager::SpawnMainWidgetTab(const FSpawnTabArgs
 	return Tab;
 }
 
-UEuwTreeNode* UEUSS_WidgetManager::CreateOrFindTreeNode(UUserWidget* Widget)
-{
-	if (!IsValid(Widget)) return nullptr;
+// UEuwTreeNode* UEUSS_WidgetManager::CreateOrFindTreeNode(UUserWidget* Widget)
+// {
+	// if (!IsValid(Widget)) return nullptr;
+	//
+	// // 已存在则返回
+	// TObjectPtr<UEuwTreeNode>* NodePtr = WidgetToNodeMap.Find(Widget);
+	// if (NodePtr && IsValid(*NodePtr))
+	// {	
+	// 	return *NodePtr;
+	// }
+	//
+	// // 创建新节点
+	// UEuwTreeNode* NewNode = NewObject<UEuwTreeNode>(this);
+	// NewNode->Widget = Widget;
+	// WidgetToNodeMap.Add(Widget, NewNode);
+	//
+	//
+	// return NewNode;
+// }
 
-	// 已存在则返回
-	TObjectPtr<UEuwTreeNode>* NodePtr = WidgetToNodeMap.Find(Widget);
-	if (NodePtr && IsValid(*NodePtr))
-	{	
-		return *NodePtr;
-	}
-
-	// 创建新节点
-	UEuwTreeNode* NewNode = NewObject<UEuwTreeNode>(this);
-	NewNode->Widget = Widget;
-	WidgetToNodeMap.Add(Widget, NewNode);
-	
-
-	return NewNode;
-}
-
-void UEUSS_WidgetManager::RemoveNodeAndDescendants(UUserWidget* InWidget)
-{
-	if (!IsValid(InWidget)) return;
-
-	// 已经在移除中，直接返回，避免递归重复处理
-	if (PendingRemoval.Contains(InWidget)) return;
-	PendingRemoval.Add(InWidget);
-
-	// 收集所有子控件
-	TArray<UUserWidget*> Descendants = GetAllDescendants(InWidget);
-
-	// 关闭所有子控件
-	// 关闭子控件会触发它们自己的 NativeDestruct -> OnDeinitialize -> RemoveNodeAndDescendants
-	// 用 PendingRemoval 确保不会重复处理当前节点
-	for (UUserWidget* Descendant : Descendants)
-	{
-		if (IsValid(Descendant))
-		{
-			CloseWidgetTab(Descendant);
-		}
-	}
-
-	// 关闭当前 Widget 自己的 Tab
-	CloseWidgetTab(InWidget);
-
-	// 清理树节点
-	RemoveNodeFromTree(InWidget);
-
-	// 移除标记
-	PendingRemoval.Remove(InWidget);
-}
+// void UEUSS_WidgetManager::RemoveNodeAndDescendants(UUserWidget* InWidget)
+// {
+	// if (!IsValid(InWidget)) return;
+	//
+	// // 已经在移除中，直接返回，避免递归重复处理
+	// if (PendingRemoval.Contains(InWidget)) return;
+	// PendingRemoval.Add(InWidget);
+	//
+	// // 收集所有子控件
+	// TArray<UUserWidget*> Descendants = GetAllDescendants(InWidget);
+	//
+	// // 关闭所有子控件
+	// // 关闭子控件会触发它们自己的 NativeDestruct -> OnDeinitialize -> RemoveNodeAndDescendants
+	// // 用 PendingRemoval 确保不会重复处理当前节点
+	// for (UUserWidget* Descendant : Descendants)
+	// {
+	// 	if (IsValid(Descendant))
+	// 	{
+	// 		CloseWidgetTab(Descendant);
+	// 	}
+	// }
+	//
+	// // 关闭当前 Widget 自己的 Tab
+	// CloseWidgetTab(InWidget);
+	//
+	// // 清理树节点
+	// RemoveNodeFromTree(InWidget);
+	//
+	// // 移除标记
+	// PendingRemoval.Remove(InWidget);
+// }
 
 void UEUSS_WidgetManager::OnMainWidgetMoved(const FAssetData& AssetData, const FString& OldObjectPath)
 {
@@ -423,54 +415,54 @@ void UEUSS_WidgetManager::CloseWidgetTab(UUserWidget* Widget)
 	CloseEditorUtilityTab(*TabIdPtr);
 }
 
-void UEUSS_WidgetManager::RemoveNodeFromTree(UUserWidget* Widget)
-{
-	if (!IsValid(Widget)) return;
+// void UEUSS_WidgetManager::RemoveNodeFromTree(UUserWidget* Widget)
+// {
+	// if (!IsValid(Widget)) return;
+	//
+	// // 查找节点
+	// TObjectPtr<UEuwTreeNode>* NodePtr = WidgetToNodeMap.Find(Widget);
+	// if (!NodePtr || !IsValid(*NodePtr)) return;
+	//
+	// UEuwTreeNode* Node = *NodePtr;
+	//
+	// // 从父节点的 Children 中移除自己
+	// if (UEuwTreeNode* Parent = Node->Parent.Get())
+	// {
+	// 	Parent->Children.Remove(Node);
+	// }
+	//
+	// // 如果自己是根节点，清空根
+	// if (RootNode == Node)
+	// {
+	// 	RootNode = nullptr;
+	// }
+	//
+	// // 从映射中移除
+	// WidgetToNodeMap.Remove(Widget);
+	//
+	// UE_LOG(LogMetaDataOfAssets, Log, TEXT("[%hs] : 移除节点: %s"), __FUNCTION__, *Widget->GetName());
+// }
 
-	// 查找节点
-	TObjectPtr<UEuwTreeNode>* NodePtr = WidgetToNodeMap.Find(Widget);
-	if (!NodePtr || !IsValid(*NodePtr)) return;
-	
-	UEuwTreeNode* Node = *NodePtr;
-	
-	// 从父节点的 Children 中移除自己
-	if (UEuwTreeNode* Parent = Node->Parent.Get())
-	{
-		Parent->Children.Remove(Node);
-	}
-
-	// 如果自己是根节点，清空根
-	if (RootNode == Node)
-	{
-		RootNode = nullptr;
-	}
-
-	// 从映射中移除
-	WidgetToNodeMap.Remove(Widget);
-
-	UE_LOG(LogMetaDataOfAssets, Log, TEXT("[%hs] : 移除节点: %s"), __FUNCTION__, *Widget->GetName());
-}
-
-void UEUSS_WidgetManager::CloseDescendantTabs(UUserWidget* RootWidget)
-{
-	if (!IsValid(RootWidget))
-	{
-		return;
-	}
-
-	TArray<UUserWidget*> Descendants =
-		GetAllDescendants(RootWidget);
-
-	for (UUserWidget* Descendant : Descendants)
-	{
-		if (!IsValid(Descendant))
-		{
-			continue;
-		}
-
-		CloseWidgetTab(Descendant);
-	}
-}
+// void UEUSS_WidgetManager::CloseDescendantTabs(UUserWidget* RootWidget)
+// {
+	// if (!IsValid(RootWidget))
+	// {
+	// 	return;
+	// }
+	//
+	// TArray<UUserWidget*> Descendants =
+	// 	GetAllDescendants(RootWidget);
+	//
+	// for (UUserWidget* Descendant : Descendants)
+	// {
+	// 	if (!IsValid(Descendant))
+	// 	{
+	// 		continue;
+	// 	}
+	//
+	// 	CloseWidgetTab(Descendant);
+	// }
+// }
 
 UEditorUtilityWidgetBlueprint* UEUSS_WidgetManager::LoadMainWidget()
 {
@@ -661,11 +653,7 @@ void UEUSS_WidgetManager::CloseOldWidget(UEditorUtilityWidgetBlueprint* InBluepr
 	FName OldTabID = NAME_None;
 	if (OldWidget)
 	{
-		if (FName* TabIdPtr = WidgetToTabName.Find(OldWidget))
-		{
-			OldTabID = *TabIdPtr;
-			CloseEditorUtilityTab(OldTabID);
-		}
+		CloseWidgetTab(OldWidget);
 	}
 }
 
