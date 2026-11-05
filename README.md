@@ -39,7 +39,7 @@
   - UE 5.0 以上
 
 - **下载**
-  - 方法一：FAB 商城直接下载：**[链接待补充]**
+  - 方法一：FAB 商城直接下载：https://www.fab.com/portal/listings/0563efa9-7cc3-4e39-b23f-90fe9b7be790
   - 方法二：https://github.com/theljc/MetaDataOfAssets/releases 下载压缩包，其中包含了UE5所有版本的对应插件，将需要的版本解压到项目的 `Plugins` 文件夹中
 
 - **启用**
@@ -141,7 +141,6 @@ MetaDataOfAssets/
   - 新增的 EditorUtilityWidget 必须继承 `UEUW_BaseUtilityWidget`
   - 新增的控件可重写 `OnOpen` 接口用于接收参数并初始化，`OnClose` 接口用于控件销毁时的清理
   - 如果想让控件在父类被关闭时，自己也一起被关闭，则可以在控件的 `OnOpen` 中使用 `UEUSS_WidgetManager::AddToChildNode` 节点将自身添加到节点树中。`ParentWidget` 传入父类控件，`ChildWidget` 传入自身
-  - 建议不要修改现有的父子节点关系
 
 
 
@@ -149,6 +148,7 @@ MetaDataOfAssets/
 
 - 本插件为编辑器插件
 - 启用本插件需要同时启用 `Struct Utils` 和 `Editor Scripting Utilities` 插件
+- 如果需要修改蓝图部分，建议关闭已经打开的控件，并在蓝图编译完成后重新打开
 - 本插件做了中文和英语本地化，在 [编辑器偏好设置 -> 区域和语言] 中切换编辑器语言时会自动更改
 - 本插件涉及的项目配置都保存在本插件目录的 [Config/DefaultMetaDataOfAssets.ini] 文件中
   - `[/Script/MetaDataOfAssets.MetaDataOfAssetsSettings]` 分段
@@ -157,5 +157,5 @@ MetaDataOfAssets/
     - `bEnableDebug`：是否开启本插件相关的 UE_LOG 和 PrintString 输出
     - `MainWidgetPath`：主控件资产的路径。禁止手动修改，否则无法使用编辑器工具栏中的按钮打开主控件
 - 将资产添加到主控件中，以及点击 **`同步配置路径中的资产`** 按钮时，都会加载这个资产
-- 点击 **`同步配置路径中的资产`** 按钮时，会在编辑器中分帧加载资产，右下角会显示加载进度。加载完成后，会对所有加载的资产进行b'c
+- 点击 **`同步配置路径中的资产`** 按钮时，会在编辑器中分帧加载资产，右下角会显示加载进度。加载完成后，会对所有加载的资产进行保存
 

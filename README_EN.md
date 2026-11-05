@@ -1,5 +1,7 @@
 <div align="center">
 <h1>MetaData of Assets Plugin</h1>
+(Translated by AI)
+
 
 ![UE Version](https://img.shields.io/badge/UE-5.0%2B-blue)
 [![License](https://img.shields.io/badge/License-MIT-green)](LICENSE)
@@ -38,7 +40,7 @@
 - **Applicable version**
   - UE 5.0 or above
 - **Download**
-  - Option 1: Download directly from the FAB Marketplace: **[link to be added]**
+  - Option 1: Download directly from the FAB Marketplace: https://www.fab.com/portal/listings/0563efa9-7cc3-4e39-b23f-90fe9b7be790
   - Option 2: Download the compressed file from https://github.com/theljc/MetaDataOfAssets/releases which contains the corresponding plugins for all versions of UE5. Extract the required version to the `Plugins` folder of your project
 - **Enable**
   - Open the project, search for **MetaDataOfAssets** in the [Plugins] panel, and enable the plugin
@@ -139,7 +141,6 @@ MetaDataOfAssets/
   - New EditorUtilityWidgets must inherit from `UEUW_BaseUtilityWidget`.
   - New widgets can override the `OnOpen` interface to receive parameters and initialize themselves, and the `OnClose` interface to perform cleanup when the widget is destroyed.
   - If you want a widget to close when its parent is closed, use `UEUSS_WidgetManager::AddToChildNode` in the widget's `OnOpen` to add it to the node tree. Pass the parent widget as `ParentWidget` and the widget itself as `ChildWidget`.
-  - Avoid modifying the existing parent-child relationships.
 
 
 
@@ -147,6 +148,7 @@ MetaDataOfAssets/
 
 - This is an editor plugin.
 - To use this plugin, you need to enable both the `Struct Utils` and `Editor Scripting Utilities` plugins.
+- If you need to modify the Blueprint, recommend closing any open widgets and reopening them after compiled.
 - The plugin is localized in Chinese and English. The displayed text changes automatically when the Editor language is switched in [Editor Preferences -> Region & Language].
 - All project-related configuration for this plugin is stored in [Config/DefaultMetaDataOfAssets.ini] in the plugin directory.
   - `[/Script/MetaDataOfAssets.MetaDataOfAssetsSettings]` section

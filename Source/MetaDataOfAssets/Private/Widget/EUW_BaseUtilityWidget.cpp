@@ -12,30 +12,30 @@ void UEUW_BaseUtilityWidget::NativeConstruct()
 {
 	Super::NativeConstruct();
 
-	if (GEditor)
-	{
-		UEUSS_WidgetManager* WidgetManager = GEditor->GetEditorSubsystem<UEUSS_WidgetManager>();
+	// if (GEditor)
+	// {
+		// UEUSS_WidgetManager* WidgetManager = GEditor->GetEditorSubsystem<UEUSS_WidgetManager>();
 
 		// 用 UEUSS_WidgetManager 创建的控件，此处会直接 return
-		if (WidgetManager->GetInCreatingSubWidget()) return;
+		// if (WidgetManager->GetInCreatingSubWidget()) return;
 
 		/** 由于 EUW 有多种创建方式，需要确保创建的控件能够被正确管理 */
-		UEditorUtilityWidgetBlueprint* Blueprint =
-				Cast<UEditorUtilityWidgetBlueprint>(GetClass()->ClassGeneratedBy);
+		// UEditorUtilityWidgetBlueprint* Blueprint =
+				// Cast<UEditorUtilityWidgetBlueprint>(GetClass()->ClassGeneratedBy);
 
 		// 查找 TabID
-		const FName TabID = Blueprint ? Blueprint->GetRegistrationName() : NAME_None;
+		// const FName TabID = Blueprint ? Blueprint->GetRegistrationName() : NAME_None;
 
 		// 添加到 WidgetToTabName 中
-		WidgetManager->AddTo_WidgetToTabName(this, TabID);
+		// WidgetManager->AddTo_WidgetToTabName(this, TabID);
 
 		// 主控件继承了 IWidgetInterface_MetaDataPlugin，所以 Interface 有效
-		TScriptInterface<IWidgetInterface_MetaDataOfAssets> Interface(this);
-		if (Interface)
-		{
-			Interface->OnInitialize(FInstancedStruct());
-		}
-	}
+		// TScriptInterface<IWidgetInterface_MetaDataOfAssets> Interface(this);
+		// if (Interface)
+		// {
+		// 	Interface->OnInitialize(FInstancedStruct());
+		// }
+	// }
 }
 
 void UEUW_BaseUtilityWidget::NativeDestruct()
@@ -99,10 +99,13 @@ void UEUW_BaseUtilityWidget::OnDeinitialize()
 	if (!IsValid(WidgetManager)) return;
 
 	// 关闭时，确保控件存在
-	if (!WidgetManager->GetActiveWidgets().Contains(this)) return;
+	const bool bWasActive = WidgetManager->GetActiveWidgets().Contains(this);
 
-	// 调用接口
-	IWidgetInterface_MetaDataOfAssets::Execute_OnClose(this);
+	if (bWasActive)
+	{
+		// 调用接口
+		IWidgetInterface_MetaDataOfAssets::Execute_OnClose(this);
+	}
 
 	// 递归移除自身和子节点
 	// WidgetManager->RemoveNodeAndDescendants(this);
@@ -114,7 +117,10 @@ void UEUW_BaseUtilityWidget::OnDeinitialize()
 	WidgetManager->RemoveFrom_WidgetToTabName(this);
 
 	// 通知本控件被移除
-	WidgetManager->OnWidgetInstanceRemoved.Broadcast(this);
+	if (bWasActive)
+	{
+		WidgetManager->OnWidgetInstanceRemoved.Broadcast(this);
+	}
 	
 	UE_LOG(LogMetaDataOfAssets, Log, TEXT("[%hs] : 已移除控件 [%s]"), __FUNCTION__, *GetName());
 

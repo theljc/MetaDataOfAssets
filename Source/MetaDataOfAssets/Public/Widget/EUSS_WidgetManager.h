@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "Editor/Blutility/Public/EditorUtilitySubsystem.h"
 #include "InstancedStruct.h"
+#include "StructUtils/InstancedStruct.h"
 #include "EUSS_WidgetManager.generated.h"
 
 class FAssetSyncTask;
@@ -19,24 +20,76 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnWidgetInstanceRemoved, UUserWidge
 
 
 // 树节点
-// UCLASS()
-// class METADATAOFASSETS_API UEuwTreeNode : public UObject
-// {
-// 	GENERATED_BODY()
-//
-// public:
-// 	
-// 	// 对应的 EUW 实例
-// 	TWeakObjectPtr<UUserWidget> Widget;
-//
-// 	// 父节点
-// 	TWeakObjectPtr<UEuwTreeNode> Parent;
-//
-// 	// 子节点
-// 	UPROPERTY()
-// 	TArray<TObjectPtr<UEuwTreeNode>> Children;
-// 	
-// };
+UCLASS()
+class METADATAOFASSETS_API UEuwTreeNode : public UObject
+{
+	GENERATED_BODY()
+
+public:
+	
+	// 对应的 EUW 实例
+	TWeakObjectPtr<UUserWidget> Widget;
+
+	// 父节点
+	TWeakObjectPtr<UEuwTreeNode> Parent;
+
+	// 子节点
+	UPROPERTY()
+	TArray<TObjectPtr<UEuwTreeNode>> Children;
+	
+};
+
+// EUW 控件生成参数
+USTRUCT()
+struct FEUWTabSpawnContext
+{
+	GENERATED_BODY()
+
+	// 默认构造函数
+	FEUWTabSpawnContext()
+		: Blueprint(nullptr)
+		, TabID(NAME_None)
+		, StatusBarName(NAME_None)
+		, bAddContentBrowserDrawer(false)
+		, Params(FInstancedStruct())
+	{
+	}
+
+	/**
+	 * 必须传入 Blueprint 和 TabID
+	 *
+	 * @param InBlueprint					EUW 蓝图资产
+	 * @param InTabID						EUW 的 TabID
+	 * @param InStatusBarName				底部 ContentBrowserDrawer 的名称
+	 * @param bInAddContentBrowserDrawer	是否添加 ContentBrowserDrawer
+	 * @param InParams						初始化时传入的参数
+	 */
+	FEUWTabSpawnContext(
+		UEditorUtilityWidgetBlueprint* InBlueprint,
+		const FName InTabID,
+		const FName InStatusBarName = NAME_None,
+		const bool bInAddContentBrowserDrawer = false,
+		FInstancedStruct InParams = FInstancedStruct())
+		: Blueprint(InBlueprint)
+		, TabID(InTabID)
+		, StatusBarName(InStatusBarName)
+		, bAddContentBrowserDrawer(bInAddContentBrowserDrawer)
+		, Params(MoveTemp(InParams))
+	{
+	}
+	
+	TWeakObjectPtr<UEditorUtilityWidgetBlueprint> Blueprint;
+
+	FName TabID;
+
+	FName StatusBarName;
+	
+	bool bAddContentBrowserDrawer;
+
+	UPROPERTY()
+	FInstancedStruct Params;
+
+};
 
 
 /**
@@ -52,9 +105,6 @@ public:
 	virtual void Initialize(FSubsystemCollectionBase& Collection) override;
 	virtual void Deinitialize() override;
 
-	// 注册主控件
-	void RegisterSpawner();
-	bool RegisterMainWidgetSpawner();
 	
 	// 控件被创建时触发，提供委托，但未使用
 	UPROPERTY(BlueprintAssignable, Category = "MetaDataOfAssets", meta = (DisplayName = "OnWidgetCreated"))
@@ -87,21 +137,24 @@ public:
 	 * @return				创建完成的实例
 	 */
 	UFUNCTION(BlueprintCallable, Category = "MetaDataOfAssets")
-	UEditorUtilityWidget* CreateEditorUtilityWidget(UEditorUtilityWidgetBlueprint* InBlueprint, const FInstancedStruct& Params);
+	UEditorUtilityWidget* CreateEditorUtilityWidget(UEditorUtilityWidgetBlueprint* InBlueprint, FInstancedStruct Params);
 
 	// 创建树的根节点
-	// UFUNCTION(BlueprintCallable, Category = "MetaDataOfAssets")
-	// void SetToRootNode(UUserWidget* InRootWidget);
+	UFUNCTION(BlueprintCallable, Category = "MetaDataOfAssets")
+	void SetToRootNode(UUserWidget* InRootWidget);
 
 	// 往树中添加子节点
-	// UFUNCTION(BlueprintCallable, Category = "MetaDataOfAssets")
-	// void AddToChildNode(UUserWidget* ParentWidget, UUserWidget* ChildWidget);
+	UFUNCTION(BlueprintCallable, Category = "MetaDataOfAssets")
+	void AddToChildNode(UUserWidget* ParentWidget, UUserWidget* ChildWidget);
 
 	// 查找某节点下的所有子节点
-	// TArray<UUserWidget*> GetAllDescendants(UUserWidget* InWidget);
+	TArray<UUserWidget*> GetAllDescendants(UUserWidget* InWidget);
 
 	// 在 EUW 的 NativeDestruct 中调用：关闭当前及所有子节点 Widget，并清理树节点
 	// void RemoveNodeAndDescendants(UUserWidget* InWidget);
+
+	// 注册主控件
+	void RegisterMainWidgetTab();
 	
 	// 创建主控件
 	void CreateMainWidget();
@@ -145,42 +198,58 @@ public:
 
 	TSoftObjectPtr<UEditorUtilityWidgetBlueprint> GetMainWidgetSoftPtr() const { return MainWidgetSoftPtr; }
 
-	bool GetInCreatingSubWidget() const { return bInSubWidgetCreating; }
+	// bool GetInCreatingSubWidget() const { return bInSubWidgetCreating; }
 	
 	/** Setter */
 	void SetMainWidgetSoftPtr(const TSoftObjectPtr<UEditorUtilityWidgetBlueprint>& InMainWidgetSoftPtr) { MainWidgetSoftPtr = InMainWidgetSoftPtr; }
 
-	void SetInCreatingSubWidget(const bool bInCreating) { bInSubWidgetCreating = bInCreating; }
+	// void SetInCreatingSubWidget(const bool bInCreating) { bInSubWidgetCreating = bInCreating; }
 
 private:
 
+	// 注册标签页
+	bool RegisterTab_Custom(const FEUWTabSpawnContext& InSpawnContext);
+
+	// 注册并生成子控件
+	UEditorUtilityWidget* SpawnAndRegisterTabWithId_Custom(UEditorUtilityWidgetBlueprint* InBlueprint, const FName InTabID, FInstancedStruct Params);
+	
 	// 用于判断是否正在创建 EUW
-	bool bInSubWidgetCreating = false;
+	// bool bInSubWidgetCreating = false;
 	
 	// 创建或查找树节点
-	// UEuwTreeNode* CreateOrFindTreeNode(UUserWidget* Widget);
+	UEuwTreeNode* CreateOrFindTreeNode(UUserWidget* Widget);
 
 	// 从树中移除单个节点
-	// void RemoveNodeFromTree(UUserWidget* Widget);
+	void RemoveNodeFromTree(UUserWidget* Widget);
 	
-	// void CloseDescendantTabs(UUserWidget* RootWidget);
+	void CloseDescendantTabs(UUserWidget* RootWidget);
 	
 	// 关闭一个 Widget 对应的 Tab
 	void CloseWidgetTab(UUserWidget* Widget);
-
+	
 	// 加载主控件的资产
 	UEditorUtilityWidgetBlueprint* LoadMainWidget();
 
 	// 构建主控件的 TabID
 	FName MakeMainWidgetTabID(const UEditorUtilityWidgetBlueprint* Blueprint);
-	
+
+	// 构建 StatusBar 的名称
+	FName MakeStatusBarName(const UEditorUtilityWidgetBlueprint* Blueprint);
+
+	// 生成控件
+	void SpawnRegisteredTabByID_Custom(const FEUWTabSpawnContext& SpawnContext);
+
 	// 设置主控件资产的路径
 	void SetMainWidgetPath();
-
-	// void OnMainWidgetTabClosed(TSharedRef<SDockTab> ClosedTab, TWeakObjectPtr<UUserWidget> WeakWidget);
 	
-	// 创建主控件的标签页
-	TSharedRef<SDockTab> SpawnMainWidgetTab(const FSpawnTabArgs& Args);
+	// 标签页被关闭时
+	void OnTabClosed(TSharedRef<SDockTab> ClosedTab, TWeakObjectPtr<UUserWidget> WeakWidget, TWeakObjectPtr<UEditorUtilityWidgetBlueprint> WeakBlueprint);
+	
+	// 标签页被创建时
+	TSharedRef<SDockTab> OnSpawnEUWTab(const FSpawnTabArgs& Args, const FName InTabID);
+
+	// 创建子控件的标签页
+	// TSharedRef<SDockTab> SpawnSubWidgetTab(const FSpawnTabArgs& Args, UEditorUtilityWidgetBlueprint* InBlueprint);
 	
 	// 主控件资产的路径
 	FString MainWidgetPath;
@@ -202,14 +271,17 @@ private:
 	TMap<TObjectPtr<UUserWidget>, FName> WidgetToTabName;
 	
 	// 存储根节点
-	// UPROPERTY()
-	// TObjectPtr<UEuwTreeNode> RootNode;
-	//
-	// // 用于通过 Widget 找到树节点
-	// UPROPERTY()
-	// TMap<TWeakObjectPtr<UUserWidget>, TObjectPtr<UEuwTreeNode>> WidgetToNodeMap;
-	//
-	// // 标记待移除的 Widget 列表
-	// TSet<TWeakObjectPtr<UUserWidget>> PendingRemoval;
+	UPROPERTY()
+	TObjectPtr<UEuwTreeNode> RootNode;
 	
+	// 用于通过 Widget 找到树节点
+	UPROPERTY()
+	TMap<TWeakObjectPtr<UUserWidget>, TObjectPtr<UEuwTreeNode>> WidgetToNodeMap;
+	
+	// 标记待移除的 Widget 列表
+	TSet<TWeakObjectPtr<UUserWidget>> PendingRemoval;
+
+	UPROPERTY()
+	TMap<FName, FEUWTabSpawnContext> TabSpawnContexts;
+	FTSTicker::FDelegateHandle RetryTickerHandle;
 };

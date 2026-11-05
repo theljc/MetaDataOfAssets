@@ -214,7 +214,7 @@ void FMetaDataOfAssetsModule::OnEditorInitialized(double Double)
 	UEUSS_WidgetManager* WidgetManager = GEditor->GetEditorSubsystem<UEUSS_WidgetManager>();
 	if (MetaDataManager && WidgetManager)
 	{
-		WidgetManager->RegisterSpawner();
+		WidgetManager->RegisterMainWidgetTab();
 		MetaDataManager->SyncAssetsInDirectory();
 	}
 }
