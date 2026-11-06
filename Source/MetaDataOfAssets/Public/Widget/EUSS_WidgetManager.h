@@ -163,13 +163,13 @@ public:
 	void CloseOldWidget(UEditorUtilityWidgetBlueprint* InBlueprint);
 
 	// 尝试聚焦到指定的 EUW 控件，返回是否聚焦成功
-	bool TryFocusEditorUtilityTab(FName TabID);
+	bool TryFocusEditorUtilityTab(FName InTabID);
 
 	// 主控件资产移动或重命名时触发，确保主窗口的资产移动后，下次启动编辑器依然能打开
 	void OnMainWidgetMoved(const FAssetData& AssetData, const FString& OldObjectPath);
 	
 	// 通过 TabID 关闭对应的 EUW
-	bool CloseEditorUtilityTab(FName TabID);
+	bool CloseEditorUtilityTab(FName InTabID);
 
 	// 关闭所有已创建的控件
 	void CloseAllWidgets();
@@ -212,6 +212,11 @@ private:
 
 	// 注册并生成子控件
 	UEditorUtilityWidget* SpawnAndRegisterTabWithId_Custom(UEditorUtilityWidgetBlueprint* InBlueprint, const FName InTabID, FInstancedStruct Params);
+
+	void OnBlueprintCompiled(UBlueprint* InCompiledBlueprint, const FName InTabID);
+	void RestoreTabContent(const FName InTabID);
+
+	TSharedPtr<SDockTab> FindExistingTab(FName TabID);
 	
 	// 用于判断是否正在创建 EUW
 	// bool bInSubWidgetCreating = false;
@@ -281,7 +286,16 @@ private:
 	// 标记待移除的 Widget 列表
 	TSet<TWeakObjectPtr<UUserWidget>> PendingRemoval;
 
+	// 保存 EUW 创建的 TabID 和 生成参数
 	UPROPERTY()
 	TMap<FName, FEUWTabSpawnContext> TabSpawnContexts;
+
+	// 防止快速编译多次从而生成多个 ContentBrowserDrawer
+	TSet<FName> PendingTabContentRestore;
+
+	// 保存已注册的 Spawner 的 TabID
+	TSet<FName> RegisteredTabID;
+	
 	FTSTicker::FDelegateHandle RetryTickerHandle;
+	FDelegateHandle CompiledHandle;
 };

@@ -1,6 +1,6 @@
 <div align="center">
-<h1>MetaData of Assets Plugin</h1>
-(Translated by AI)
+<h1>MetaData of Assets Plugin (Translated by AI)</h1>
+
 
 
 ![UE Version](https://img.shields.io/badge/UE-5.0%2B-blue)

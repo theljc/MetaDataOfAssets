@@ -65,8 +65,10 @@ void UEUSS_WidgetManager::Initialize(FSubsystemCollectionBase& Collection)
 {
 	Super::Initialize(Collection);
 
+	// 设置主控件资产的路径
 	SetMainWidgetPath();
-	
+
+	// 是否启用调试
 	GetEnableDebugSetting() ? EnableDebug() : DisableDebug();
 	
 	UE_LOG(LogMetaDataOfAssets, Log, TEXT("[%hs] : 初始化完成"), __FUNCTION__);
@@ -74,14 +76,10 @@ void UEUSS_WidgetManager::Initialize(FSubsystemCollectionBase& Collection)
 
 void UEUSS_WidgetManager::Deinitialize()
 {
+	// 关闭所有控件
 	CloseAllWidgets();
-	
-	if (RetryTickerHandle.IsValid())
-	{
-		FTSTicker::GetCoreTicker().RemoveTicker(RetryTickerHandle);
-		RetryTickerHandle.Reset();
-	}
 
+	// 注销所有已注册 TabSpawner
 	if (FLevelEditorModule* LevelEditor =
 		FModuleManager::GetModulePtr<FLevelEditorModule>(
 			TEXT("LevelEditor")))
@@ -90,18 +88,31 @@ void UEUSS_WidgetManager::Deinitialize()
 
 		if (Manager.IsValid())
 		{
-			for (auto& Pair : WidgetToTabName)
+			for (FName TabID : RegisteredTabID)
 			{
-				if (Manager->HasTabSpawner(Pair.Value))
+				if (Manager->HasTabSpawner(TabID))
 				{
-					Manager->UnregisterTabSpawner(Pair.Value);
+					Manager->UnregisterTabSpawner(TabID);
+					RegisteredTabs.Remove(TabID);
 				}
 			}
 		}
 	}
 
-	RegisteredTabs.Empty();
 	TabSpawnContexts.Empty();
+
+	// 移除 Handle
+	if (RetryTickerHandle.IsValid())
+	{
+		FTSTicker::GetCoreTicker().RemoveTicker(RetryTickerHandle);
+		RetryTickerHandle.Reset();
+	}
+	
+	if (CompiledHandle.IsValid())
+	{
+		MainWidget->OnCompiled().Remove(CompiledHandle);
+		CompiledHandle.Reset();
+	}
 	
 	Super::Deinitialize();
 }
@@ -161,6 +172,7 @@ bool UEUSS_WidgetManager::RegisterTab_Custom(const FEUWTabSpawnContext& InSpawnC
 			UEditorUtilityWidgetBlueprint* Blueprint = InSpawnContext.Blueprint.Get();
 			if (!Blueprint) return false;
 
+			// 注册 TabSpawner
 			LevelEditorTabManager->RegisterTabSpawner(
 				InSpawnContext.TabID,
 				FOnSpawnTab::CreateUObject(
@@ -174,6 +186,8 @@ bool UEUSS_WidgetManager::RegisterTab_Custom(const FEUWTabSpawnContext& InSpawnC
 
 			Blueprint->SetRegistrationName(InSpawnContext.TabID);
 			RegisteredTabs.Add(InSpawnContext.TabID, Blueprint);
+
+			RegisteredTabID.Add(InSpawnContext.TabID);
 		}
 
 		return true;
@@ -197,6 +211,94 @@ UEditorUtilityWidget* UEUSS_WidgetManager::SpawnAndRegisterTabWithId_Custom(UEdi
 	RegisterTab_Custom(SpawnContext);
 	SpawnRegisteredTabByID_Custom(SpawnContext);
 	return FindUtilityWidgetFromBlueprint(InBlueprint);
+}
+
+void UEUSS_WidgetManager::OnBlueprintCompiled(UBlueprint* InCompiledBlueprint, const FName InTabID)
+{
+	if (!GEditor || PendingTabContentRestore.Contains(InTabID)) return;
+	
+	PendingTabContentRestore.Add(InTabID);
+	
+	GEditor->GetTimerManager()->SetTimerForNextTick(
+		FTimerDelegate::CreateWeakLambda(
+			this,
+			[this, InTabID]()
+			{
+				RestoreTabContent(InTabID);
+			}));
+}
+
+void UEUSS_WidgetManager::RestoreTabContent(const FName InTabID)
+{
+	if (!GEditor) return;
+
+	FEUWTabSpawnContext* SpawnContext = TabSpawnContexts.Find(InTabID);
+	if (!SpawnContext) return;
+
+	TSharedPtr<SDockTab> Tab = FindExistingTab(SpawnContext->TabID);
+	if (!Tab.IsValid()) return;
+	
+	UEditorUtilityWidget* NewWidget = SpawnContext->Blueprint.Get()->GetCreatedWidget();
+	if (!IsValid(NewWidget)) return;
+
+	// 原有 OnTabClosed 绑定的是旧 Widget，需要重新绑定
+	Tab->SetOnTabClosed(
+		SDockTab::FOnTabClosedCallback::CreateUObject(
+			this,
+			&UEUSS_WidgetManager::OnTabClosed,
+			TWeakObjectPtr<UUserWidget>(NewWidget),
+			SpawnContext->Blueprint));
+	
+	// 新的 Widget 实例需要重新建立 TabID 映射
+	AddTo_WidgetToTabName(NewWidget, SpawnContext->TabID);
+
+	// 重新初始化新 Widget
+	TScriptInterface<IWidgetInterface_MetaDataOfAssets> Interface(NewWidget);
+	if (Interface)
+	{
+		Interface->OnInitialize(SpawnContext->Params);
+	}
+
+	if (SpawnContext->bAddContentBrowserDrawer)
+	{
+		// Native RegenerateCreatedTab 已经生成了新的 EUW 内容
+		TSharedRef<SWidget> EUWContent = Tab->GetContent();
+		
+		TSharedRef<SWidget> StatusBar =
+			GEditor->GetEditorSubsystem<UStatusBarSubsystem>()
+				->MakeStatusBarWidget(SpawnContext->StatusBarName, Tab.ToSharedRef());
+
+		Tab->SetContent(
+			SNew(SVerticalBox)
+			+ SVerticalBox::Slot()
+			.FillHeight(1.0f)
+			[
+				EUWContent
+			]
+			+ SVerticalBox::Slot()
+			.AutoHeight()
+			[
+				StatusBar
+			]);
+	}
+	
+	PendingTabContentRestore.Remove(InTabID);
+}
+
+TSharedPtr<SDockTab> UEUSS_WidgetManager::FindExistingTab(FName TabID)
+{
+	if (FLevelEditorModule* LevelEditor = FModuleManager::GetModulePtr<FLevelEditorModule>(TEXT("LevelEditor")))
+	{
+		if (TSharedPtr<FTabManager> Manager = LevelEditor->GetLevelEditorTabManager())
+		{
+			if (TSharedPtr<SDockTab> Tab = Manager->FindExistingLiveTab(TabID))
+			{
+				return Tab;
+			}
+		}
+	}
+
+	return FGlobalTabmanager::Get()->FindExistingLiveTab(TabID);
 }
 
 void UEUSS_WidgetManager::SetToRootNode(UUserWidget* InRootWidget)
@@ -269,29 +371,10 @@ TArray<UUserWidget*> UEUSS_WidgetManager::GetAllDescendants(UUserWidget* InWidge
 	return Result;
 }
 
-bool UEUSS_WidgetManager::TryFocusEditorUtilityTab(FName TabID)
+bool UEUSS_WidgetManager::TryFocusEditorUtilityTab(FName InTabID)
 {
-	TSharedPtr<SDockTab> Tab;
-
-	// 根据 TabID 查找 Tab
-	if (FLevelEditorModule* LevelEditor = FModuleManager::GetModulePtr<FLevelEditorModule>(TEXT("LevelEditor")))
-	{
-		if (TSharedPtr<FTabManager> Manager = LevelEditor->GetLevelEditorTabManager())
-		{
-			Tab = Manager->FindExistingLiveTab(TabID);
-		}
-	}
-
-	// Nomad Tab 由 GlobalTabManager 管理
-	if (!Tab)
-	{
-		Tab = FGlobalTabmanager::Get()->FindExistingLiveTab(TabID);
-	}
-
-	if (!Tab)
-	{
-		return false;
-	}
+	TSharedPtr<SDockTab> Tab = FindExistingTab(InTabID);
+	if (!Tab.IsValid()) return false;
 
 	if (TSharedPtr<SWindow> Window = Tab->GetParentWindow())
 	{
@@ -304,12 +387,14 @@ bool UEUSS_WidgetManager::TryFocusEditorUtilityTab(FName TabID)
 
 		// 将窗口置于最上层
 		Window->BringToFront();
-	}
 
-	// 激活 Tab
-	Tab->ActivateInParent(ETabActivationCause::SetDirectly);
+		// 激活 Tab
+		Tab->ActivateInParent(ETabActivationCause::SetDirectly);
+		
+		return true;
+	}
 	
-	return true;
+	return false;
 }
 
 TSharedRef<SDockTab> UEUSS_WidgetManager::OnSpawnEUWTab(const FSpawnTabArgs& Args, const FName InTabID)
@@ -327,6 +412,18 @@ TSharedRef<SDockTab> UEUSS_WidgetManager::OnSpawnEUWTab(const FSpawnTabArgs& Arg
 	// 先按原生方式创建 Tab 和 EUW
 	TSharedRef<SDockTab> Tab = WidgetBlueprint->SpawnEditorUITab(Args);
 
+	if (CompiledHandle.IsValid())
+	{
+		MainWidget->OnCompiled().Remove(CompiledHandle);
+	}
+	
+	CompiledHandle =
+		SpawnContext->Blueprint->OnCompiled().AddUObject(
+			this,
+			&UEUSS_WidgetManager::OnBlueprintCompiled,
+			SpawnContext->TabID
+		);
+	
 	UEditorUtilityWidget* Widget = WidgetBlueprint->GetCreatedWidget();
 	if (!IsValid(Widget))
 	{
@@ -457,14 +554,14 @@ void UEUSS_WidgetManager::OnMainWidgetMoved(const FAssetData& AssetData, const F
 	}
 }
 
-bool UEUSS_WidgetManager::CloseEditorUtilityTab(FName TabID)
+bool UEUSS_WidgetManager::CloseEditorUtilityTab(FName InTabID)
 {
 	if (!IsRunningCommandlet())
 	{
 		FLevelEditorModule& LevelEditor = FModuleManager::GetModuleChecked<FLevelEditorModule>(TEXT("LevelEditor"));
 		if (TSharedPtr<FTabManager> Manager = LevelEditor.GetLevelEditorTabManager())
 		{
-			if (TSharedPtr<SDockTab> Tab = Manager->FindExistingLiveTab(TabID))
+			if (TSharedPtr<SDockTab> Tab = Manager->FindExistingLiveTab(InTabID))
 			{
 				Tab->RequestCloseTab();
 				return true;
@@ -475,7 +572,7 @@ bool UEUSS_WidgetManager::CloseEditorUtilityTab(FName TabID)
 		 * 由于 Nomad Tab 由 FGlobalTabmanager 管理，
 		 * 而 UEditorUtilitySubsystem::CloseTabByID 在 5.6 版本之前没有处理，所以手动调用关闭
 		 */
-		if (TSharedPtr<SDockTab> NomadTab = FGlobalTabmanager::Get()->FindExistingLiveTab(TabID))
+		if (TSharedPtr<SDockTab> NomadTab = FGlobalTabmanager::Get()->FindExistingLiveTab(InTabID))
 		{
 			NomadTab->RequestCloseTab();
 			return true;
@@ -762,7 +859,7 @@ void UEUSS_WidgetManager::RemoveFrom_WidgetToTabName(UUserWidget* Widget)
 void UEUSS_WidgetManager::CloseOldWidget(UEditorUtilityWidgetBlueprint* InBlueprint)
 {
 	UEditorUtilityWidget* OldWidget = FindUtilityWidgetFromBlueprint(InBlueprint);
-	FName OldTabID = NAME_None;
+	// FName OldTabID = NAME_None;
 	if (OldWidget)
 	{
 		CloseWidgetTab(OldWidget);
