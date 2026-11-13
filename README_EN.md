@@ -13,7 +13,7 @@
 
 
 
-## Table of Contents
+## Contents
 
 - [Video Tutorial](#video-tutorial)
 - [Introduction](#introduction)
@@ -29,7 +29,7 @@
 
 ## Video Tutorial
 
-**Link to be added (recording in progress)**
+**Recording in progress**
 
 
 
@@ -148,14 +148,15 @@ MetaDataOfAssets/
 
 - This is an editor plugin.
 - To use this plugin, you need to enable both the `Struct Utils` and `Editor Scripting Utilities` plugins.
-- If you need to modify the Blueprint, recommend closing any open widgets and reopening them after compiled.
 - The plugin is localized in Chinese and English. The displayed text changes automatically when the Editor language is switched in [Editor Preferences -> Region & Language].
+- This asset is loaded when assets are added to the main widget and when **`Sync assets in configured path`** is clicked.
+- If you need to modify the Blueprint, recommend closing any open widgets and reopening them after compiled.
+- Do not use the `Run Utility Widget` button in the blueprint to open the widget.
 - All project-related configuration for this plugin is stored in [Config/DefaultMetaDataOfAssets.ini] in the plugin directory.
   - `[/Script/MetaDataOfAssets.MetaDataOfAssetsSettings]` section
     - `bAllowManageAssetRegistryTagsDelete`: Whether to allow automatic deletion of tags from the Asset Registry.
     - `ScanSettings`: The scan paths used when synchronizing assets.
     - `bEnableDebug`: Whether to enable UE_LOG and PrintString output related to this plugin.
     - `MainWidgetPath`: The path to the main widget asset. Do not modify it manually; otherwise, the button on the Editor toolbar will not be able to open the main widget.
-- This asset is loaded when assets are added to the main widget and when **`Sync assets in configured path`** is clicked.
 - When **`Sync assets in configured path`** is clicked, assets are loaded across multiple frames in the editor, and the loading progress is displayed in the bottom-right corner. After loading is complete, a save operation will be performed on all loaded assets.
 

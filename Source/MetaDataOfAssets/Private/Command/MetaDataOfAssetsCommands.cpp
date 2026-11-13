@@ -1,7 +1,6 @@
 // Copyright 2026 ljc. All rights reserved.
 
 #include "Command/MetaDataOfAssetsCommands.h"
-
 #include "Style/MetaDataOfAssetsStyle.h"
 
 #define LOCTEXT_NAMESPACE "MetaDataOfAssetsCommands"

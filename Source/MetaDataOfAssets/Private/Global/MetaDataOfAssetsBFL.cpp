@@ -1,7 +1,6 @@
 // Copyright 2026 ljc. All rights reserved.
 
 #include "Global/MetaDataOfAssetsBFL.h"
-
 #include "EditorAssetLibrary.h"
 
 
@@ -27,43 +26,45 @@ bool UMetaDataOfAssetsBFL::IsNameBlank(const FName& InName)
 
 TArray<FName> UMetaDataOfAssetsBFL::CalcIntersectionOfMetaData(const TArray<UObject*>& InAssets)
 {
-	TSet<FName> Result;
-	TSet<FName> SetToCompare;
-	
-	if (IsValid(InAssets[0]))
-	{
-		TMap<FName, FString> MetadataTagValues = UEditorAssetLibrary::GetMetadataTagValues(InAssets[0]);
-		TArray<FName> MetadataKeys;
-		MetadataTagValues.GetKeys(MetadataKeys);
-		SetToCompare.Append(MetadataKeys);
-	}
-	else
+	if (InAssets.IsEmpty())
 	{
 		return TArray<FName>();
 	}
 
+	TSet<FName> Result;
+	TSet<FName> SetToCompare;
+
+	if (!IsValid(InAssets[0])) 	return TArray<FName>();
+
+	// 以第一个资产中的元数据为基准进行比较
+	TMap<FName, FString> MetadataTagValues = UEditorAssetLibrary::GetMetadataTagValues(InAssets[0]);
+	TArray<FName> MetadataKeys;
+	MetadataTagValues.GetKeys(MetadataKeys);
+	SetToCompare.Append(MetadataKeys);
+
+	// 遍历所有资产
 	for (UObject* Asset : InAssets)
 	{
-		if (IsValid(Asset))
-		{
-			Result.Empty();
+		if (!IsValid(Asset)) return TArray<FName>();
 
-			TMap<FName, FString> MetadataTagValues = UEditorAssetLibrary::GetMetadataTagValues(Asset);
+		MetadataTagValues.Empty();
+		MetadataKeys.Empty();
+		Result.Empty();
+		
+		MetadataTagValues = UEditorAssetLibrary::GetMetadataTagValues(Asset);
+		MetadataTagValues.GetKeys(MetadataKeys);
+		Result.Append(MetadataKeys);
 
-			TArray<FName> MetadataKeys;
-			MetadataTagValues.GetKeys(MetadataKeys);
-			Result.Append(MetadataKeys);
-			
-			TSet<FName> TempSet = Result.Intersect(SetToCompare);
-			if (TempSet.IsEmpty()) return TArray<FName>();
+		// Intersect 计算两个集合的交集
+		TSet<FName> TempSet = Result.Intersect(SetToCompare);
 
-			Result = TempSet;
-		}
-		else
-		{
-			return TArray<FName>();
-		}
+		// 交集为空则返回空数组
+		if (TempSet.IsEmpty()) return TArray<FName>();
+
+		// 交集的结果作为新的基准进行下一次比较
+		Result = TempSet;
 	}
 
+	// 集合转换为数组
 	return Result.Array();
 }

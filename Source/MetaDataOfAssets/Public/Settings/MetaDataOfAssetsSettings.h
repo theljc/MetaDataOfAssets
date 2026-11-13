@@ -31,6 +31,7 @@ class METADATAOFASSETS_API UMetaDataOfAssetsSettings : public UDeveloperSettings
 	GENERATED_BODY()
 
 public:
+	
 	UMetaDataOfAssetsSettings() {};
 	
 	// 用于确定是否要自动删除资产注册表中的 MetaData Tag，修改配置需要重启编辑器

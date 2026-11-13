@@ -12,7 +12,7 @@ struct FScanDirectorySetting;
 class UWidget;
 
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnAssetDeleted, UObject*, Asset);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnAssetDeleted, FSoftObjectPath, AssetPath);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnAssetSynced, UObject*, Asset);
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnMetaDataAdded, UObject*, Asset);
@@ -21,12 +21,13 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnMetaDataModified, UObject*, Asset
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnMetaDataCopied, UObject*, SourceAsset, UObject*, TargetAsset);
 
 
-USTRUCT()
-struct FMetaDataMap
+struct FAssetMetaDataState
 {
-	GENERATED_BODY()
-	
-	TMap<FName, FString> Map;
+	// 保存此资产的元数据快照
+	TMap<FName, FString> MetaDataSnapshot;
+
+	// 此资产实际计入引用计数的 Tag
+	TSet<FName> CountedTags;
 };
 
 
@@ -71,10 +72,9 @@ public:
 	UPROPERTY(BlueprintAssignable, Category = "MetaDataOfAssets")
 	FOnAssetDeleted OnAssetDeleted;
 
-
 	// 主控件关闭时，设置已添加的资产
 	UFUNCTION(BlueprintCallable, Category = "MetaDataOfAssets")
-	void SetAddedAssets(const TArray<UObject*> NewAssetRefs) { AddedAssets = NewAssetRefs; }
+	void SetAddedAssets(const TArray<UObject*> InAssetRefs) { AddedAssets = InAssetRefs; }
 
 	// 获得上一次主控件关闭时已添加的资产
 	UFUNCTION(BlueprintCallable, Category = "MetaDataOfAssets")
@@ -86,60 +86,61 @@ public:
 
 	// 获得规范化的路径，确保没有重复的路径
 	UFUNCTION(BlueprintCallable, Category = "MetaDataOfAssets")
-	TArray<FScanDirectorySetting> GetNormalizedPathSettings(const TArray<FScanDirectorySetting>& Settings);
+	TArray<FScanDirectorySetting> GetNormalizedPathSettings(const TArray<FScanDirectorySetting>& InSettings);
 	
 	// 添加元数据
 	UFUNCTION(BlueprintCallable, Category = "MetaDataOfAssets")
-	void AddMetaData(UObject* Asset, FName TagToAdd, FString ValueToAdd);
+	void AddMetaData(UObject* InAsset, const FName InTagToAdd, const FString InValueToAdd);
 
 	// 修改元数据
 	UFUNCTION(BlueprintCallable, Category = "MetaDataOfAssets")
-	void ModifyMetaData(UObject* Asset, FName TagToAdd, FString ValueToAdd);
+	void ModifyMetaData(UObject* InAsset, const FName InTagToAdd, const FString InValueToAdd);
 
 	// 删除元数据
 	UFUNCTION(BlueprintCallable, Category = "MetaDataOfAssets")
-	void DeleteMetaData(UObject* Asset, FName TagToAdd);
+	void DeleteMetaData(UObject* InAsset, const FName InTagToAdd);
 
 	// 复制元数据
 	UFUNCTION(BlueprintCallable, Category = "MetaDataOfAssets")
-	void CopyMetaData(TArray<UObject*> SourceAsset, TArray<UObject*> TargetAsset);
+	void CopyMetaData(const TArray<UObject*> InSourceAsset, const TArray<UObject*> InTargetAsset);
 	
 	// 同步资产元数据
 	UFUNCTION(BlueprintCallable, Category = "MetaDataOfAssets")
-	void SyncAsset(UObject* Asset);
+	void SyncAsset(UObject* InAsset);
+
 	
-	// 添加标签到资产注册表
-	void AddTagToRegisteredTags(const FName TagToAdd, UObject* Asset);
-
-	// 从资产注册表移除标签
-	void RemoveTagFromRegisteredTags(const FName TagToRemove, UObject* Asset);
-	
-	// 注册标签到全局资产注册表
-	void AddTagToAssetRegistry(const FName TagToAdd);
-
-	// 从资产注册表中移除
-	void RemoveTagFromAssetRegistry(const FName TagToRemove, UObject* Asset);
-	
-	// 在删除模式下，更新资产的标签状态
-	void UpdateAssetTagStates(UObject* Asset);
-
-	// 资产被删除时，从已注册的标签中移除
-	void RemoveFromAssetTagStates(UObject* Asset);
-
 	// 资产删除回调
-	void OnAssetRemoved(const FAssetData& AssetData);
+	void OnAssetRemoved(const FAssetData& InAssetData);
+
+	// 资产重命名或移动时迁移元数据状态
+	void OnAssetsMoved(const FAssetData& InAssetData, const FString& InOldObjectPath);
 	
 	// 资产同步任务完成时的回调
-	void OnTaskFinished(FAssetSyncTask* FinishedTask);
+	void OnTaskFinished(FAssetSyncTask* InFinishedTask);
 	
 private:
 	
-	// 移除已保存的旧的元数据，并更新 AssetRegistry
-	void RemoveSavedMetaData(UObject* Asset, TMap<FName, FString>* TagMapToAdd);
+	// 添加标签到资产注册表
+	void AddTagToRegisteredTags(const FName InTagToAdd, UObject* InAsset);
 
-	// 添加实际的新的元数据，并更新 AssetRegistry
-	void AddActualMetaData(UObject* Asset, const TMap<FName, FString>& ObjectMetaDataMap, TMap<FName, FString>* TagMapToAdd);
+	// 从资产注册表移除标签
+	void RemoveTagFromRegisteredTags(const FName InTagToRemove, UObject* InAsset);
 	
+	// 注册标签到全局资产注册表
+	void AddTagToAssetRegistry(const FName InTagToAdd);
+
+	// 从资产注册表中移除
+	void RemoveTagFromAssetRegistry(const FName InTagToRemove);
+	
+	// 计算元数据修改前的快照，是后续计算元数据差异的基准
+	void CalcAssetTagStateBaseline(UObject* InAsset);
+	
+	// 在删除模式下，更新资产的标签状态
+	void UpdateAssetTagStates(UObject* InAsset);
+	
+	// 资产被删除时，从已注册的标签中移除
+	void RemoveFromAssetTagStates(const FSoftObjectPath& InAssetPath);
+
 	
 	// 保存所有已添加的资产
 	UPROPERTY()
@@ -149,7 +150,10 @@ private:
 	TMap<FName, int32> RegisteredTags;
 
 	// 此变量用于标记资产的元数据是否被同步过，外层 key 表示资产路径，内层结构体表示元数据的键值对
-	TMap<FSoftObjectPath, FMetaDataMap> AssetTagStates;
+	TMap<FSoftObjectPath, FAssetMetaDataState> AssetTagStates;
+
+	// 防止 AssetDeleted 和 PackageDeleted 对同一路径重复触发删除事件
+	TSet<FSoftObjectPath> RemovedAssetPaths;
 	
 	// 资产同步任务
 	TSharedPtr<FAssetSyncTask> AssetSyncTask;

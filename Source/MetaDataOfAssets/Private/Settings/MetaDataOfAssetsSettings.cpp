@@ -1,7 +1,6 @@
 // Copyright 2026 ljc. All rights reserved.
 
 #include "Settings/MetaDataOfAssetsSettings.h"
-
 #include "Interfaces/IPluginManager.h"
 #include "Log/MetaDataOfAssetsLogChannel.h"
 #include "Misc/Paths.h"

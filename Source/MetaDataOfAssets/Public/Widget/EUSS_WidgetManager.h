@@ -6,13 +6,13 @@
 #include "Editor/Blutility/Public/EditorUtilitySubsystem.h"
 #include "InstancedStruct.h"
 #include "StructUtils/InstancedStruct.h"
+#include "EditorUtilityWidgetBlueprint.h"
 #include "EUSS_WidgetManager.generated.h"
 
 class FAssetSyncTask;
 struct FInstancedStruct;
 class UUserWidget;
 class UEditorUtilityWidget;
-class UEditorUtilityWidgetBlueprint;
 
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnWidgetInstanceCreated, UUserWidget*, Widget);
@@ -122,22 +122,22 @@ public:
 	/**
 	 * 用于创建 UserWidget
 	 *
-	 * @param WidgetClass	要创建的 UserWidget 类
-	 * @param Params		创建时可以通过 FInstancedStruct 传递参数
+	 * @param InWidgetClass	要创建的 UserWidget 类
+	 * @param InParams		创建时可以通过 FInstancedStruct 传递参数
 	 * @return				创建完成的实例
 	 */
 	UFUNCTION(BlueprintCallable, Category = "MetaDataOfAssets")
-	UUserWidget* CreateUserWidget(TSubclassOf<UUserWidget> WidgetClass, const FInstancedStruct& Params);
+	UUserWidget* CreateUserWidget(TSubclassOf<UUserWidget> InWidgetClass, const FInstancedStruct& InParams);
 
 	/**
 	 * 用于创建 EditorUtilityWidget
 	 * 
 	 * @param InBlueprint   要创建的 EUW 类
-	 * @param Params		创建时可以通过 FInstancedStruct 传递参数
+	 * @param InParams		创建时可以通过 FInstancedStruct 传递参数
 	 * @return				创建完成的实例
 	 */
 	UFUNCTION(BlueprintCallable, Category = "MetaDataOfAssets")
-	UEditorUtilityWidget* CreateEditorUtilityWidget(UEditorUtilityWidgetBlueprint* InBlueprint, FInstancedStruct Params);
+	UEditorUtilityWidget* CreateEditorUtilityWidget(UEditorUtilityWidgetBlueprint* InBlueprint, FInstancedStruct InParams);
 
 	// 创建树的根节点
 	UFUNCTION(BlueprintCallable, Category = "MetaDataOfAssets")
@@ -145,32 +145,18 @@ public:
 
 	// 往树中添加子节点
 	UFUNCTION(BlueprintCallable, Category = "MetaDataOfAssets")
-	void AddToChildNode(UUserWidget* ParentWidget, UUserWidget* ChildWidget);
+	void AddToChildNode(UUserWidget* InParentWidget, UUserWidget* InChildWidget);
 
-	// 查找某节点下的所有子节点
-	TArray<UUserWidget*> GetAllDescendants(UUserWidget* InWidget);
-
-	// 在 EUW 的 NativeDestruct 中调用：关闭当前及所有子节点 Widget，并清理树节点
-	// void RemoveNodeAndDescendants(UUserWidget* InWidget);
-
+	
 	// 注册主控件
 	void RegisterMainWidgetTab();
 	
 	// 创建主控件
 	void CreateMainWidget();
-
-	// 关闭旧的控件
-	void CloseOldWidget(UEditorUtilityWidgetBlueprint* InBlueprint);
-
-	// 尝试聚焦到指定的 EUW 控件，返回是否聚焦成功
-	bool TryFocusEditorUtilityTab(FName InTabID);
-
-	// 主控件资产移动或重命名时触发，确保主窗口的资产移动后，下次启动编辑器依然能打开
-	void OnMainWidgetMoved(const FAssetData& AssetData, const FString& OldObjectPath);
 	
-	// 通过 TabID 关闭对应的 EUW
-	bool CloseEditorUtilityTab(FName InTabID);
-
+	// 主控件资产移动或重命名时触发，确保主窗口的资产移动后，下次启动编辑器依然能打开
+	void OnAssetsMoved(const FAssetData& InAssetData, const FString& InOldObjectPath);
+	
 	// 关闭所有已创建的控件
 	void CloseAllWidgets();
 
@@ -179,16 +165,16 @@ public:
 	void EnableDebug();
 	
 	// 添加和移除 ActiveWidgets
-	void AddToActiveWidgets(UUserWidget* Widget);
-	void RemoveFromActiveWidgets(UUserWidget* Widget);
+	void AddToActiveWidgets(UUserWidget* InWidget);
+	void RemoveFromActiveWidgets(UUserWidget* InWidget);
 
 	// 添加和移除 WidgetToTabName
-	void AddTo_WidgetToTabName(UUserWidget* Widget, FName TabName);
-	void RemoveFrom_WidgetToTabName(UUserWidget* Widget);
+	void AddTo_WidgetToTabName(UUserWidget* InWidget, FName InTabName);
+	void RemoveFrom_WidgetToTabName(UUserWidget* InWidget);
 
 	// 资产同步任务开始和完成时
 	void OnTaskStart();
-	void OnTaskComplete();
+	void OnTaskFinished();
 	
 	
 	/** Getter */
@@ -197,64 +183,75 @@ public:
 	TMap<TObjectPtr<UUserWidget>, FName> GetWidgetToTabName() const { return WidgetToTabName; }
 
 	TSoftObjectPtr<UEditorUtilityWidgetBlueprint> GetMainWidgetSoftPtr() const { return MainWidgetSoftPtr; }
-
-	// bool GetInCreatingSubWidget() const { return bInSubWidgetCreating; }
 	
 	/** Setter */
 	void SetMainWidgetSoftPtr(const TSoftObjectPtr<UEditorUtilityWidgetBlueprint>& InMainWidgetSoftPtr) { MainWidgetSoftPtr = InMainWidgetSoftPtr; }
 
-	// void SetInCreatingSubWidget(const bool bInCreating) { bInSubWidgetCreating = bInCreating; }
-
 private:
-
+	
 	// 注册标签页
 	bool RegisterTab_Custom(const FEUWTabSpawnContext& InSpawnContext);
 
 	// 注册并生成子控件
-	UEditorUtilityWidget* SpawnAndRegisterTabWithId_Custom(UEditorUtilityWidgetBlueprint* InBlueprint, const FName InTabID, FInstancedStruct Params);
-
+	UEditorUtilityWidget* SpawnAndRegisterTabWithId_Custom(UEditorUtilityWidgetBlueprint* InBlueprint, const FName InTabID, FInstancedStruct InParams);
+	
+	// 生成控件
+	void SpawnRegisteredTabByID_Custom(const FEUWTabSpawnContext& InSpawnContext);
+	
+	// 标签页被关闭时
+	void OnTabClosed(TSharedRef<SDockTab> InClosedTab, TWeakObjectPtr<UUserWidget> InWeakWidget, TWeakObjectPtr<UEditorUtilityWidgetBlueprint> InWeakBlueprint);
+	
+	// 标签页被创建时
+	TSharedRef<SDockTab> OnSpawnEUWTab(const FSpawnTabArgs& InArgs, const FName InTabID);
+	
+	// 查找已存在的标签页
+	TSharedPtr<SDockTab> FindExistingTab(const FName InTabID);
+	
+	// 蓝图编译回调
 	void OnBlueprintCompiled(UBlueprint* InCompiledBlueprint, const FName InTabID);
+
+	// 蓝图编译后，用于恢复标签页的内容
 	void RestoreTabContent(const FName InTabID);
 
-	TSharedPtr<SDockTab> FindExistingTab(FName TabID);
 	
-	// 用于判断是否正在创建 EUW
-	// bool bInSubWidgetCreating = false;
+	// 尝试聚焦到指定的 EUW 控件，返回是否聚焦成功
+	bool TryFocusEditorUtilityTab(const FName InTabID);
 	
-	// 创建或查找树节点
-	UEuwTreeNode* CreateOrFindTreeNode(UUserWidget* Widget);
-
-	// 从树中移除单个节点
-	void RemoveNodeFromTree(UUserWidget* Widget);
+	// 通过 TabID 关闭对应的 EUW
+	bool CloseTabByID_Custom(const FName InTabID);
 	
-	void CloseDescendantTabs(UUserWidget* RootWidget);
+	// 关闭旧的控件
+	void CloseOldWidget(UEditorUtilityWidgetBlueprint* InBlueprint);
 	
 	// 关闭一个 Widget 对应的 Tab
-	void CloseWidgetTab(UUserWidget* Widget);
+	void CloseWidgetTab(UUserWidget* InWidget);
+
+	
+	// 创建或查找树节点
+	UEuwTreeNode* CreateOrFindTreeNode(UUserWidget* InWidget);
+	
+	// 查找某节点下的所有子节点
+	TArray<UUserWidget*> GetAllDescendants(UUserWidget* InWidget);
+	
+	// 从树中移除单个节点
+	void RemoveNodeFromTree(UUserWidget* InWidget);
+	
+	// 移除所有子节点对应的标签页
+	void CloseDescendantTabs(UUserWidget* InRootWidget);
+	
+	
+	// 设置主控件资产的路径
+	void SetMainWidgetPath();
 	
 	// 加载主控件的资产
 	UEditorUtilityWidgetBlueprint* LoadMainWidget();
 
 	// 构建主控件的 TabID
-	FName MakeMainWidgetTabID(const UEditorUtilityWidgetBlueprint* Blueprint);
+	FName MakeMainWidgetTabID(const UEditorUtilityWidgetBlueprint* InBlueprint);
 
 	// 构建 StatusBar 的名称
-	FName MakeStatusBarName(const UEditorUtilityWidgetBlueprint* Blueprint);
-
-	// 生成控件
-	void SpawnRegisteredTabByID_Custom(const FEUWTabSpawnContext& SpawnContext);
-
-	// 设置主控件资产的路径
-	void SetMainWidgetPath();
+	FName MakeStatusBarName(const UEditorUtilityWidgetBlueprint* InBlueprint);
 	
-	// 标签页被关闭时
-	void OnTabClosed(TSharedRef<SDockTab> ClosedTab, TWeakObjectPtr<UUserWidget> WeakWidget, TWeakObjectPtr<UEditorUtilityWidgetBlueprint> WeakBlueprint);
-	
-	// 标签页被创建时
-	TSharedRef<SDockTab> OnSpawnEUWTab(const FSpawnTabArgs& Args, const FName InTabID);
-
-	// 创建子控件的标签页
-	// TSharedRef<SDockTab> SpawnSubWidgetTab(const FSpawnTabArgs& Args, UEditorUtilityWidgetBlueprint* InBlueprint);
 	
 	// 主控件资产的路径
 	FString MainWidgetPath;

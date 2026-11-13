@@ -1,0 +1,930 @@
+# Fill out your copyright notice in the Description page of Project Settings.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: MetaDataPlugin_DisplayNameAndCategory\n"
+"POT-Creation-Date: 2026-11-12 17:30\n"
+"PO-Revision-Date: 2026-11-13 01:32+0800\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.9\n"
+
+#. Key:	MetaDataOfAssets
+#. SourceLocation:	Meta-data for key Category of member Directory in ScanDirectorySetting (type: StructProperty, owner: ScanDirectorySetting)
+#: Meta-data for key Category of member Directory in ScanDirectorySetting
+#: (type: StructProperty, owner: ScanDirectorySetting)
+msgctxt "UObjectCategory,MetaDataOfAssets"
+msgid "MetaDataOfAssets"
+msgstr "MetaDataOfAssets"
+
+#. Key:	EUSS_WidgetManager:ActiveWidgets
+#. SourceLocation:	Meta-data for key DisplayName of member ActiveWidgets in EUSS_WidgetManager (type: ArrayProperty, owner: EUSS_WidgetManager)
+#: Meta-data for key DisplayName of member ActiveWidgets in EUSS_WidgetManager
+#: (type: ArrayProperty, owner: EUSS_WidgetManager)
+msgctxt "UObjectDisplayNames,EUSS_WidgetManager:ActiveWidgets"
+msgid "Active Widgets"
+msgstr "Active Widgets"
+
+#. Key:	EUSS_MetaDataManager:AddedAssets
+#. SourceLocation:	Meta-data for key DisplayName of member AddedAssets in EUSS_MetaDataManager (type: ArrayProperty, owner: EUSS_MetaDataManager)
+#: Meta-data for key DisplayName of member AddedAssets in EUSS_MetaDataManager
+#: (type: ArrayProperty, owner: EUSS_MetaDataManager)
+msgctxt "UObjectDisplayNames,EUSS_MetaDataManager:AddedAssets"
+msgid "Added Assets"
+msgstr "Added Assets"
+
+#. Key:	EUSS_MetaDataManager:AddMetaData
+#. SourceLocation:	Meta-data for key DisplayName of member AddMetaData in EUSS_MetaDataManager (type: Function, owner: AddMetaData)
+#: Meta-data for key DisplayName of member AddMetaData in EUSS_MetaDataManager
+#: (type: Function, owner: AddMetaData)
+msgctxt "UObjectDisplayNames,EUSS_MetaDataManager:AddMetaData"
+msgid "Add Meta Data"
+msgstr "Add Meta Data"
+
+#. Key:	EUSS_WidgetManager:AddToChildNode
+#. SourceLocation:	Meta-data for key DisplayName of member AddToChildNode in EUSS_WidgetManager (type: Function, owner: AddToChildNode)
+#: Meta-data for key DisplayName of member AddToChildNode in EUSS_WidgetManager
+#: (type: Function, owner: AddToChildNode)
+msgctxt "UObjectDisplayNames,EUSS_WidgetManager:AddToChildNode"
+msgid "Add to Child Node"
+msgstr "Add to Child Node"
+
+#. Key:	OnAssetDeleted__DelegateSignature:Asset
+#. SourceLocation:	Meta-data for key DisplayName of member Asset in OnAssetDeleted__DelegateSignature (type: ObjectProperty, owner: OnAssetDeleted__DelegateSignature)
+#: Meta-data for key DisplayName of member Asset in
+#: OnAssetDeleted__DelegateSignature (type: ObjectProperty, owner:
+#: OnAssetDeleted__DelegateSignature)
+msgctxt "UObjectDisplayNames,OnAssetDeleted__DelegateSignature:Asset"
+msgid "Asset"
+msgstr "Asset"
+
+#. Key:	OnAssetSynced__DelegateSignature:Asset
+#. SourceLocation:	Meta-data for key DisplayName of member Asset in OnAssetSynced__DelegateSignature (type: ObjectProperty, owner: OnAssetSynced__DelegateSignature)
+#: Meta-data for key DisplayName of member Asset in
+#: OnAssetSynced__DelegateSignature (type: ObjectProperty, owner:
+#: OnAssetSynced__DelegateSignature)
+msgctxt "UObjectDisplayNames,OnAssetSynced__DelegateSignature:Asset"
+msgid "Asset"
+msgstr "Asset"
+
+#. Key:	OnMetaDataAdded__DelegateSignature:Asset
+#. SourceLocation:	Meta-data for key DisplayName of member Asset in OnMetaDataAdded__DelegateSignature (type: ObjectProperty, owner: OnMetaDataAdded__DelegateSignature)
+#: Meta-data for key DisplayName of member Asset in
+#: OnMetaDataAdded__DelegateSignature (type: ObjectProperty, owner:
+#: OnMetaDataAdded__DelegateSignature)
+msgctxt "UObjectDisplayNames,OnMetaDataAdded__DelegateSignature:Asset"
+msgid "Asset"
+msgstr "Asset"
+
+#. Key:	OnMetaDataDeleted__DelegateSignature:Asset
+#. SourceLocation:	Meta-data for key DisplayName of member Asset in OnMetaDataDeleted__DelegateSignature (type: ObjectProperty, owner: OnMetaDataDeleted__DelegateSignature)
+#: Meta-data for key DisplayName of member Asset in
+#: OnMetaDataDeleted__DelegateSignature (type: ObjectProperty, owner:
+#: OnMetaDataDeleted__DelegateSignature)
+msgctxt "UObjectDisplayNames,OnMetaDataDeleted__DelegateSignature:Asset"
+msgid "Asset"
+msgstr "Asset"
+
+#. Key:	OnMetaDataModified__DelegateSignature:Asset
+#. SourceLocation:	Meta-data for key DisplayName of member Asset in OnMetaDataModified__DelegateSignature (type: ObjectProperty, owner: OnMetaDataModified__DelegateSignature)
+#: Meta-data for key DisplayName of member Asset in
+#: OnMetaDataModified__DelegateSignature (type: ObjectProperty, owner:
+#: OnMetaDataModified__DelegateSignature)
+msgctxt "UObjectDisplayNames,OnMetaDataModified__DelegateSignature:Asset"
+msgid "Asset"
+msgstr "Asset"
+
+#. Key:	EUSS_MetaDataManager:bAllowManageAssetRegistryTagsDelete
+#. SourceLocation:	Meta-data for key DisplayName of member bAllowManageAssetRegistryTagsDelete in EUSS_MetaDataManager (type: BoolProperty, owner: EUSS_MetaDataManager)
+#: Meta-data for key DisplayName of member bAllowManageAssetRegistryTagsDelete
+#: in EUSS_MetaDataManager (type: BoolProperty, owner: EUSS_MetaDataManager)
+msgctxt "UObjectDisplayNames,EUSS_MetaDataManager:bAllowManageAssetRegistryTagsDelete"
+msgid "Allow Manage Asset Registry Tags Delete"
+msgstr "Allow Manage Asset Registry Tags Delete"
+
+#. Key:	MetaDataOfAssetsSettings:bAllowManageAssetRegistryTagsDelete
+#. SourceLocation:	Meta-data for key DisplayName of member bAllowManageAssetRegistryTagsDelete in MetaDataOfAssetsSettings (type: BoolProperty, owner: MetaDataOfAssetsSettings)
+#: Meta-data for key DisplayName of member bAllowManageAssetRegistryTagsDelete
+#: in MetaDataOfAssetsSettings (type: BoolProperty, owner:
+#: MetaDataOfAssetsSettings)
+msgctxt "UObjectDisplayNames,MetaDataOfAssetsSettings:bAllowManageAssetRegistryTagsDelete"
+msgid "Allow Manage Asset Registry Tags Delete"
+msgstr "Allow Manage Asset Registry Tags Delete"
+
+#. Key:	MetaDataOfAssetsSettings:bEnableDebug
+#. SourceLocation:	Meta-data for key DisplayName of member bEnableDebug in MetaDataOfAssetsSettings (type: BoolProperty, owner: MetaDataOfAssetsSettings)
+#: Meta-data for key DisplayName of member bEnableDebug in
+#: MetaDataOfAssetsSettings (type: BoolProperty, owner:
+#: MetaDataOfAssetsSettings)
+msgctxt "UObjectDisplayNames,MetaDataOfAssetsSettings:bEnableDebug"
+msgid "Enable Debug"
+msgstr "Enable Debug"
+
+#. Key:	ScanDirectorySetting:bRecursive
+#. SourceLocation:	Meta-data for key DisplayName of member bRecursive in ScanDirectorySetting (type: BoolProperty, owner: ScanDirectorySetting)
+#: Meta-data for key DisplayName of member bRecursive in ScanDirectorySetting
+#: (type: BoolProperty, owner: ScanDirectorySetting)
+msgctxt "UObjectDisplayNames,ScanDirectorySetting:bRecursive"
+msgid "Recursive"
+msgstr "Recursive"
+
+#. Key:	MetaDataOfAssetsBFL:CalcIntersectionOfMetaData
+#. SourceLocation:	Meta-data for key DisplayName of member CalcIntersectionOfMetaData in MetaDataOfAssetsBFL (type: Function, owner: CalcIntersectionOfMetaData)
+#: Meta-data for key DisplayName of member CalcIntersectionOfMetaData in
+#: MetaDataOfAssetsBFL (type: Function, owner: CalcIntersectionOfMetaData)
+msgctxt "UObjectDisplayNames,MetaDataOfAssetsBFL:CalcIntersectionOfMetaData"
+msgid "Calc Intersection Of Meta Data"
+msgstr ""
+
+#. Key:	EuwTreeNode:Children
+#. SourceLocation:	Meta-data for key DisplayName of member Children in EuwTreeNode (type: ArrayProperty, owner: EuwTreeNode)
+#: Meta-data for key DisplayName of member Children in EuwTreeNode (type:
+#: ArrayProperty, owner: EuwTreeNode)
+msgctxt "UObjectDisplayNames,EuwTreeNode:Children"
+msgid "Children"
+msgstr "Children"
+
+#. Key:	EUSS_MetaDataManager:CopyMetaData
+#. SourceLocation:	Meta-data for key DisplayName of member CopyMetaData in EUSS_MetaDataManager (type: Function, owner: CopyMetaData)
+#: Meta-data for key DisplayName of member CopyMetaData in EUSS_MetaDataManager
+#: (type: Function, owner: CopyMetaData)
+msgctxt "UObjectDisplayNames,EUSS_MetaDataManager:CopyMetaData"
+msgid "Copy Meta Data"
+msgstr "Copy Meta Data"
+
+#. Key:	EUSS_WidgetManager:CreateEditorUtilityWidget
+#. SourceLocation:	Meta-data for key DisplayName of member CreateEditorUtilityWidget in EUSS_WidgetManager (type: Function, owner: CreateEditorUtilityWidget)
+#: Meta-data for key DisplayName of member CreateEditorUtilityWidget in
+#: EUSS_WidgetManager (type: Function, owner: CreateEditorUtilityWidget)
+msgctxt "UObjectDisplayNames,EUSS_WidgetManager:CreateEditorUtilityWidget"
+msgid "Create Editor Utility Widget"
+msgstr "Create Editor Utility Widget"
+
+#. Key:	EUSS_WidgetManager:CreateUserWidget
+#. SourceLocation:	Meta-data for key DisplayName of member CreateUserWidget in EUSS_WidgetManager (type: Function, owner: CreateUserWidget)
+#: Meta-data for key DisplayName of member CreateUserWidget in
+#: EUSS_WidgetManager (type: Function, owner: CreateUserWidget)
+msgctxt "UObjectDisplayNames,EUSS_WidgetManager:CreateUserWidget"
+msgid "Create User Widget"
+msgstr "Create User Widget"
+
+#. Key:	EUSS_MetaDataManager:DeleteMetaData
+#. SourceLocation:	Meta-data for key DisplayName of member DeleteMetaData in EUSS_MetaDataManager (type: Function, owner: DeleteMetaData)
+#: Meta-data for key DisplayName of member DeleteMetaData in
+#: EUSS_MetaDataManager (type: Function, owner: DeleteMetaData)
+msgctxt "UObjectDisplayNames,EUSS_MetaDataManager:DeleteMetaData"
+msgid "Delete Meta Data"
+msgstr "Delete Meta Data"
+
+#. Key:	ScanDirectorySetting:Directory
+#. SourceLocation:	Meta-data for key DisplayName of member Directory in ScanDirectorySetting (type: StructProperty, owner: ScanDirectorySetting)
+#: Meta-data for key DisplayName of member Directory in ScanDirectorySetting
+#: (type: StructProperty, owner: ScanDirectorySetting)
+msgctxt "UObjectDisplayNames,ScanDirectorySetting:Directory"
+msgid "Directory"
+msgstr "Directory"
+
+#. Key:	EUSS_MetaDataManager
+#. SourceLocation:	Meta-data for key DisplayName of member EUSS_MetaDataManager in None (type: Class, owner: EUSS_MetaDataManager)
+#: Meta-data for key DisplayName of member EUSS_MetaDataManager in None (type:
+#: Class, owner: EUSS_MetaDataManager)
+msgctxt "UObjectDisplayNames,EUSS_MetaDataManager"
+msgid "EUSS Meta Data Manager"
+msgstr "EUSS Meta Data Manager"
+
+#. Key:	EUSS_WidgetManager
+#. SourceLocation:	Meta-data for key DisplayName of member EUSS_WidgetManager in None (type: Class, owner: EUSS_WidgetManager)
+#: Meta-data for key DisplayName of member EUSS_WidgetManager in None (type:
+#: Class, owner: EUSS_WidgetManager)
+msgctxt "UObjectDisplayNames,EUSS_WidgetManager"
+msgid "EUSS Widget Manager"
+msgstr "EUSS Widget Manager"
+
+#. Key:	EUW_BaseUtilityWidget
+#. SourceLocation:	Meta-data for key DisplayName of member EUW_BaseUtilityWidget in None (type: Class, owner: EUW_BaseUtilityWidget)
+#: Meta-data for key DisplayName of member EUW_BaseUtilityWidget in None (type:
+#: Class, owner: EUW_BaseUtilityWidget)
+msgctxt "UObjectDisplayNames,EUW_BaseUtilityWidget"
+msgid "EUW Base Utility Widget"
+msgstr "EUW Base Utility Widget"
+
+#. Key:	EUWTabSpawnContext
+#. SourceLocation:	Meta-data for key DisplayName of member EUWTabSpawnContext in None (type: ScriptStruct, owner: EUWTabSpawnContext)
+#: Meta-data for key DisplayName of member EUWTabSpawnContext in None (type:
+#: ScriptStruct, owner: EUWTabSpawnContext)
+msgctxt "UObjectDisplayNames,EUWTabSpawnContext"
+msgid "EUWTab Spawn Context"
+msgstr ""
+
+#. Key:	EuwTreeNode
+#. SourceLocation:	Meta-data for key DisplayName of member EuwTreeNode in None (type: Class, owner: EuwTreeNode)
+#: Meta-data for key DisplayName of member EuwTreeNode in None (type: Class,
+#: owner: EuwTreeNode)
+msgctxt "UObjectDisplayNames,EuwTreeNode"
+msgid "Euw Tree Node"
+msgstr "Euw Tree Node"
+
+#. Key:	EUSS_MetaDataManager:GetAddedAssets
+#. SourceLocation:	Meta-data for key DisplayName of member GetAddedAssets in EUSS_MetaDataManager (type: Function, owner: GetAddedAssets)
+#: Meta-data for key DisplayName of member GetAddedAssets in
+#: EUSS_MetaDataManager (type: Function, owner: GetAddedAssets)
+msgctxt "UObjectDisplayNames,EUSS_MetaDataManager:GetAddedAssets"
+msgid "Get Added Assets"
+msgstr "Get Added Assets"
+
+#. Key:	EUSS_WidgetManager:GetEnableDebugSetting
+#. SourceLocation:	Meta-data for key DisplayName of member GetEnableDebugSetting in EUSS_WidgetManager (type: Function, owner: GetEnableDebugSetting)
+#: Meta-data for key DisplayName of member GetEnableDebugSetting in
+#: EUSS_WidgetManager (type: Function, owner: GetEnableDebugSetting)
+msgctxt "UObjectDisplayNames,EUSS_WidgetManager:GetEnableDebugSetting"
+msgid "Get Enable Debug Setting"
+msgstr "Get Enable Debug Setting"
+
+#. Key:	EUSS_MetaDataManager:GetNormalizedPathSettings
+#. SourceLocation:	Meta-data for key DisplayName of member GetNormalizedPathSettings in EUSS_MetaDataManager (type: Function, owner: GetNormalizedPathSettings)
+#: Meta-data for key DisplayName of member GetNormalizedPathSettings in
+#: EUSS_MetaDataManager (type: Function, owner: GetNormalizedPathSettings)
+msgctxt "UObjectDisplayNames,EUSS_MetaDataManager:GetNormalizedPathSettings"
+msgid "Get Normalized Path Settings"
+msgstr "Get Normalized Path Settings"
+
+#. Key:	EUSS_MetaDataManager:AddMetaData:InAsset
+#. SourceLocation:	Meta-data for key DisplayName of member InAsset in EUSS_MetaDataManager:AddMetaData (type: ObjectProperty, owner: AddMetaData)
+#: Meta-data for key DisplayName of member InAsset in
+#: EUSS_MetaDataManager:AddMetaData (type: ObjectProperty, owner: AddMetaData)
+msgctxt "UObjectDisplayNames,EUSS_MetaDataManager:AddMetaData:InAsset"
+msgid "In Asset"
+msgstr "In Asset"
+
+#. Key:	EUSS_MetaDataManager:DeleteMetaData:InAsset
+#. SourceLocation:	Meta-data for key DisplayName of member InAsset in EUSS_MetaDataManager:DeleteMetaData (type: ObjectProperty, owner: DeleteMetaData)
+#: Meta-data for key DisplayName of member InAsset in
+#: EUSS_MetaDataManager:DeleteMetaData (type: ObjectProperty, owner:
+#: DeleteMetaData)
+msgctxt "UObjectDisplayNames,EUSS_MetaDataManager:DeleteMetaData:InAsset"
+msgid "In Asset"
+msgstr "In Asset"
+
+#. Key:	EUSS_MetaDataManager:ModifyMetaData:InAsset
+#. SourceLocation:	Meta-data for key DisplayName of member InAsset in EUSS_MetaDataManager:ModifyMetaData (type: ObjectProperty, owner: ModifyMetaData)
+#: Meta-data for key DisplayName of member InAsset in
+#: EUSS_MetaDataManager:ModifyMetaData (type: ObjectProperty, owner:
+#: ModifyMetaData)
+msgctxt "UObjectDisplayNames,EUSS_MetaDataManager:ModifyMetaData:InAsset"
+msgid "In Asset"
+msgstr "In Asset"
+
+#. Key:	EUSS_MetaDataManager:SyncAsset:InAsset
+#. SourceLocation:	Meta-data for key DisplayName of member InAsset in EUSS_MetaDataManager:SyncAsset (type: ObjectProperty, owner: SyncAsset)
+#: Meta-data for key DisplayName of member InAsset in
+#: EUSS_MetaDataManager:SyncAsset (type: ObjectProperty, owner: SyncAsset)
+msgctxt "UObjectDisplayNames,EUSS_MetaDataManager:SyncAsset:InAsset"
+msgid "In Asset"
+msgstr "In Asset"
+
+#. Key:	EUSS_MetaDataManager:SetAddedAssets:InAssetRefs
+#. SourceLocation:	Meta-data for key DisplayName of member InAssetRefs in EUSS_MetaDataManager:SetAddedAssets (type: ArrayProperty, owner: SetAddedAssets)
+#: Meta-data for key DisplayName of member InAssetRefs in
+#: EUSS_MetaDataManager:SetAddedAssets (type: ArrayProperty, owner:
+#: SetAddedAssets)
+msgctxt "UObjectDisplayNames,EUSS_MetaDataManager:SetAddedAssets:InAssetRefs"
+msgid "In Asset Refs"
+msgstr "In Asset Refs"
+
+#. Key:	MetaDataOfAssetsBFL:CalcIntersectionOfMetaData:InAssets
+#. SourceLocation:	Meta-data for key DisplayName of member InAssets in MetaDataOfAssetsBFL:CalcIntersectionOfMetaData (type: ArrayProperty, owner: CalcIntersectionOfMetaData)
+#: Meta-data for key DisplayName of member InAssets in
+#: MetaDataOfAssetsBFL:CalcIntersectionOfMetaData (type: ArrayProperty, owner:
+#: CalcIntersectionOfMetaData)
+msgctxt "UObjectDisplayNames,MetaDataOfAssetsBFL:CalcIntersectionOfMetaData:InAssets"
+msgid "In Assets"
+msgstr "In Assets"
+
+#. Key:	EUSS_WidgetManager:CreateEditorUtilityWidget:InBlueprint
+#. SourceLocation:	Meta-data for key DisplayName of member InBlueprint in EUSS_WidgetManager:CreateEditorUtilityWidget (type: ObjectProperty, owner: CreateEditorUtilityWidget)
+#: Meta-data for key DisplayName of member InBlueprint in
+#: EUSS_WidgetManager:CreateEditorUtilityWidget (type: ObjectProperty, owner:
+#: CreateEditorUtilityWidget)
+msgctxt "UObjectDisplayNames,EUSS_WidgetManager:CreateEditorUtilityWidget:InBlueprint"
+msgid "In Blueprint"
+msgstr "In Blueprint"
+
+#. Key:	EUSS_WidgetManager:AddToChildNode:InChildWidget
+#. SourceLocation:	Meta-data for key DisplayName of member InChildWidget in EUSS_WidgetManager:AddToChildNode (type: ObjectProperty, owner: AddToChildNode)
+#: Meta-data for key DisplayName of member InChildWidget in
+#: EUSS_WidgetManager:AddToChildNode (type: ObjectProperty, owner:
+#: AddToChildNode)
+msgctxt "UObjectDisplayNames,EUSS_WidgetManager:AddToChildNode:InChildWidget"
+msgid "In Child Widget"
+msgstr "In Child Widget"
+
+#. Key:	MetaDataOfAssetsBFL:IsNameBlank:InName
+#. SourceLocation:	Meta-data for key DisplayName of member InName in MetaDataOfAssetsBFL:IsNameBlank (type: NameProperty, owner: IsNameBlank)
+#: Meta-data for key DisplayName of member InName in
+#: MetaDataOfAssetsBFL:IsNameBlank (type: NameProperty, owner: IsNameBlank)
+msgctxt "UObjectDisplayNames,MetaDataOfAssetsBFL:IsNameBlank:InName"
+msgid "In Name"
+msgstr ""
+
+#. Key:	EUSS_WidgetManager:CreateEditorUtilityWidget:InParams
+#. SourceLocation:	Meta-data for key DisplayName of member InParams in EUSS_WidgetManager:CreateEditorUtilityWidget (type: StructProperty, owner: CreateEditorUtilityWidget)
+#: Meta-data for key DisplayName of member InParams in
+#: EUSS_WidgetManager:CreateEditorUtilityWidget (type: StructProperty, owner:
+#: CreateEditorUtilityWidget)
+msgctxt "UObjectDisplayNames,EUSS_WidgetManager:CreateEditorUtilityWidget:InParams"
+msgid "In Params"
+msgstr "In Params"
+
+#. Key:	EUSS_WidgetManager:CreateUserWidget:InParams
+#. SourceLocation:	Meta-data for key DisplayName of member InParams in EUSS_WidgetManager:CreateUserWidget (type: StructProperty, owner: CreateUserWidget)
+#: Meta-data for key DisplayName of member InParams in
+#: EUSS_WidgetManager:CreateUserWidget (type: StructProperty, owner:
+#: CreateUserWidget)
+msgctxt "UObjectDisplayNames,EUSS_WidgetManager:CreateUserWidget:InParams"
+msgid "In Params"
+msgstr "In Params"
+
+#. Key:	EUSS_WidgetManager:AddToChildNode:InParentWidget
+#. SourceLocation:	Meta-data for key DisplayName of member InParentWidget in EUSS_WidgetManager:AddToChildNode (type: ObjectProperty, owner: AddToChildNode)
+#: Meta-data for key DisplayName of member InParentWidget in
+#: EUSS_WidgetManager:AddToChildNode (type: ObjectProperty, owner:
+#: AddToChildNode)
+msgctxt "UObjectDisplayNames,EUSS_WidgetManager:AddToChildNode:InParentWidget"
+msgid "In Parent Widget"
+msgstr "In Parent Widget"
+
+#. Key:	EUSS_WidgetManager:SetToRootNode:InRootWidget
+#. SourceLocation:	Meta-data for key DisplayName of member InRootWidget in EUSS_WidgetManager:SetToRootNode (type: ObjectProperty, owner: SetToRootNode)
+#: Meta-data for key DisplayName of member InRootWidget in
+#: EUSS_WidgetManager:SetToRootNode (type: ObjectProperty, owner:
+#: SetToRootNode)
+msgctxt "UObjectDisplayNames,EUSS_WidgetManager:SetToRootNode:InRootWidget"
+msgid "In Root Widget"
+msgstr "In Root Widget"
+
+#. Key:	EUSS_MetaDataManager:GetNormalizedPathSettings:InSettings
+#. SourceLocation:	Meta-data for key DisplayName of member InSettings in EUSS_MetaDataManager:GetNormalizedPathSettings (type: ArrayProperty, owner: GetNormalizedPathSettings)
+#: Meta-data for key DisplayName of member InSettings in
+#: EUSS_MetaDataManager:GetNormalizedPathSettings (type: ArrayProperty, owner:
+#: GetNormalizedPathSettings)
+msgctxt "UObjectDisplayNames,EUSS_MetaDataManager:GetNormalizedPathSettings:InSettings"
+msgid "In Settings"
+msgstr "In Settings"
+
+#. Key:	EUSS_MetaDataManager:CopyMetaData:InSourceAsset
+#. SourceLocation:	Meta-data for key DisplayName of member InSourceAsset in EUSS_MetaDataManager:CopyMetaData (type: ArrayProperty, owner: CopyMetaData)
+#: Meta-data for key DisplayName of member InSourceAsset in
+#: EUSS_MetaDataManager:CopyMetaData (type: ArrayProperty, owner: CopyMetaData)
+msgctxt "UObjectDisplayNames,EUSS_MetaDataManager:CopyMetaData:InSourceAsset"
+msgid "In Source Asset"
+msgstr "In Source Asset"
+
+#. Key:	MetaDataOfAssetsBFL:IsStringBlank:InStr
+#. SourceLocation:	Meta-data for key DisplayName of member InStr in MetaDataOfAssetsBFL:IsStringBlank (type: StrProperty, owner: IsStringBlank)
+#: Meta-data for key DisplayName of member InStr in
+#: MetaDataOfAssetsBFL:IsStringBlank (type: StrProperty, owner: IsStringBlank)
+msgctxt "UObjectDisplayNames,MetaDataOfAssetsBFL:IsStringBlank:InStr"
+msgid "In Str"
+msgstr "In Str"
+
+#. Key:	EUSS_MetaDataManager:AddMetaData:InTagToAdd
+#. SourceLocation:	Meta-data for key DisplayName of member InTagToAdd in EUSS_MetaDataManager:AddMetaData (type: NameProperty, owner: AddMetaData)
+#: Meta-data for key DisplayName of member InTagToAdd in
+#: EUSS_MetaDataManager:AddMetaData (type: NameProperty, owner: AddMetaData)
+msgctxt "UObjectDisplayNames,EUSS_MetaDataManager:AddMetaData:InTagToAdd"
+msgid "In Tag to Add"
+msgstr "In Tag to Add"
+
+#. Key:	EUSS_MetaDataManager:DeleteMetaData:InTagToAdd
+#. SourceLocation:	Meta-data for key DisplayName of member InTagToAdd in EUSS_MetaDataManager:DeleteMetaData (type: NameProperty, owner: DeleteMetaData)
+#: Meta-data for key DisplayName of member InTagToAdd in
+#: EUSS_MetaDataManager:DeleteMetaData (type: NameProperty, owner:
+#: DeleteMetaData)
+msgctxt "UObjectDisplayNames,EUSS_MetaDataManager:DeleteMetaData:InTagToAdd"
+msgid "In Tag to Add"
+msgstr "In Tag to Add"
+
+#. Key:	EUSS_MetaDataManager:ModifyMetaData:InTagToAdd
+#. SourceLocation:	Meta-data for key DisplayName of member InTagToAdd in EUSS_MetaDataManager:ModifyMetaData (type: NameProperty, owner: ModifyMetaData)
+#: Meta-data for key DisplayName of member InTagToAdd in
+#: EUSS_MetaDataManager:ModifyMetaData (type: NameProperty, owner:
+#: ModifyMetaData)
+msgctxt "UObjectDisplayNames,EUSS_MetaDataManager:ModifyMetaData:InTagToAdd"
+msgid "In Tag to Add"
+msgstr "In Tag to Add"
+
+#. Key:	EUSS_MetaDataManager:CopyMetaData:InTargetAsset
+#. SourceLocation:	Meta-data for key DisplayName of member InTargetAsset in EUSS_MetaDataManager:CopyMetaData (type: ArrayProperty, owner: CopyMetaData)
+#: Meta-data for key DisplayName of member InTargetAsset in
+#: EUSS_MetaDataManager:CopyMetaData (type: ArrayProperty, owner: CopyMetaData)
+msgctxt "UObjectDisplayNames,EUSS_MetaDataManager:CopyMetaData:InTargetAsset"
+msgid "In Target Asset"
+msgstr "In Target Asset"
+
+#. Key:	EUSS_MetaDataManager:AddMetaData:InValueToAdd
+#. SourceLocation:	Meta-data for key DisplayName of member InValueToAdd in EUSS_MetaDataManager:AddMetaData (type: StrProperty, owner: AddMetaData)
+#: Meta-data for key DisplayName of member InValueToAdd in
+#: EUSS_MetaDataManager:AddMetaData (type: StrProperty, owner: AddMetaData)
+msgctxt "UObjectDisplayNames,EUSS_MetaDataManager:AddMetaData:InValueToAdd"
+msgid "In Value to Add"
+msgstr "In Value to Add"
+
+#. Key:	EUSS_MetaDataManager:ModifyMetaData:InValueToAdd
+#. SourceLocation:	Meta-data for key DisplayName of member InValueToAdd in EUSS_MetaDataManager:ModifyMetaData (type: StrProperty, owner: ModifyMetaData)
+#: Meta-data for key DisplayName of member InValueToAdd in
+#: EUSS_MetaDataManager:ModifyMetaData (type: StrProperty, owner:
+#: ModifyMetaData)
+msgctxt "UObjectDisplayNames,EUSS_MetaDataManager:ModifyMetaData:InValueToAdd"
+msgid "In Value to Add"
+msgstr "In Value to Add"
+
+#. Key:	EUSS_WidgetManager:CreateUserWidget:InWidgetClass
+#. SourceLocation:	Meta-data for key DisplayName of member InWidgetClass in EUSS_WidgetManager:CreateUserWidget (type: ClassProperty, owner: CreateUserWidget)
+#: Meta-data for key DisplayName of member InWidgetClass in
+#: EUSS_WidgetManager:CreateUserWidget (type: ClassProperty, owner:
+#: CreateUserWidget)
+msgctxt "UObjectDisplayNames,EUSS_WidgetManager:CreateUserWidget:InWidgetClass"
+msgid "In Widget Class"
+msgstr "In Value to Add"
+
+#. Key:	MetaDataOfAssetsBFL:IsNameBlank
+#. SourceLocation:	Meta-data for key DisplayName of member IsNameBlank in MetaDataOfAssetsBFL (type: Function, owner: IsNameBlank)
+#: Meta-data for key DisplayName of member IsNameBlank in MetaDataOfAssetsBFL
+#: (type: Function, owner: IsNameBlank)
+msgctxt "UObjectDisplayNames,MetaDataOfAssetsBFL:IsNameBlank"
+msgid "Is Name Blank"
+msgstr "Is Name Blank"
+
+#. Key:	MetaDataOfAssetsBFL:IsStringBlank
+#. SourceLocation:	Meta-data for key DisplayName of member IsStringBlank in MetaDataOfAssetsBFL (type: Function, owner: IsStringBlank)
+#: Meta-data for key DisplayName of member IsStringBlank in MetaDataOfAssetsBFL
+#: (type: Function, owner: IsStringBlank)
+msgctxt "UObjectDisplayNames,MetaDataOfAssetsBFL:IsStringBlank"
+msgid "Is String Blank"
+msgstr "Is String Blank"
+
+#. Key:	EUSS_WidgetManager:MainWidget
+#. SourceLocation:	Meta-data for key DisplayName of member MainWidget in EUSS_WidgetManager (type: ObjectProperty, owner: EUSS_WidgetManager)
+#: Meta-data for key DisplayName of member MainWidget in EUSS_WidgetManager
+#: (type: ObjectProperty, owner: EUSS_WidgetManager)
+msgctxt "UObjectDisplayNames,EUSS_WidgetManager:MainWidget"
+msgid "Main Widget"
+msgstr "Main Widget"
+
+#. Key:	MetaDataOfAssetsSettings:MainWidgetPath
+#. SourceLocation:	Meta-data for key DisplayName of member MainWidgetPath in MetaDataOfAssetsSettings (type: StrProperty, owner: MetaDataOfAssetsSettings)
+#: Meta-data for key DisplayName of member MainWidgetPath in
+#: MetaDataOfAssetsSettings (type: StrProperty, owner:
+#: MetaDataOfAssetsSettings)
+msgctxt "UObjectDisplayNames,MetaDataOfAssetsSettings:MainWidgetPath"
+msgid "Main Widget Path"
+msgstr "Main Widget Path"
+
+#. Key:	EUSS_WidgetManager:MainWidgetSoftPtr
+#. SourceLocation:	Meta-data for key DisplayName of member MainWidgetSoftPtr in EUSS_WidgetManager (type: SoftObjectProperty, owner: EUSS_WidgetManager)
+#: Meta-data for key DisplayName of member MainWidgetSoftPtr in
+#: EUSS_WidgetManager (type: SoftObjectProperty, owner: EUSS_WidgetManager)
+msgctxt "UObjectDisplayNames,EUSS_WidgetManager:MainWidgetSoftPtr"
+msgid "Main Widget Soft Ptr"
+msgstr "Main Widget Soft Ptr"
+
+#. Key:	MetaDataOfAssetsBFL
+#. SourceLocation:	Meta-data for key DisplayName of member MetaDataOfAssetsBFL in None (type: Class, owner: MetaDataOfAssetsBFL)
+#: Meta-data for key DisplayName of member MetaDataOfAssetsBFL in None (type:
+#: Class, owner: MetaDataOfAssetsBFL)
+msgctxt "UObjectDisplayNames,MetaDataOfAssetsBFL"
+msgid "Meta Data Of Assets BFL"
+msgstr "Meta Data Of Assets BFL"
+
+#. Key:	MetaDataOfAssetsSettings
+#. SourceLocation:	Meta-data for key DisplayName of member MetaDataOfAssetsSettings in None (type: Class, owner: MetaDataOfAssetsSettings)
+#: Meta-data for key DisplayName of member MetaDataOfAssetsSettings in None
+#: (type: Class, owner: MetaDataOfAssetsSettings)
+msgctxt "UObjectDisplayNames,MetaDataOfAssetsSettings"
+msgid "Meta Data Of Assets Settings"
+msgstr "Meta Data Of Assets Settings"
+
+#. Key:	EUSS_MetaDataManager:ModifyMetaData
+#. SourceLocation:	Meta-data for key DisplayName of member ModifyMetaData in EUSS_MetaDataManager (type: Function, owner: ModifyMetaData)
+#: Meta-data for key DisplayName of member ModifyMetaData in
+#: EUSS_MetaDataManager (type: Function, owner: ModifyMetaData)
+msgctxt "UObjectDisplayNames,EUSS_MetaDataManager:ModifyMetaData"
+msgid "Modify Meta Data"
+msgstr "Modify Meta Data"
+
+#. Key:	EUSS_MetaDataManager:OnAssetDeleted
+#. SourceLocation:	Meta-data for key DisplayName of member OnAssetDeleted in EUSS_MetaDataManager (type: MulticastInlineDelegateProperty, owner: EUSS_MetaDataManager)
+#: Meta-data for key DisplayName of member OnAssetDeleted in
+#: EUSS_MetaDataManager (type: MulticastInlineDelegateProperty, owner:
+#: EUSS_MetaDataManager)
+msgctxt "UObjectDisplayNames,EUSS_MetaDataManager:OnAssetDeleted"
+msgid "On Asset Deleted"
+msgstr "On Asset Deleted"
+
+#. Key:	OnAssetDeleted__DelegateSignature
+#. SourceLocation:	Meta-data for key DisplayName of member OnAssetDeleted__DelegateSignature in None (type: DelegateFunction, owner: OnAssetDeleted__DelegateSignature)
+#: Meta-data for key DisplayName of member OnAssetDeleted__DelegateSignature in
+#: None (type: DelegateFunction, owner: OnAssetDeleted__DelegateSignature)
+msgctxt "UObjectDisplayNames,OnAssetDeleted__DelegateSignature"
+msgid "On Asset Deleted  Delegate Signature"
+msgstr "On Asset Deleted  Delegate Signature"
+
+#. Key:	EUSS_MetaDataManager:OnAssetSynced
+#. SourceLocation:	Meta-data for key DisplayName of member OnAssetSynced in EUSS_MetaDataManager (type: MulticastInlineDelegateProperty, owner: EUSS_MetaDataManager)
+#: Meta-data for key DisplayName of member OnAssetSynced in
+#: EUSS_MetaDataManager (type: MulticastInlineDelegateProperty, owner:
+#: EUSS_MetaDataManager)
+msgctxt "UObjectDisplayNames,EUSS_MetaDataManager:OnAssetSynced"
+msgid "On Asset Synced"
+msgstr "On Asset Synced"
+
+#. Key:	OnAssetSynced__DelegateSignature
+#. SourceLocation:	Meta-data for key DisplayName of member OnAssetSynced__DelegateSignature in None (type: DelegateFunction, owner: OnAssetSynced__DelegateSignature)
+#: Meta-data for key DisplayName of member OnAssetSynced__DelegateSignature in
+#: None (type: DelegateFunction, owner: OnAssetSynced__DelegateSignature)
+msgctxt "UObjectDisplayNames,OnAssetSynced__DelegateSignature"
+msgid "On Asset Synced  Delegate Signature"
+msgstr "On Asset Synced  Delegate Signature"
+
+#. Key:	WidgetInterface_MetaDataOfAssets:OnClose
+#. SourceLocation:	Meta-data for key DisplayName of member OnClose in WidgetInterface_MetaDataOfAssets (type: Function, owner: OnClose)
+#: Meta-data for key DisplayName of member OnClose in
+#: WidgetInterface_MetaDataOfAssets (type: Function, owner: OnClose)
+msgctxt "UObjectDisplayNames,WidgetInterface_MetaDataOfAssets:OnClose"
+msgid "OnWidgetClosed"
+msgstr "OnWidgetClosed"
+
+#. Key:	EUSS_MetaDataManager:OnMetaDataAdded
+#. SourceLocation:	Meta-data for key DisplayName of member OnMetaDataAdded in EUSS_MetaDataManager (type: MulticastInlineDelegateProperty, owner: EUSS_MetaDataManager)
+#: Meta-data for key DisplayName of member OnMetaDataAdded in
+#: EUSS_MetaDataManager (type: MulticastInlineDelegateProperty, owner:
+#: EUSS_MetaDataManager)
+msgctxt "UObjectDisplayNames,EUSS_MetaDataManager:OnMetaDataAdded"
+msgid "On Meta Data Added"
+msgstr "On Meta Data Added"
+
+#. Key:	OnMetaDataAdded__DelegateSignature
+#. SourceLocation:	Meta-data for key DisplayName of member OnMetaDataAdded__DelegateSignature in None (type: DelegateFunction, owner: OnMetaDataAdded__DelegateSignature)
+#: Meta-data for key DisplayName of member OnMetaDataAdded__DelegateSignature
+#: in None (type: DelegateFunction, owner: OnMetaDataAdded__DelegateSignature)
+msgctxt "UObjectDisplayNames,OnMetaDataAdded__DelegateSignature"
+msgid "On Meta Data Added  Delegate Signature"
+msgstr "On Meta Data Added  Delegate Signature"
+
+#. Key:	EUSS_MetaDataManager:OnMetaDataCopied
+#. SourceLocation:	Meta-data for key DisplayName of member OnMetaDataCopied in EUSS_MetaDataManager (type: MulticastInlineDelegateProperty, owner: EUSS_MetaDataManager)
+#: Meta-data for key DisplayName of member OnMetaDataCopied in
+#: EUSS_MetaDataManager (type: MulticastInlineDelegateProperty, owner:
+#: EUSS_MetaDataManager)
+msgctxt "UObjectDisplayNames,EUSS_MetaDataManager:OnMetaDataCopied"
+msgid "On Meta Data Copied"
+msgstr "On Meta Data Copied"
+
+#. Key:	OnMetaDataCopied__DelegateSignature
+#. SourceLocation:	Meta-data for key DisplayName of member OnMetaDataCopied__DelegateSignature in None (type: DelegateFunction, owner: OnMetaDataCopied__DelegateSignature)
+#: Meta-data for key DisplayName of member OnMetaDataCopied__DelegateSignature
+#: in None (type: DelegateFunction, owner: OnMetaDataCopied__DelegateSignature)
+msgctxt "UObjectDisplayNames,OnMetaDataCopied__DelegateSignature"
+msgid "On Meta Data Copied  Delegate Signature"
+msgstr "On Meta Data Copied  Delegate Signature"
+
+#. Key:	EUSS_MetaDataManager:OnMetaDataDeleted
+#. SourceLocation:	Meta-data for key DisplayName of member OnMetaDataDeleted in EUSS_MetaDataManager (type: MulticastInlineDelegateProperty, owner: EUSS_MetaDataManager)
+#: Meta-data for key DisplayName of member OnMetaDataDeleted in
+#: EUSS_MetaDataManager (type: MulticastInlineDelegateProperty, owner:
+#: EUSS_MetaDataManager)
+msgctxt "UObjectDisplayNames,EUSS_MetaDataManager:OnMetaDataDeleted"
+msgid "On Meta Data Deleted"
+msgstr "On Meta Data Deleted"
+
+#. Key:	OnMetaDataDeleted__DelegateSignature
+#. SourceLocation:	Meta-data for key DisplayName of member OnMetaDataDeleted__DelegateSignature in None (type: DelegateFunction, owner: OnMetaDataDeleted__DelegateSignature)
+#: Meta-data for key DisplayName of member OnMetaDataDeleted__DelegateSignature
+#: in None (type: DelegateFunction, owner:
+#: OnMetaDataDeleted__DelegateSignature)
+msgctxt "UObjectDisplayNames,OnMetaDataDeleted__DelegateSignature"
+msgid "On Meta Data Deleted  Delegate Signature"
+msgstr "On Meta Data Deleted  Delegate Signature"
+
+#. Key:	EUSS_MetaDataManager:OnMetaDataModified
+#. SourceLocation:	Meta-data for key DisplayName of member OnMetaDataModified in EUSS_MetaDataManager (type: MulticastInlineDelegateProperty, owner: EUSS_MetaDataManager)
+#: Meta-data for key DisplayName of member OnMetaDataModified in
+#: EUSS_MetaDataManager (type: MulticastInlineDelegateProperty, owner:
+#: EUSS_MetaDataManager)
+msgctxt "UObjectDisplayNames,EUSS_MetaDataManager:OnMetaDataModified"
+msgid "On Meta Data Modified"
+msgstr "On Meta Data Modified"
+
+#. Key:	OnMetaDataModified__DelegateSignature
+#. SourceLocation:	Meta-data for key DisplayName of member OnMetaDataModified__DelegateSignature in None (type: DelegateFunction, owner: OnMetaDataModified__DelegateSignature)
+#: Meta-data for key DisplayName of member
+#: OnMetaDataModified__DelegateSignature in None (type: DelegateFunction,
+#: owner: OnMetaDataModified__DelegateSignature)
+msgctxt "UObjectDisplayNames,OnMetaDataModified__DelegateSignature"
+msgid "On Meta Data Modified  Delegate Signature"
+msgstr "On Meta Data Modified  Delegate Signature"
+
+#. Key:	WidgetInterface_MetaDataOfAssets:OnOpen
+#. SourceLocation:	Meta-data for key DisplayName of member OnOpen in WidgetInterface_MetaDataOfAssets (type: Function, owner: OnOpen)
+#: Meta-data for key DisplayName of member OnOpen in
+#: WidgetInterface_MetaDataOfAssets (type: Function, owner: OnOpen)
+msgctxt "UObjectDisplayNames,WidgetInterface_MetaDataOfAssets:OnOpen"
+msgid "OnWidgetOpened"
+msgstr "OnWidgetOpened"
+
+#. Key:	EUSS_WidgetManager:OnWidgetInstanceCreated
+#. SourceLocation:	Meta-data for key DisplayName of member OnWidgetInstanceCreated in EUSS_WidgetManager (type: MulticastInlineDelegateProperty, owner: EUSS_WidgetManager)
+#: Meta-data for key DisplayName of member OnWidgetInstanceCreated in
+#: EUSS_WidgetManager (type: MulticastInlineDelegateProperty, owner:
+#: EUSS_WidgetManager)
+msgctxt "UObjectDisplayNames,EUSS_WidgetManager:OnWidgetInstanceCreated"
+msgid "OnWidgetCreated"
+msgstr "OnWidgetCreated"
+
+#. Key:	OnWidgetInstanceCreated__DelegateSignature
+#. SourceLocation:	Meta-data for key DisplayName of member OnWidgetInstanceCreated__DelegateSignature in None (type: DelegateFunction, owner: OnWidgetInstanceCreated__DelegateSignature)
+#: Meta-data for key DisplayName of member
+#: OnWidgetInstanceCreated__DelegateSignature in None (type: DelegateFunction,
+#: owner: OnWidgetInstanceCreated__DelegateSignature)
+msgctxt "UObjectDisplayNames,OnWidgetInstanceCreated__DelegateSignature"
+msgid "On Widget Instance Created  Delegate Signature"
+msgstr "On Widget Instance Created  Delegate Signature"
+
+#. Key:	EUSS_WidgetManager:OnWidgetInstanceRemoved
+#. SourceLocation:	Meta-data for key DisplayName of member OnWidgetInstanceRemoved in EUSS_WidgetManager (type: MulticastInlineDelegateProperty, owner: EUSS_WidgetManager)
+#: Meta-data for key DisplayName of member OnWidgetInstanceRemoved in
+#: EUSS_WidgetManager (type: MulticastInlineDelegateProperty, owner:
+#: EUSS_WidgetManager)
+msgctxt "UObjectDisplayNames,EUSS_WidgetManager:OnWidgetInstanceRemoved"
+msgid "OnWidgetRemoved"
+msgstr "OnWidgetRemoved"
+
+#. Key:	OnWidgetInstanceRemoved__DelegateSignature
+#. SourceLocation:	Meta-data for key DisplayName of member OnWidgetInstanceRemoved__DelegateSignature in None (type: DelegateFunction, owner: OnWidgetInstanceRemoved__DelegateSignature)
+#: Meta-data for key DisplayName of member
+#: OnWidgetInstanceRemoved__DelegateSignature in None (type: DelegateFunction,
+#: owner: OnWidgetInstanceRemoved__DelegateSignature)
+msgctxt "UObjectDisplayNames,OnWidgetInstanceRemoved__DelegateSignature"
+msgid "On Widget Instance Removed  Delegate Signature"
+msgstr "On Widget Instance Removed  Delegate Signature"
+
+#. Key:	EUWTabSpawnContext:Params
+#. SourceLocation:	Meta-data for key DisplayName of member Params in EUWTabSpawnContext (type: StructProperty, owner: EUWTabSpawnContext)
+#: Meta-data for key DisplayName of member Params in EUWTabSpawnContext (type:
+#: StructProperty, owner: EUWTabSpawnContext)
+msgctxt "UObjectDisplayNames,EUWTabSpawnContext:Params"
+msgid "Params"
+msgstr "Params"
+
+#. Key:	WidgetInterface_MetaDataOfAssets:OnOpen:Params
+#. SourceLocation:	Meta-data for key DisplayName of member Params in WidgetInterface_MetaDataOfAssets:OnOpen (type: StructProperty, owner: OnOpen)
+#: Meta-data for key DisplayName of member Params in
+#: WidgetInterface_MetaDataOfAssets:OnOpen (type: StructProperty, owner:
+#: OnOpen)
+msgctxt "UObjectDisplayNames,WidgetInterface_MetaDataOfAssets:OnOpen:Params"
+msgid "Params"
+msgstr "Params"
+
+#. Key:	EUSS_MetaDataManager:GetAddedAssets:ReturnValue
+#. SourceLocation:	Meta-data for key DisplayName of member ReturnValue in EUSS_MetaDataManager:GetAddedAssets (type: ArrayProperty, owner: GetAddedAssets)
+#: Meta-data for key DisplayName of member ReturnValue in
+#: EUSS_MetaDataManager:GetAddedAssets (type: ArrayProperty, owner:
+#: GetAddedAssets)
+msgctxt "UObjectDisplayNames,EUSS_MetaDataManager:GetAddedAssets:ReturnValue"
+msgid "Return Value"
+msgstr "Return Value"
+
+#. Key:	EUSS_MetaDataManager:GetNormalizedPathSettings:ReturnValue
+#. SourceLocation:	Meta-data for key DisplayName of member ReturnValue in EUSS_MetaDataManager:GetNormalizedPathSettings (type: ArrayProperty, owner: GetNormalizedPathSettings)
+#: Meta-data for key DisplayName of member ReturnValue in
+#: EUSS_MetaDataManager:GetNormalizedPathSettings (type: ArrayProperty, owner:
+#: GetNormalizedPathSettings)
+msgctxt "UObjectDisplayNames,EUSS_MetaDataManager:GetNormalizedPathSettings:ReturnValue"
+msgid "Return Value"
+msgstr "Return Value"
+
+#. Key:	EUSS_WidgetManager:CreateEditorUtilityWidget:ReturnValue
+#. SourceLocation:	Meta-data for key DisplayName of member ReturnValue in EUSS_WidgetManager:CreateEditorUtilityWidget (type: ObjectProperty, owner: CreateEditorUtilityWidget)
+#: Meta-data for key DisplayName of member ReturnValue in
+#: EUSS_WidgetManager:CreateEditorUtilityWidget (type: ObjectProperty, owner:
+#: CreateEditorUtilityWidget)
+msgctxt "UObjectDisplayNames,EUSS_WidgetManager:CreateEditorUtilityWidget:ReturnValue"
+msgid "Return Value"
+msgstr "Return Value"
+
+#. Key:	EUSS_WidgetManager:CreateUserWidget:ReturnValue
+#. SourceLocation:	Meta-data for key DisplayName of member ReturnValue in EUSS_WidgetManager:CreateUserWidget (type: ObjectProperty, owner: CreateUserWidget)
+#: Meta-data for key DisplayName of member ReturnValue in
+#: EUSS_WidgetManager:CreateUserWidget (type: ObjectProperty, owner:
+#: CreateUserWidget)
+msgctxt "UObjectDisplayNames,EUSS_WidgetManager:CreateUserWidget:ReturnValue"
+msgid "Return Value"
+msgstr "Return Value"
+
+#. Key:	EUSS_WidgetManager:GetEnableDebugSetting:ReturnValue
+#. SourceLocation:	Meta-data for key DisplayName of member ReturnValue in EUSS_WidgetManager:GetEnableDebugSetting (type: BoolProperty, owner: GetEnableDebugSetting)
+#: Meta-data for key DisplayName of member ReturnValue in
+#: EUSS_WidgetManager:GetEnableDebugSetting (type: BoolProperty, owner:
+#: GetEnableDebugSetting)
+msgctxt "UObjectDisplayNames,EUSS_WidgetManager:GetEnableDebugSetting:ReturnValue"
+msgid "Return Value"
+msgstr "Return Value"
+
+#. Key:	MetaDataOfAssetsBFL:CalcIntersectionOfMetaData:ReturnValue
+#. SourceLocation:	Meta-data for key DisplayName of member ReturnValue in MetaDataOfAssetsBFL:CalcIntersectionOfMetaData (type: ArrayProperty, owner: CalcIntersectionOfMetaData)
+#: Meta-data for key DisplayName of member ReturnValue in
+#: MetaDataOfAssetsBFL:CalcIntersectionOfMetaData (type: ArrayProperty, owner:
+#: CalcIntersectionOfMetaData)
+msgctxt "UObjectDisplayNames,MetaDataOfAssetsBFL:CalcIntersectionOfMetaData:ReturnValue"
+msgid "Return Value"
+msgstr "Return Value"
+
+#. Key:	MetaDataOfAssetsBFL:IsNameBlank:ReturnValue
+#. SourceLocation:	Meta-data for key DisplayName of member ReturnValue in MetaDataOfAssetsBFL:IsNameBlank (type: BoolProperty, owner: IsNameBlank)
+#: Meta-data for key DisplayName of member ReturnValue in
+#: MetaDataOfAssetsBFL:IsNameBlank (type: BoolProperty, owner: IsNameBlank)
+msgctxt "UObjectDisplayNames,MetaDataOfAssetsBFL:IsNameBlank:ReturnValue"
+msgid "Return Value"
+msgstr "Return Value"
+
+#. Key:	MetaDataOfAssetsBFL:IsStringBlank:ReturnValue
+#. SourceLocation:	Meta-data for key DisplayName of member ReturnValue in MetaDataOfAssetsBFL:IsStringBlank (type: BoolProperty, owner: IsStringBlank)
+#: Meta-data for key DisplayName of member ReturnValue in
+#: MetaDataOfAssetsBFL:IsStringBlank (type: BoolProperty, owner: IsStringBlank)
+msgctxt "UObjectDisplayNames,MetaDataOfAssetsBFL:IsStringBlank:ReturnValue"
+msgid "Return Value"
+msgstr "Return Value"
+
+#. Key:	EUSS_WidgetManager:RootNode
+#. SourceLocation:	Meta-data for key DisplayName of member RootNode in EUSS_WidgetManager (type: ObjectProperty, owner: EUSS_WidgetManager)
+#: Meta-data for key DisplayName of member RootNode in EUSS_WidgetManager
+#: (type: ObjectProperty, owner: EUSS_WidgetManager)
+msgctxt "UObjectDisplayNames,EUSS_WidgetManager:RootNode"
+msgid "Root Node"
+msgstr "Root Node"
+
+#. Key:	ScanDirectorySetting
+#. SourceLocation:	Meta-data for key DisplayName of member ScanDirectorySetting in None (type: ScriptStruct, owner: ScanDirectorySetting)
+#: Meta-data for key DisplayName of member ScanDirectorySetting in None (type:
+#: ScriptStruct, owner: ScanDirectorySetting)
+msgctxt "UObjectDisplayNames,ScanDirectorySetting"
+msgid "Scan Directory Setting"
+msgstr "Scan Directory Setting"
+
+#. Key:	MetaDataOfAssetsSettings:ScanSettings
+#. SourceLocation:	Meta-data for key DisplayName of member ScanSettings in MetaDataOfAssetsSettings (type: ArrayProperty, owner: MetaDataOfAssetsSettings)
+#: Meta-data for key DisplayName of member ScanSettings in
+#: MetaDataOfAssetsSettings (type: ArrayProperty, owner:
+#: MetaDataOfAssetsSettings)
+msgctxt "UObjectDisplayNames,MetaDataOfAssetsSettings:ScanSettings"
+msgid "Scan Settings"
+msgstr "Scan Settings"
+
+#. Key:	EUSS_MetaDataManager:SetAddedAssets
+#. SourceLocation:	Meta-data for key DisplayName of member SetAddedAssets in EUSS_MetaDataManager (type: Function, owner: SetAddedAssets)
+#: Meta-data for key DisplayName of member SetAddedAssets in
+#: EUSS_MetaDataManager (type: Function, owner: SetAddedAssets)
+msgctxt "UObjectDisplayNames,EUSS_MetaDataManager:SetAddedAssets"
+msgid "Set Added Assets"
+msgstr "Set Added Assets"
+
+#. Key:	EUSS_WidgetManager:SetToRootNode
+#. SourceLocation:	Meta-data for key DisplayName of member SetToRootNode in EUSS_WidgetManager (type: Function, owner: SetToRootNode)
+#: Meta-data for key DisplayName of member SetToRootNode in EUSS_WidgetManager
+#: (type: Function, owner: SetToRootNode)
+msgctxt "UObjectDisplayNames,EUSS_WidgetManager:SetToRootNode"
+msgid "Set to Root Node"
+msgstr "Set to Root Node"
+
+#. Key:	OnMetaDataCopied__DelegateSignature:SourceAsset
+#. SourceLocation:	Meta-data for key DisplayName of member SourceAsset in OnMetaDataCopied__DelegateSignature (type: ObjectProperty, owner: OnMetaDataCopied__DelegateSignature)
+#: Meta-data for key DisplayName of member SourceAsset in
+#: OnMetaDataCopied__DelegateSignature (type: ObjectProperty, owner:
+#: OnMetaDataCopied__DelegateSignature)
+msgctxt "UObjectDisplayNames,OnMetaDataCopied__DelegateSignature:SourceAsset"
+msgid "Source Asset"
+msgstr "Source Asset"
+
+#. Key:	EUSS_MetaDataManager:SyncAsset
+#. SourceLocation:	Meta-data for key DisplayName of member SyncAsset in EUSS_MetaDataManager (type: Function, owner: SyncAsset)
+#: Meta-data for key DisplayName of member SyncAsset in EUSS_MetaDataManager
+#: (type: Function, owner: SyncAsset)
+msgctxt "UObjectDisplayNames,EUSS_MetaDataManager:SyncAsset"
+msgid "Sync Asset"
+msgstr "Sync Asset"
+
+#. Key:	EUSS_MetaDataManager:SyncAssetsInDirectory
+#. SourceLocation:	Meta-data for key DisplayName of member SyncAssetsInDirectory in EUSS_MetaDataManager (type: Function, owner: SyncAssetsInDirectory)
+#: Meta-data for key DisplayName of member SyncAssetsInDirectory in
+#: EUSS_MetaDataManager (type: Function, owner: SyncAssetsInDirectory)
+msgctxt "UObjectDisplayNames,EUSS_MetaDataManager:SyncAssetsInDirectory"
+msgid "Sync Assets in Directory"
+msgstr "Sync Assets in Directory"
+
+#. Key:	EUSS_WidgetManager:TabSpawnContexts
+#. SourceLocation:	Meta-data for key DisplayName of member TabSpawnContexts in EUSS_WidgetManager (type: MapProperty, owner: EUSS_WidgetManager)
+#: Meta-data for key DisplayName of member TabSpawnContexts in
+#: EUSS_WidgetManager (type: MapProperty, owner: EUSS_WidgetManager)
+msgctxt "UObjectDisplayNames,EUSS_WidgetManager:TabSpawnContexts"
+msgid "Tab Spawn Contexts"
+msgstr "Tab Spawn Contexts"
+
+#. Key:	OnMetaDataCopied__DelegateSignature:TargetAsset
+#. SourceLocation:	Meta-data for key DisplayName of member TargetAsset in OnMetaDataCopied__DelegateSignature (type: ObjectProperty, owner: OnMetaDataCopied__DelegateSignature)
+#: Meta-data for key DisplayName of member TargetAsset in
+#: OnMetaDataCopied__DelegateSignature (type: ObjectProperty, owner:
+#: OnMetaDataCopied__DelegateSignature)
+msgctxt "UObjectDisplayNames,OnMetaDataCopied__DelegateSignature:TargetAsset"
+msgid "Target Asset"
+msgstr "Target Asset"
+
+#. Key:	UW_BaseDataWidget
+#. SourceLocation:	Meta-data for key DisplayName of member UW_BaseDataWidget in None (type: Class, owner: UW_BaseDataWidget)
+#: Meta-data for key DisplayName of member UW_BaseDataWidget in None (type:
+#: Class, owner: UW_BaseDataWidget)
+msgctxt "UObjectDisplayNames,UW_BaseDataWidget"
+msgid "UW Base Data Widget"
+msgstr "UW Base Data Widget"
+
+#. Key:	OnWidgetInstanceCreated__DelegateSignature:Widget
+#. SourceLocation:	Meta-data for key DisplayName of member Widget in OnWidgetInstanceCreated__DelegateSignature (type: ObjectProperty, owner: OnWidgetInstanceCreated__DelegateSignature)
+#: Meta-data for key DisplayName of member Widget in
+#: OnWidgetInstanceCreated__DelegateSignature (type: ObjectProperty, owner:
+#: OnWidgetInstanceCreated__DelegateSignature)
+msgctxt "UObjectDisplayNames,OnWidgetInstanceCreated__DelegateSignature:Widget"
+msgid "Widget"
+msgstr "Widget"
+
+#. Key:	OnWidgetInstanceRemoved__DelegateSignature:Widget
+#. SourceLocation:	Meta-data for key DisplayName of member Widget in OnWidgetInstanceRemoved__DelegateSignature (type: ObjectProperty, owner: OnWidgetInstanceRemoved__DelegateSignature)
+#: Meta-data for key DisplayName of member Widget in
+#: OnWidgetInstanceRemoved__DelegateSignature (type: ObjectProperty, owner:
+#: OnWidgetInstanceRemoved__DelegateSignature)
+msgctxt "UObjectDisplayNames,OnWidgetInstanceRemoved__DelegateSignature:Widget"
+msgid "Widget"
+msgstr "Widget"
+
+#. Key:	WidgetInterface_MetaDataOfAssets
+#. SourceLocation:	Meta-data for key DisplayName of member WidgetInterface_MetaDataOfAssets in None (type: Class, owner: WidgetInterface_MetaDataOfAssets)
+#: Meta-data for key DisplayName of member WidgetInterface_MetaDataOfAssets in
+#: None (type: Class, owner: WidgetInterface_MetaDataOfAssets)
+msgctxt "UObjectDisplayNames,WidgetInterface_MetaDataOfAssets"
+msgid "Widget Interface Meta Data Of Assets"
+msgstr "Widget Interface Meta Data Of Assets"
+
+#. Key:	EUSS_WidgetManager:WidgetToNodeMap
+#. SourceLocation:	Meta-data for key DisplayName of member WidgetToNodeMap in EUSS_WidgetManager (type: MapProperty, owner: EUSS_WidgetManager)
+#: Meta-data for key DisplayName of member WidgetToNodeMap in
+#: EUSS_WidgetManager (type: MapProperty, owner: EUSS_WidgetManager)
+msgctxt "UObjectDisplayNames,EUSS_WidgetManager:WidgetToNodeMap"
+msgid "Widget to Node Map"
+msgstr "Widget to Node Map"
+
+#. Key:	EUSS_WidgetManager:WidgetToTabName
+#. SourceLocation:	Meta-data for key DisplayName of member WidgetToTabName in EUSS_WidgetManager (type: MapProperty, owner: EUSS_WidgetManager)
+#: Meta-data for key DisplayName of member WidgetToTabName in
+#: EUSS_WidgetManager (type: MapProperty, owner: EUSS_WidgetManager)
+msgctxt "UObjectDisplayNames,EUSS_WidgetManager:WidgetToTabName"
+msgid "Widget to Tab Name"
+msgstr "Widget to Tab Name"
+
+#~ msgctxt "UObjectDisplayNames,MetaDataMap"
+#~ msgid "Meta Data Map"
+#~ msgstr "Meta Data Map"
+
+#~ msgctxt "UObjectCategory,MetaDataOfAssetsSettings"
+#~ msgid "MetaDataOfAssetsSettings"
+#~ msgstr "MetaDataOfAssetsSettings"
+
+#~ msgctxt "UObjectCategory,ScanDirectorySetting"
+#~ msgid "ScanDirectorySetting"
+#~ msgstr "ScanDirectorySetting"
+
+#~ msgctxt "UObjectDisplayNames,EUSS_MetaDataManager:DeleteMetaData:Asset"
+#~ msgid "Asset"
+#~ msgstr "Asset"
+
+#~ msgctxt "UObjectDisplayNames,EUSS_MetaDataManager:ModifyMetaData:Asset"
+#~ msgid "Asset"
+#~ msgstr "Asset"
+
+#~ msgctxt "UObjectDisplayNames,EUSS_WidgetManager:CreateUserWidget:Params"
+#~ msgid "Params"
+#~ msgstr "Params"
+
+#~ msgctxt "UObjectDisplayNames,EUSS_MetaDataManager:DeleteMetaData:TagToAdd"
+#~ msgid "Tag to Add"
+#~ msgstr "Tag to Add"
+
+#~ msgctxt "UObjectDisplayNames,EUSS_MetaDataManager:ModifyMetaData:TagToAdd"
+#~ msgid "Tag to Add"
+#~ msgstr "Tag to Add"
+
+#~ msgctxt "UObjectDisplayNames,EUSS_MetaDataManager:ModifyMetaData:ValueToAdd"
+#~ msgid "Value to Add"
+#~ msgstr "Value to Add"

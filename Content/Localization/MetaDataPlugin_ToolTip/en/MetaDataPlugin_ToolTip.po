@@ -1,0 +1,467 @@
+# Fill out your copyright notice in the Description page of Project Settings.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: MetaDataPlugin_ToolTip\n"
+"POT-Creation-Date: 2026-11-12 08:02\n"
+"PO-Revision-Date: 2026-11-12 16:37+0800\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.9\n"
+
+#. Key:	EUSS_WidgetManager:ActiveWidgets
+#. SourceLocation:	Meta-data for key ToolTip of member ActiveWidgets in EUSS_WidgetManager (type: ArrayProperty, owner: EUSS_WidgetManager)
+#: Meta-data for key ToolTip of member ActiveWidgets in EUSS_WidgetManager (type:
+#: ArrayProperty, owner: EUSS_WidgetManager)
+msgctxt "UObjectToolTips,EUSS_WidgetManager:ActiveWidgets"
+msgid "存储已创建的控件列表"
+msgstr "Stores the list of created widgets"
+
+#. Key:	EUSS_MetaDataManager:AddedAssets
+#. SourceLocation:	Meta-data for key ToolTip of member AddedAssets in EUSS_MetaDataManager (type: ArrayProperty, owner: EUSS_MetaDataManager)
+#: Meta-data for key ToolTip of member AddedAssets in EUSS_MetaDataManager (type:
+#: ArrayProperty, owner: EUSS_MetaDataManager)
+msgctxt "UObjectToolTips,EUSS_MetaDataManager:AddedAssets"
+msgid "保存所有已添加的资产"
+msgstr "Stores all assets that have been added"
+
+#. Key:	EUSS_MetaDataManager:AddMetaData
+#. SourceLocation:	Meta-data for key ToolTip of member AddMetaData in EUSS_MetaDataManager (type: Function, owner: AddMetaData)
+#: Meta-data for key ToolTip of member AddMetaData in EUSS_MetaDataManager (type:
+#: Function, owner: AddMetaData)
+msgctxt "UObjectToolTips,EUSS_MetaDataManager:AddMetaData"
+msgid "添加元数据"
+msgstr "Adds metadata"
+
+#. Key:	EUSS_WidgetManager:AddToChildNode
+#. SourceLocation:	Meta-data for key ToolTip of member AddToChildNode in EUSS_WidgetManager (type: Function, owner: AddToChildNode)
+#: Meta-data for key ToolTip of member AddToChildNode in EUSS_WidgetManager (type:
+#: Function, owner: AddToChildNode)
+msgctxt "UObjectToolTips,EUSS_WidgetManager:AddToChildNode"
+msgid "往树中添加子节点"
+msgstr "Adds a child node to the tree"
+
+#. Key:	EUSS_MetaDataManager:bAllowManageAssetRegistryTagsDelete
+#. SourceLocation:	Meta-data for key ToolTip of member bAllowManageAssetRegistryTagsDelete in EUSS_MetaDataManager (type: BoolProperty, owner: EUSS_MetaDataManager)
+#: Meta-data for key ToolTip of member bAllowManageAssetRegistryTagsDelete in
+#: EUSS_MetaDataManager (type: BoolProperty, owner: EUSS_MetaDataManager)
+msgctxt "UObjectToolTips,EUSS_MetaDataManager:bAllowManageAssetRegistryTagsDelete"
+msgid ""
+"在 Initialize 时从项目设置中同步值，用于确定是否要自动删除资产注册表中的 MetaData "
+"Tag"
+msgstr ""
+"Synchronizes this value from Project Settings during Initialize to determine "
+"whether metadata tags should be automatically removed from the Asset Registry"
+
+#. Key:	MetaDataOfAssetsSettings:bAllowManageAssetRegistryTagsDelete
+#. SourceLocation:	Meta-data for key ToolTip of member bAllowManageAssetRegistryTagsDelete in MetaDataOfAssetsSettings (type: BoolProperty, owner: MetaDataOfAssetsSettings)
+#: Meta-data for key ToolTip of member bAllowManageAssetRegistryTagsDelete in
+#: MetaDataOfAssetsSettings (type: BoolProperty, owner: MetaDataOfAssetsSettings)
+msgctxt "UObjectToolTips,MetaDataOfAssetsSettings:bAllowManageAssetRegistryTagsDelete"
+msgid "用于确定是否要自动删除资产注册表中的 MetaData Tag，修改配置需要重启编辑器"
+msgstr ""
+"Determines whether metadata tags are automatically removed from the Asset Registry. "
+"Changing this setting requires an editor restart"
+
+#. Key:	MetaDataOfAssetsSettings:bEnableDebug
+#. SourceLocation:	Meta-data for key ToolTip of member bEnableDebug in MetaDataOfAssetsSettings (type: BoolProperty, owner: MetaDataOfAssetsSettings)
+#: Meta-data for key ToolTip of member bEnableDebug in MetaDataOfAssetsSettings (type:
+#: BoolProperty, owner: MetaDataOfAssetsSettings)
+msgctxt "UObjectToolTips,MetaDataOfAssetsSettings:bEnableDebug"
+msgid "是否启用调试"
+msgstr "Whether to enable debugging"
+
+#. Key:	ScanDirectorySetting:bRecursive
+#. SourceLocation:	Meta-data for key ToolTip of member bRecursive in ScanDirectorySetting (type: BoolProperty, owner: ScanDirectorySetting)
+#: Meta-data for key ToolTip of member bRecursive in ScanDirectorySetting (type:
+#: BoolProperty, owner: ScanDirectorySetting)
+msgctxt "UObjectToolTips,ScanDirectorySetting:bRecursive"
+msgid "是否递归"
+msgstr "Whether to scan recursively"
+
+#. Key:	MetaDataOfAssetsBFL:CalcIntersectionOfMetaData
+#. SourceLocation:	Meta-data for key ToolTip of member CalcIntersectionOfMetaData in MetaDataOfAssetsBFL (type: Function, owner: CalcIntersectionOfMetaData)
+#: Meta-data for key ToolTip of member CalcIntersectionOfMetaData in
+#: MetaDataOfAssetsBFL (type: Function, owner: CalcIntersectionOfMetaData)
+msgctxt "UObjectToolTips,MetaDataOfAssetsBFL:CalcIntersectionOfMetaData"
+msgid ""
+"计算资产中所有元数据的交集\n"
+"\n"
+"@param InAssets 资产数组\n"
+"@return 共同的元数据"
+msgstr ""
+"Calculate the intersection of all metadata in the asset\n"
+"\n"
+"@param InAssets Asset Array\n"
+"@return Common metadata"
+
+#. Key:	EuwTreeNode:Children
+#. SourceLocation:	Meta-data for key ToolTip of member Children in EuwTreeNode (type: ArrayProperty, owner: EuwTreeNode)
+#: Meta-data for key ToolTip of member Children in EuwTreeNode (type: ArrayProperty,
+#: owner: EuwTreeNode)
+msgctxt "UObjectToolTips,EuwTreeNode:Children"
+msgid "子节点"
+msgstr "Child nodes"
+
+#. Key:	EUSS_MetaDataManager:CopyMetaData
+#. SourceLocation:	Meta-data for key ToolTip of member CopyMetaData in EUSS_MetaDataManager (type: Function, owner: CopyMetaData)
+#: Meta-data for key ToolTip of member CopyMetaData in EUSS_MetaDataManager (type:
+#: Function, owner: CopyMetaData)
+msgctxt "UObjectToolTips,EUSS_MetaDataManager:CopyMetaData"
+msgid "复制元数据"
+msgstr "Copies metadata"
+
+#. Key:	EUSS_WidgetManager:CreateEditorUtilityWidget
+#. SourceLocation:	Meta-data for key ToolTip of member CreateEditorUtilityWidget in EUSS_WidgetManager (type: Function, owner: CreateEditorUtilityWidget)
+#: Meta-data for key ToolTip of member CreateEditorUtilityWidget in EUSS_WidgetManager
+#: (type: Function, owner: CreateEditorUtilityWidget)
+msgctxt "UObjectToolTips,EUSS_WidgetManager:CreateEditorUtilityWidget"
+msgid ""
+"用于创建 EditorUtilityWidget\n"
+"\n"
+"@param InBlueprint   要创建的 EUW 类\n"
+"@param InParams              创建时可以通过 FInstancedStruct 传递参数\n"
+"@return                              创建完成的实例"
+msgstr ""
+"Creates an EditorUtilityWidget\n"
+"\n"
+"@param InBlueprint   The EUW class to create\n"
+"@param Params                Parameters that can be passed at creation time through "
+"FInstancedStruct\n"
+"@return                              The created instance"
+
+#. Key:	EUSS_WidgetManager:CreateUserWidget
+#. SourceLocation:	Meta-data for key ToolTip of member CreateUserWidget in EUSS_WidgetManager (type: Function, owner: CreateUserWidget)
+#: Meta-data for key ToolTip of member CreateUserWidget in EUSS_WidgetManager (type:
+#: Function, owner: CreateUserWidget)
+msgctxt "UObjectToolTips,EUSS_WidgetManager:CreateUserWidget"
+msgid ""
+"用于创建 UserWidget\n"
+"\n"
+"@param InWidgetClass 要创建的 UserWidget 类\n"
+"@param InParams              创建时可以通过 FInstancedStruct 传递参数\n"
+"@return                              创建完成的实例"
+msgstr ""
+"Creates a UserWidget\n"
+"\n"
+"@param WidgetClass   The UserWidget class to create\n"
+"@param Params                Parameters that can be passed at creation time through "
+"FInstancedStruct\n"
+"@return                              The created instance"
+
+#. Key:	EUSS_MetaDataManager:DeleteMetaData
+#. SourceLocation:	Meta-data for key ToolTip of member DeleteMetaData in EUSS_MetaDataManager (type: Function, owner: DeleteMetaData)
+#: Meta-data for key ToolTip of member DeleteMetaData in EUSS_MetaDataManager (type:
+#: Function, owner: DeleteMetaData)
+msgctxt "UObjectToolTips,EUSS_MetaDataManager:DeleteMetaData"
+msgid "删除元数据"
+msgstr "Deletes metadata"
+
+#. Key:	ScanDirectorySetting:Directory
+#. SourceLocation:	Meta-data for key ToolTip of member Directory in ScanDirectorySetting (type: StructProperty, owner: ScanDirectorySetting)
+#: Meta-data for key ToolTip of member Directory in ScanDirectorySetting (type:
+#: StructProperty, owner: ScanDirectorySetting)
+msgctxt "UObjectToolTips,ScanDirectorySetting:Directory"
+msgid "扫描路径"
+msgstr "Scan path"
+
+#. Key:	EUSS_MetaDataManager
+#. SourceLocation:	Meta-data for key ToolTip of member EUSS_MetaDataManager in None (type: Class, owner: EUSS_MetaDataManager)
+#: Meta-data for key ToolTip of member EUSS_MetaDataManager in None (type: Class,
+#: owner: EUSS_MetaDataManager)
+msgctxt "UObjectToolTips,EUSS_MetaDataManager"
+msgid "负责管理元数据"
+msgstr "Manages metadata"
+
+#. Key:	EUSS_WidgetManager
+#. SourceLocation:	Meta-data for key ToolTip of member EUSS_WidgetManager in None (type: Class, owner: EUSS_WidgetManager)
+#: Meta-data for key ToolTip of member EUSS_WidgetManager in None (type: Class, owner:
+#: EUSS_WidgetManager)
+msgctxt "UObjectToolTips,EUSS_WidgetManager"
+msgid "负责统一管理所有通过本插件创建的控件"
+msgstr "Manages all widgets created by this plugin"
+
+#. Key:	EUW_BaseUtilityWidget
+#. SourceLocation:	Meta-data for key ToolTip of member EUW_BaseUtilityWidget in None (type: Class, owner: EUW_BaseUtilityWidget)
+#: Meta-data for key ToolTip of member EUW_BaseUtilityWidget in None (type: Class,
+#: owner: EUW_BaseUtilityWidget)
+msgctxt "UObjectToolTips,EUW_BaseUtilityWidget"
+msgid "本插件的所有 EditorUtilityWidget 都继承自该基类"
+msgstr "All EditorUtilityWidgets in this plugin inherit from this base class"
+
+#. Key:	EUWTabSpawnContext
+#. SourceLocation:	Meta-data for key ToolTip of member EUWTabSpawnContext in None (type: ScriptStruct, owner: EUWTabSpawnContext)
+#: Meta-data for key ToolTip of member EUWTabSpawnContext in None (type: ScriptStruct,
+#: owner: EUWTabSpawnContext)
+msgctxt "UObjectToolTips,EUWTabSpawnContext"
+msgid "EUW 控件生成参数"
+msgstr "Generation parameters of EUW widget"
+
+#. Key:	EuwTreeNode
+#. SourceLocation:	Meta-data for key ToolTip of member EuwTreeNode in None (type: Class, owner: EuwTreeNode)
+#: Meta-data for key ToolTip of member EuwTreeNode in None (type: Class, owner:
+#: EuwTreeNode)
+msgctxt "UObjectToolTips,EuwTreeNode"
+msgid "树节点"
+msgstr "Tree node"
+
+#. Key:	EUSS_MetaDataManager:GetAddedAssets
+#. SourceLocation:	Meta-data for key ToolTip of member GetAddedAssets in EUSS_MetaDataManager (type: Function, owner: GetAddedAssets)
+#: Meta-data for key ToolTip of member GetAddedAssets in EUSS_MetaDataManager (type:
+#: Function, owner: GetAddedAssets)
+msgctxt "UObjectToolTips,EUSS_MetaDataManager:GetAddedAssets"
+msgid "获得上一次主控件关闭时已添加的资产"
+msgstr "Gets the assets that were added when the main widget was last closed"
+
+#. Key:	EUSS_WidgetManager:GetEnableDebugSetting
+#. SourceLocation:	Meta-data for key ToolTip of member GetEnableDebugSetting in EUSS_WidgetManager (type: Function, owner: GetEnableDebugSetting)
+#: Meta-data for key ToolTip of member GetEnableDebugSetting in EUSS_WidgetManager
+#: (type: Function, owner: GetEnableDebugSetting)
+msgctxt "UObjectToolTips,EUSS_WidgetManager:GetEnableDebugSetting"
+msgid "从配置中获取是否启用打印字符串设置"
+msgstr "Gets whether debug string printing is enabled from the configuration"
+
+#. Key:	EUSS_MetaDataManager:GetNormalizedPathSettings
+#. SourceLocation:	Meta-data for key ToolTip of member GetNormalizedPathSettings in EUSS_MetaDataManager (type: Function, owner: GetNormalizedPathSettings)
+#: Meta-data for key ToolTip of member GetNormalizedPathSettings in
+#: EUSS_MetaDataManager (type: Function, owner: GetNormalizedPathSettings)
+msgctxt "UObjectToolTips,EUSS_MetaDataManager:GetNormalizedPathSettings"
+msgid "获得规范化的路径，确保没有重复的路径"
+msgstr "Gets normalized paths with duplicates removed"
+
+#. Key:	MetaDataOfAssetsBFL:IsNameBlank
+#. SourceLocation:	Meta-data for key ToolTip of member IsNameBlank in MetaDataOfAssetsBFL (type: Function, owner: IsNameBlank)
+#: Meta-data for key ToolTip of member IsNameBlank in MetaDataOfAssetsBFL (type:
+#: Function, owner: IsNameBlank)
+msgctxt "UObjectToolTips,MetaDataOfAssetsBFL:IsNameBlank"
+msgid "判断命名是否为空"
+msgstr "Check if the name is empty"
+
+#. Key:	MetaDataOfAssetsBFL:IsStringBlank
+#. SourceLocation:	Meta-data for key ToolTip of member IsStringBlank in MetaDataOfAssetsBFL (type: Function, owner: IsStringBlank)
+#: Meta-data for key ToolTip of member IsStringBlank in MetaDataOfAssetsBFL (type:
+#: Function, owner: IsStringBlank)
+msgctxt "UObjectToolTips,MetaDataOfAssetsBFL:IsStringBlank"
+msgid "判断字符串是否为空"
+msgstr "Check if the string is empty"
+
+#. Key:	EUSS_WidgetManager:MainWidget
+#. SourceLocation:	Meta-data for key ToolTip of member MainWidget in EUSS_WidgetManager (type: ObjectProperty, owner: EUSS_WidgetManager)
+#: Meta-data for key ToolTip of member MainWidget in EUSS_WidgetManager (type:
+#: ObjectProperty, owner: EUSS_WidgetManager)
+msgctxt "UObjectToolTips,EUSS_WidgetManager:MainWidget"
+msgid "主控件蓝图资产"
+msgstr "Main widget Blueprint asset"
+
+#. Key:	MetaDataOfAssetsSettings:MainWidgetPath
+#. SourceLocation:	Meta-data for key ToolTip of member MainWidgetPath in MetaDataOfAssetsSettings (type: StrProperty, owner: MetaDataOfAssetsSettings)
+#: Meta-data for key ToolTip of member MainWidgetPath in MetaDataOfAssetsSettings
+#: (type: StrProperty, owner: MetaDataOfAssetsSettings)
+msgctxt "UObjectToolTips,MetaDataOfAssetsSettings:MainWidgetPath"
+msgid "保存主控件对应的资产路径"
+msgstr "Stores the asset path of the main widget"
+
+#. Key:	EUSS_WidgetManager:MainWidgetSoftPtr
+#. SourceLocation:	Meta-data for key ToolTip of member MainWidgetSoftPtr in EUSS_WidgetManager (type: SoftObjectProperty, owner: EUSS_WidgetManager)
+#: Meta-data for key ToolTip of member MainWidgetSoftPtr in EUSS_WidgetManager (type:
+#: SoftObjectProperty, owner: EUSS_WidgetManager)
+msgctxt "UObjectToolTips,EUSS_WidgetManager:MainWidgetSoftPtr"
+msgid "主控件蓝图资产软引用对象"
+msgstr "Soft reference object of the main widget blueprint asset"
+
+#. Key:	MetaDataOfAssetsBFL
+#. SourceLocation:	Meta-data for key ToolTip of member MetaDataOfAssetsBFL in None (type: Class, owner: MetaDataOfAssetsBFL)
+#: Meta-data for key ToolTip of member MetaDataOfAssetsBFL in None (type: Class,
+#: owner: MetaDataOfAssetsBFL)
+msgctxt "UObjectToolTips,MetaDataOfAssetsBFL"
+msgid "本插件使用的蓝图函数库"
+msgstr "The blueprint function library used by this plugin"
+
+#. Key:	MetaDataOfAssetsSettings
+#. SourceLocation:	Meta-data for key ToolTip of member MetaDataOfAssetsSettings in None (type: Class, owner: MetaDataOfAssetsSettings)
+#: Meta-data for key ToolTip of member MetaDataOfAssetsSettings in None (type: Class,
+#: owner: MetaDataOfAssetsSettings)
+msgctxt "UObjectToolTips,MetaDataOfAssetsSettings"
+msgid "插件的项目配置"
+msgstr "Plugin project settings"
+
+#. Key:	EUSS_MetaDataManager:ModifyMetaData
+#. SourceLocation:	Meta-data for key ToolTip of member ModifyMetaData in EUSS_MetaDataManager (type: Function, owner: ModifyMetaData)
+#: Meta-data for key ToolTip of member ModifyMetaData in EUSS_MetaDataManager (type:
+#: Function, owner: ModifyMetaData)
+msgctxt "UObjectToolTips,EUSS_MetaDataManager:ModifyMetaData"
+msgid "修改元数据"
+msgstr "Modifies metadata"
+
+#. Key:	EUSS_MetaDataManager:OnAssetDeleted
+#. SourceLocation:	Meta-data for key ToolTip of member OnAssetDeleted in EUSS_MetaDataManager (type: MulticastInlineDelegateProperty, owner: EUSS_MetaDataManager)
+#: Meta-data for key ToolTip of member OnAssetDeleted in EUSS_MetaDataManager (type:
+#: MulticastInlineDelegateProperty, owner: EUSS_MetaDataManager)
+msgctxt "UObjectToolTips,EUSS_MetaDataManager:OnAssetDeleted"
+msgid "资产删除回调"
+msgstr "Asset deletion callback"
+
+#. Key:	EUSS_MetaDataManager:OnAssetSynced
+#. SourceLocation:	Meta-data for key ToolTip of member OnAssetSynced in EUSS_MetaDataManager (type: MulticastInlineDelegateProperty, owner: EUSS_MetaDataManager)
+#: Meta-data for key ToolTip of member OnAssetSynced in EUSS_MetaDataManager (type:
+#: MulticastInlineDelegateProperty, owner: EUSS_MetaDataManager)
+msgctxt "UObjectToolTips,EUSS_MetaDataManager:OnAssetSynced"
+msgid "资产被同步时的回调（未使用）"
+msgstr "Callback when an asset is synchronized (unused)"
+
+#. Key:	WidgetInterface_MetaDataOfAssets:OnClose
+#. SourceLocation:	Meta-data for key ToolTip of member OnClose in WidgetInterface_MetaDataOfAssets (type: Function, owner: OnClose)
+#: Meta-data for key ToolTip of member OnClose in WidgetInterface_MetaDataOfAssets
+#: (type: Function, owner: OnClose)
+msgctxt "UObjectToolTips,WidgetInterface_MetaDataOfAssets:OnClose"
+msgid "OnDeinitialize 时被调用，在蓝图中使用"
+msgstr "Called during OnDeinitialize; use in Blueprints"
+
+#. Key:	EUSS_MetaDataManager:OnMetaDataAdded
+#. SourceLocation:	Meta-data for key ToolTip of member OnMetaDataAdded in EUSS_MetaDataManager (type: MulticastInlineDelegateProperty, owner: EUSS_MetaDataManager)
+#: Meta-data for key ToolTip of member OnMetaDataAdded in EUSS_MetaDataManager (type:
+#: MulticastInlineDelegateProperty, owner: EUSS_MetaDataManager)
+msgctxt "UObjectToolTips,EUSS_MetaDataManager:OnMetaDataAdded"
+msgid "元数据被添加时的回调"
+msgstr "Callback when metadata is added"
+
+#. Key:	EUSS_MetaDataManager:OnMetaDataCopied
+#. SourceLocation:	Meta-data for key ToolTip of member OnMetaDataCopied in EUSS_MetaDataManager (type: MulticastInlineDelegateProperty, owner: EUSS_MetaDataManager)
+#: Meta-data for key ToolTip of member OnMetaDataCopied in EUSS_MetaDataManager (type:
+#: MulticastInlineDelegateProperty, owner: EUSS_MetaDataManager)
+msgctxt "UObjectToolTips,EUSS_MetaDataManager:OnMetaDataCopied"
+msgid "元数据被复制时的回调"
+msgstr "Callback when metadata is copied"
+
+#. Key:	EUSS_MetaDataManager:OnMetaDataDeleted
+#. SourceLocation:	Meta-data for key ToolTip of member OnMetaDataDeleted in EUSS_MetaDataManager (type: MulticastInlineDelegateProperty, owner: EUSS_MetaDataManager)
+#: Meta-data for key ToolTip of member OnMetaDataDeleted in EUSS_MetaDataManager
+#: (type: MulticastInlineDelegateProperty, owner: EUSS_MetaDataManager)
+msgctxt "UObjectToolTips,EUSS_MetaDataManager:OnMetaDataDeleted"
+msgid "元数据被删除时的回调"
+msgstr "Callback when metadata is deleted"
+
+#. Key:	EUSS_MetaDataManager:OnMetaDataModified
+#. SourceLocation:	Meta-data for key ToolTip of member OnMetaDataModified in EUSS_MetaDataManager (type: MulticastInlineDelegateProperty, owner: EUSS_MetaDataManager)
+#: Meta-data for key ToolTip of member OnMetaDataModified in EUSS_MetaDataManager
+#: (type: MulticastInlineDelegateProperty, owner: EUSS_MetaDataManager)
+msgctxt "UObjectToolTips,EUSS_MetaDataManager:OnMetaDataModified"
+msgid "元数据被修改时的回调"
+msgstr "Callback when metadata is modified"
+
+#. Key:	WidgetInterface_MetaDataOfAssets:OnOpen
+#. SourceLocation:	Meta-data for key ToolTip of member OnOpen in WidgetInterface_MetaDataOfAssets (type: Function, owner: OnOpen)
+#: Meta-data for key ToolTip of member OnOpen in WidgetInterface_MetaDataOfAssets
+#: (type: Function, owner: OnOpen)
+msgctxt "UObjectToolTips,WidgetInterface_MetaDataOfAssets:OnOpen"
+msgid ""
+"OnInitialize 时被调用，在蓝图中使用\n"
+"\n"
+"@param Params 创建时需要的参数"
+msgstr ""
+"Called during OnInitialize; use in Blueprints\n"
+"\n"
+"@param Params Parameters required at creation time"
+
+#. Key:	EUSS_WidgetManager:OnWidgetInstanceCreated
+#. SourceLocation:	Meta-data for key ToolTip of member OnWidgetInstanceCreated in EUSS_WidgetManager (type: MulticastInlineDelegateProperty, owner: EUSS_WidgetManager)
+#: Meta-data for key ToolTip of member OnWidgetInstanceCreated in EUSS_WidgetManager
+#: (type: MulticastInlineDelegateProperty, owner: EUSS_WidgetManager)
+msgctxt "UObjectToolTips,EUSS_WidgetManager:OnWidgetInstanceCreated"
+msgid "控件被创建时触发，提供委托，但未使用"
+msgstr ""
+"Triggered when a widget is created. The delegate is provided but currently unused"
+
+#. Key:	EUSS_WidgetManager:OnWidgetInstanceRemoved
+#. SourceLocation:	Meta-data for key ToolTip of member OnWidgetInstanceRemoved in EUSS_WidgetManager (type: MulticastInlineDelegateProperty, owner: EUSS_WidgetManager)
+#: Meta-data for key ToolTip of member OnWidgetInstanceRemoved in EUSS_WidgetManager
+#: (type: MulticastInlineDelegateProperty, owner: EUSS_WidgetManager)
+msgctxt "UObjectToolTips,EUSS_WidgetManager:OnWidgetInstanceRemoved"
+msgid "控件被移除时触发，提供委托，但未使用"
+msgstr ""
+"Triggered when a widget is removed. The delegate is provided but currently unused"
+
+#. Key:	EUSS_WidgetManager:RootNode
+#. SourceLocation:	Meta-data for key ToolTip of member RootNode in EUSS_WidgetManager (type: ObjectProperty, owner: EUSS_WidgetManager)
+#: Meta-data for key ToolTip of member RootNode in EUSS_WidgetManager (type:
+#: ObjectProperty, owner: EUSS_WidgetManager)
+msgctxt "UObjectToolTips,EUSS_WidgetManager:RootNode"
+msgid "存储根节点"
+msgstr "Stores the root node"
+
+#. Key:	MetaDataOfAssetsSettings:ScanSettings
+#. SourceLocation:	Meta-data for key ToolTip of member ScanSettings in MetaDataOfAssetsSettings (type: ArrayProperty, owner: MetaDataOfAssetsSettings)
+#: Meta-data for key ToolTip of member ScanSettings in MetaDataOfAssetsSettings (type:
+#: ArrayProperty, owner: MetaDataOfAssetsSettings)
+msgctxt "UObjectToolTips,MetaDataOfAssetsSettings:ScanSettings"
+msgid "扫描配置"
+msgstr "Scan settings"
+
+#. Key:	EUSS_MetaDataManager:SetAddedAssets
+#. SourceLocation:	Meta-data for key ToolTip of member SetAddedAssets in EUSS_MetaDataManager (type: Function, owner: SetAddedAssets)
+#: Meta-data for key ToolTip of member SetAddedAssets in EUSS_MetaDataManager (type:
+#: Function, owner: SetAddedAssets)
+msgctxt "UObjectToolTips,EUSS_MetaDataManager:SetAddedAssets"
+msgid "主控件关闭时，设置已添加的资产"
+msgstr "Sets the added assets when the main widget is closed"
+
+#. Key:	EUSS_WidgetManager:SetToRootNode
+#. SourceLocation:	Meta-data for key ToolTip of member SetToRootNode in EUSS_WidgetManager (type: Function, owner: SetToRootNode)
+#: Meta-data for key ToolTip of member SetToRootNode in EUSS_WidgetManager (type:
+#: Function, owner: SetToRootNode)
+msgctxt "UObjectToolTips,EUSS_WidgetManager:SetToRootNode"
+msgid "创建树的根节点"
+msgstr "Creates the root node of the tree"
+
+#. Key:	EUSS_MetaDataManager:SyncAsset
+#. SourceLocation:	Meta-data for key ToolTip of member SyncAsset in EUSS_MetaDataManager (type: Function, owner: SyncAsset)
+#: Meta-data for key ToolTip of member SyncAsset in EUSS_MetaDataManager (type:
+#: Function, owner: SyncAsset)
+msgctxt "UObjectToolTips,EUSS_MetaDataManager:SyncAsset"
+msgid "同步资产元数据"
+msgstr "Sync asset metadata"
+
+#. Key:	EUSS_MetaDataManager:SyncAssetsInDirectory
+#. SourceLocation:	Meta-data for key ToolTip of member SyncAssetsInDirectory in EUSS_MetaDataManager (type: Function, owner: SyncAssetsInDirectory)
+#: Meta-data for key ToolTip of member SyncAssetsInDirectory in EUSS_MetaDataManager
+#: (type: Function, owner: SyncAssetsInDirectory)
+msgctxt "UObjectToolTips,EUSS_MetaDataManager:SyncAssetsInDirectory"
+msgid "扫描项目设置中配置路径的资产"
+msgstr "Scans the assets in the paths configured in Project Settings"
+
+#. Key:	EUSS_WidgetManager:TabSpawnContexts
+#. SourceLocation:	Meta-data for key ToolTip of member TabSpawnContexts in EUSS_WidgetManager (type: MapProperty, owner: EUSS_WidgetManager)
+#: Meta-data for key ToolTip of member TabSpawnContexts in EUSS_WidgetManager (type:
+#: MapProperty, owner: EUSS_WidgetManager)
+msgctxt "UObjectToolTips,EUSS_WidgetManager:TabSpawnContexts"
+msgid "保存 EUW 创建的 TabID 和 生成参数"
+msgstr "Save the TabID created by EUW and the generation parameters"
+
+#. Key:	UW_BaseDataWidget
+#. SourceLocation:	Meta-data for key ToolTip of member UW_BaseDataWidget in None (type: Class, owner: UW_BaseDataWidget)
+#: Meta-data for key ToolTip of member UW_BaseDataWidget in None (type: Class, owner:
+#: UW_BaseDataWidget)
+msgctxt "UObjectToolTips,UW_BaseDataWidget"
+msgid "本插件的所有 UserWidget 都继承自该基类"
+msgstr "All UserWidgets in this plugin inherit from this base class"
+
+#. Key:	EUSS_WidgetManager:WidgetToNodeMap
+#. SourceLocation:	Meta-data for key ToolTip of member WidgetToNodeMap in EUSS_WidgetManager (type: MapProperty, owner: EUSS_WidgetManager)
+#: Meta-data for key ToolTip of member WidgetToNodeMap in EUSS_WidgetManager (type:
+#: MapProperty, owner: EUSS_WidgetManager)
+msgctxt "UObjectToolTips,EUSS_WidgetManager:WidgetToNodeMap"
+msgid "用于通过 Widget 找到树节点"
+msgstr "Used to find the tree node for a widget"
+
+#. Key:	EUSS_WidgetManager:WidgetToTabName
+#. SourceLocation:	Meta-data for key ToolTip of member WidgetToTabName in EUSS_WidgetManager (type: MapProperty, owner: EUSS_WidgetManager)
+#: Meta-data for key ToolTip of member WidgetToTabName in EUSS_WidgetManager (type:
+#: MapProperty, owner: EUSS_WidgetManager)
+msgctxt "UObjectToolTips,EUSS_WidgetManager:WidgetToTabName"
+msgid "EUW 和 TabID 的映射"
+msgstr "Mapping between EUWs and Tab IDs"

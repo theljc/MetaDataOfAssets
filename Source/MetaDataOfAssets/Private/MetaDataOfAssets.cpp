@@ -16,9 +16,10 @@
 #include "Global/MetaDataOfAssetsGlobal.h"
 #include "Interfaces/IMainFrameModule.h"
 #include "Internationalization/StringTableRegistry.h"
+#include "Log/MetaDataOfAssetsLogChannel.h"
 
 
-#define LOCTEXT_NAMESPACE "FtestModule"
+#define LOCTEXT_NAMESPACE "FMetaDataOfAssetsModule"
 
 void FMetaDataOfAssetsModule::StartupModule()
 {
@@ -44,6 +45,12 @@ void FMetaDataOfAssetsModule::StartupModule()
 
 	if (SettingsSection.IsValid())
 	{
+		// 缓存设置页标识，供 ShutdownModule 注销时使用
+		SettingsContainerName = PluginSettings->GetContainerName();
+		SettingsCategoryName = PluginSettings->GetCategoryName();
+		SettingsSectionName = PluginSettings->GetSectionName();
+		bSettingsRegistered = true;
+
 		// 项目设置页的改动保存到插件自己的 ini 配置文件
 		SettingsSection->OnSave().BindLambda([]() -> bool
 		{
@@ -72,7 +79,7 @@ void FMetaDataOfAssetsModule::StartupModule()
 	FLevelEditorModule& LevelEditorModule = FModuleManager::LoadModuleChecked<FLevelEditorModule>("LevelEditor");
 	
 	// 扩展关卡编辑器的工具栏
-	TSharedPtr<FExtender> ToolbarExtender = MakeShareable(new FExtender);
+	ToolbarExtender = MakeShareable(new FExtender);
 
 	// 将按钮添加在名为 "Play" 的工具栏区块之后
 	ToolbarExtender->AddToolBarExtension("Play"
@@ -91,16 +98,97 @@ void FMetaDataOfAssetsModule::StartupModule()
 	// 获得资产注册表模块
 	IAssetRegistry& AssetRegistry = FModuleManager::LoadModuleChecked<FAssetRegistryModule>("AssetRegistry").Get();
 	// 绑定资产删除事件
-	AssetRegistry.OnAssetRemoved().AddRaw(this, &FMetaDataOfAssetsModule::OnAssetRemoved);
+	AssetRemovedDelegateHandle = AssetRegistry.OnAssetRemoved().AddRaw(
+		this,
+		&FMetaDataOfAssetsModule::OnAssetRemoved);
 	// 移动资产时也会触发重命名事件
-	AssetRegistry.OnAssetRenamed().AddRaw(this, &FMetaDataOfAssetsModule::OnAssetMoved);
-
+	AssetRenamedDelegateHandle = AssetRegistry.OnAssetRenamed().AddRaw(
+		this,
+		&FMetaDataOfAssetsModule::OnAssetsMoved);
+	
+	// AssetRenamedDelegateHandle = FEditorDelegates::OnPackageDeleted.AddRaw(
+	// 	this,
+	// 	&FMetaDataOfAssetsModule::OnPackageRemoved);
+	
 	// 编辑器初始化完成的回调
-	FEditorDelegates::OnEditorInitialized.AddRaw(this, &FMetaDataOfAssetsModule::OnEditorInitialized);
+	EditorInitializedDelegateHandle = FEditorDelegates::OnEditorInitialized.AddRaw(
+		this,
+		&FMetaDataOfAssetsModule::OnEditorInitialized);
+
+	// 关卡切换前关闭所有控件，避免控件持有旧 World 导致世界泄漏
+	MapLoadDelegateHandle = FEditorDelegates::OnMapLoad.AddRaw(
+		this,
+		&FMetaDataOfAssetsModule::OnMapLoad);
 }
 
 void FMetaDataOfAssetsModule::ShutdownModule()
 {
+	// 解除命令映射绑定
+	if (PluginCommands.IsValid())
+	{
+		PluginCommands->UnmapAction(FMetaDataOfAssetsCommands::Get().Command_OpenMain);
+		PluginCommands->UnmapAction(FMetaDataOfAssetsCommands::Get().Command_CloseAll);
+		PluginCommands.Reset();
+	}
+
+	// 从关卡编辑器工具栏移除
+	if (FLevelEditorModule* LevelEditorModule =
+		FModuleManager::GetModulePtr<FLevelEditorModule>(TEXT("LevelEditor")))
+	{
+		TSharedPtr<FExtensibilityManager> ToolbarManager =
+			LevelEditorModule->GetToolBarExtensibilityManager();
+		if (ToolbarManager.IsValid() && ToolbarExtender.IsValid())
+		{
+			ToolbarManager->RemoveExtender(ToolbarExtender);
+		}
+	}
+	ToolbarExtender.Reset();
+
+	// 解除 AssetRegistry 事件绑定
+	if (FAssetRegistryModule* AssetRegistryModule =
+		FModuleManager::GetModulePtr<FAssetRegistryModule>(TEXT("AssetRegistry")))
+	{
+		IAssetRegistry& AssetRegistry = AssetRegistryModule->Get();
+		if (AssetRemovedDelegateHandle.IsValid())
+		{
+			AssetRegistry.OnAssetRemoved().Remove(AssetRemovedDelegateHandle);
+		}
+		if (AssetRenamedDelegateHandle.IsValid())
+		{
+			AssetRegistry.OnAssetRenamed().Remove(AssetRenamedDelegateHandle);
+		}
+	}
+	AssetRemovedDelegateHandle.Reset();
+	AssetRenamedDelegateHandle.Reset();
+
+	// 解除编辑器初始化完成事件绑定
+	if (EditorInitializedDelegateHandle.IsValid())
+	{
+		FEditorDelegates::OnEditorInitialized.Remove(EditorInitializedDelegateHandle);
+		EditorInitializedDelegateHandle.Reset();
+	}
+
+	if (MapLoadDelegateHandle.IsValid())
+	{
+		FEditorDelegates::OnMapLoad.Remove(MapLoadDelegateHandle);
+		MapLoadDelegateHandle.Reset();
+	}
+
+	// 从项目设置中移除本插件的设置页
+	if (ISettingsModule* SettingsModule =
+		FModuleManager::GetModulePtr<ISettingsModule>(TEXT("Settings")))
+	{
+		if (bSettingsRegistered)
+		{
+			SettingsModule->UnregisterSettings(
+				SettingsContainerName,
+				SettingsCategoryName,
+				SettingsSectionName);
+		}
+	}
+	
+	bSettingsRegistered = false;
+
 	// 取消注册控制台命令
 	IConsoleManager::Get().UnregisterConsoleObject(MetaDataOfAssetsConstant::GetDisableDebugConsoleCommand());
 	IConsoleManager::Get().UnregisterConsoleObject(MetaDataOfAssetsConstant::GetEnableDebugConsoleCommand());
@@ -190,13 +278,20 @@ void FMetaDataOfAssetsModule::OnButtonClicked()
 	}
 }
 
-void FMetaDataOfAssetsModule::OnAssetMoved(const FAssetData& AssetData, const FString& OldObjectPath)
+void FMetaDataOfAssetsModule::OnAssetsMoved(const FAssetData& AssetData, const FString& OldObjectPath)
 {
+	UEUSS_MetaDataManager* MetaDataManager = GEditor->GetEditorSubsystem<UEUSS_MetaDataManager>();
+	if (MetaDataManager)
+	{
+		MetaDataManager->OnAssetsMoved(AssetData, OldObjectPath);
+	}
+	
 	UEUSS_WidgetManager* WidgetManager = GEditor->GetEditorSubsystem<UEUSS_WidgetManager>();
 	if (WidgetManager)
 	{
-		WidgetManager->OnMainWidgetMoved(AssetData, OldObjectPath);
+		WidgetManager->OnAssetsMoved(AssetData, OldObjectPath);
 	}
+	
 }
 
 void FMetaDataOfAssetsModule::OnAssetRemoved(const FAssetData& AssetData)
@@ -205,6 +300,22 @@ void FMetaDataOfAssetsModule::OnAssetRemoved(const FAssetData& AssetData)
 	if (MetaDataManager)
 	{
 		MetaDataManager->OnAssetRemoved(AssetData);
+	}
+}
+
+void FMetaDataOfAssetsModule::OnPackageRemoved(UPackage* InPackage)
+{
+	UE_LOG(LogMetaDataOfAssets, Warning, TEXT("OnPackageRemoved: %s"), *InPackage->GetFName().ToString())
+}
+
+void FMetaDataOfAssetsModule::OnMapLoad(const FString& InFilename, FCanLoadMap& OutCanLoadMap)
+{
+	if (!GEditor) return;
+
+	UEUSS_WidgetManager* WidgetManager = GEditor->GetEditorSubsystem<UEUSS_WidgetManager>();
+	if (WidgetManager)
+	{
+		WidgetManager->CloseAllWidgets();
 	}
 }
 

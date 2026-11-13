@@ -148,14 +148,15 @@ MetaDataOfAssets/
 
 - 本插件为编辑器插件
 - 启用本插件需要同时启用 `Struct Utils` 和 `Editor Scripting Utilities` 插件
-- 如果需要修改蓝图部分，建议关闭已经打开的控件，并在蓝图编译完成后重新打开
 - 本插件做了中文和英语本地化，在 [编辑器偏好设置 -> 区域和语言] 中切换编辑器语言时会自动更改
+- 将资产添加到主控件中，以及点击 **`同步配置路径中的资产`** 按钮时，都会加载这个资产
+- 如果需要修改蓝图部分，建议关闭已经打开的控件，并在蓝图编译完成后重新打开
+- 不要使用蓝图中的 `Run Utility Widget` 按钮来打开控件
 - 本插件涉及的项目配置都保存在本插件目录的 [Config/DefaultMetaDataOfAssets.ini] 文件中
   - `[/Script/MetaDataOfAssets.MetaDataOfAssetsSettings]` 分段
     - `bAllowManageAssetRegistryTagsDelete`：是否允许自动删除资产注册表的标签
     - `ScanSettings`：同步资产时使用的扫描路径
     - `bEnableDebug`：是否开启本插件相关的 UE_LOG 和 PrintString 输出
     - `MainWidgetPath`：主控件资产的路径。禁止手动修改，否则无法使用编辑器工具栏中的按钮打开主控件
-- 将资产添加到主控件中，以及点击 **`同步配置路径中的资产`** 按钮时，都会加载这个资产
 - 点击 **`同步配置路径中的资产`** 按钮时，会在编辑器中分帧加载资产，右下角会显示加载进度。加载完成后，会对所有加载的资产进行保存
 

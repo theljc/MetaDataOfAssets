@@ -1,0 +1,475 @@
+# Fill out your copyright notice in the Description page of Project Settings.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: MetaDataPlugin_TextFiles\n"
+"POT-Creation-Date: 2026-11-12 07:18\n"
+"PO-Revision-Date: 2026-11-12 15:22+0800\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.9\n"
+
+#. Key:	 Input Key
+#. SourceLocation:	../Plugins/MetaDataOfAssets/Content/Localization/MetadataPlugin.csv
+#: ../Plugins/MetaDataOfAssets/Content/Localization/MetadataPlugin.csv
+msgctxt "MetaDataOfAssetsNamespace, Input Key "
+msgid " Input Key "
+msgstr " Input Key "
+
+#. Key:	 Input Value
+#. SourceLocation:	../Plugins/MetaDataOfAssets/Content/Localization/MetadataPlugin.csv
+#: ../Plugins/MetaDataOfAssets/Content/Localization/MetadataPlugin.csv
+msgctxt "MetaDataOfAssetsNamespace, Input Value "
+msgid " Input Value "
+msgstr " Input Value "
+
+#. Key:	Add
+#. SourceLocation:	../Plugins/MetaDataOfAssets/Content/Localization/MetadataPlugin.csv
+#: ../Plugins/MetaDataOfAssets/Content/Localization/MetadataPlugin.csv
+msgctxt "MetaDataOfAssetsNamespace,Add"
+msgid "Add"
+msgstr "Add"
+
+#. Key:	Add data row
+#. SourceLocation:	../Plugins/MetaDataOfAssets/Content/Localization/MetadataPlugin.csv
+#: ../Plugins/MetaDataOfAssets/Content/Localization/MetadataPlugin.csv
+msgctxt "MetaDataOfAssetsNamespace,Add data row"
+msgid "Add data row"
+msgstr "Add data row"
+
+#. Key:	Add selected assets
+#. SourceLocation:	../Plugins/MetaDataOfAssets/Content/Localization/MetadataPlugin.csv
+#: ../Plugins/MetaDataOfAssets/Content/Localization/MetadataPlugin.csv
+msgctxt "MetaDataOfAssetsNamespace,Add selected assets"
+msgid "Add selected assets"
+msgstr "Add selected assets"
+
+#. Key:	Asset Name :
+#. SourceLocation:	../Plugins/MetaDataOfAssets/Content/Localization/MetadataPlugin.csv
+#: ../Plugins/MetaDataOfAssets/Content/Localization/MetadataPlugin.csv
+msgctxt "MetaDataOfAssetsNamespace,Asset Name :"
+msgid "Asset Name :"
+msgstr "Asset Name :"
+
+#. Key:	Batch Add
+#. SourceLocation:	../Plugins/MetaDataOfAssets/Content/Localization/MetadataPlugin.csv
+#: ../Plugins/MetaDataOfAssets/Content/Localization/MetadataPlugin.csv
+msgctxt "MetaDataOfAssetsNamespace,Batch Add"
+msgid "Batch Add"
+msgstr "Batch Add"
+
+#. Key:	Batch Copy
+#. SourceLocation:	../Plugins/MetaDataOfAssets/Content/Localization/MetadataPlugin.csv
+#: ../Plugins/MetaDataOfAssets/Content/Localization/MetadataPlugin.csv
+msgctxt "MetaDataOfAssetsNamespace,Batch Copy"
+msgid "Batch Copy"
+msgstr "Batch Copy"
+
+#. Key:	Batch Delete
+#. SourceLocation:	../Plugins/MetaDataOfAssets/Content/Localization/MetadataPlugin.csv
+#: ../Plugins/MetaDataOfAssets/Content/Localization/MetadataPlugin.csv
+msgctxt "MetaDataOfAssetsNamespace,Batch Delete"
+msgid "Batch Delete"
+msgstr "Batch Delete"
+
+#. Key:	Batch Modify
+#. SourceLocation:	../Plugins/MetaDataOfAssets/Content/Localization/MetadataPlugin.csv
+#: ../Plugins/MetaDataOfAssets/Content/Localization/MetadataPlugin.csv
+msgctxt "MetaDataOfAssetsNamespace,Batch Modify"
+msgid "Batch Modify"
+msgstr "Batch Modify"
+
+#. Key:	Batch operation
+#. SourceLocation:	../Plugins/MetaDataOfAssets/Content/Localization/MetadataPlugin.csv
+#: ../Plugins/MetaDataOfAssets/Content/Localization/MetadataPlugin.csv
+msgctxt "MetaDataOfAssetsNamespace,Batch operation"
+msgid "Batch operation"
+msgstr "Batch operation"
+
+#. Key:	Batch Sync
+#. SourceLocation:	../Plugins/MetaDataOfAssets/Content/Localization/MetadataPlugin.csv
+#: ../Plugins/MetaDataOfAssets/Content/Localization/MetadataPlugin.csv
+msgctxt "MetaDataOfAssetsNamespace,Batch Sync"
+msgid "Batch Sync"
+msgstr "Batch Sync"
+
+#. Key:	Cancel
+#. SourceLocation:	../Plugins/MetaDataOfAssets/Content/Localization/MetadataPlugin.csv
+#: ../Plugins/MetaDataOfAssets/Content/Localization/MetadataPlugin.csv
+msgctxt "MetaDataOfAssetsNamespace,Cancel"
+msgid "Cancel"
+msgstr "Cancel"
+
+#. Key:	Clear
+#. SourceLocation:	../Plugins/MetaDataOfAssets/Content/Localization/MetadataPlugin.csv
+#: ../Plugins/MetaDataOfAssets/Content/Localization/MetadataPlugin.csv
+msgctxt "MetaDataOfAssetsNamespace,Clear"
+msgid "Clear"
+msgstr "Clear"
+
+#. Key:	Clear all
+#. SourceLocation:	../Plugins/MetaDataOfAssets/Content/Localization/MetadataPlugin.csv
+#: ../Plugins/MetaDataOfAssets/Content/Localization/MetadataPlugin.csv
+msgctxt "MetaDataOfAssetsNamespace,Clear all"
+msgid "Clear all"
+msgstr "Clear all"
+
+#. Key:	Configuration is empty
+#. SourceLocation:	../Plugins/MetaDataOfAssets/Content/Localization/MetadataPlugin.csv
+#: ../Plugins/MetaDataOfAssets/Content/Localization/MetadataPlugin.csv
+msgctxt "MetaDataOfAssetsNamespace,Configuration is empty"
+msgid "Configuration is empty"
+msgstr "Configuration is empty"
+
+#. Key:	Confirm
+#. SourceLocation:	../Plugins/MetaDataOfAssets/Content/Localization/MetadataPlugin.csv
+#: ../Plugins/MetaDataOfAssets/Content/Localization/MetadataPlugin.csv
+msgctxt "MetaDataOfAssetsNamespace,Confirm"
+msgid "Confirm"
+msgstr "Confirm"
+
+#. Key:	Confirm Add
+#. SourceLocation:	../Plugins/MetaDataOfAssets/Content/Localization/MetadataPlugin.csv
+#: ../Plugins/MetaDataOfAssets/Content/Localization/MetadataPlugin.csv
+msgctxt "MetaDataOfAssetsNamespace,Confirm Add"
+msgid "Confirm Add"
+msgstr "Confirm Add"
+
+#. Key:	Confirm Delete
+#. SourceLocation:	../Plugins/MetaDataOfAssets/Content/Localization/MetadataPlugin.csv
+#: ../Plugins/MetaDataOfAssets/Content/Localization/MetadataPlugin.csv
+msgctxt "MetaDataOfAssetsNamespace,Confirm Delete"
+msgid "Confirm Delete"
+msgstr "Confirm Delete"
+
+#. Key:	Confirm Modify
+#. SourceLocation:	../Plugins/MetaDataOfAssets/Content/Localization/MetadataPlugin.csv
+#: ../Plugins/MetaDataOfAssets/Content/Localization/MetadataPlugin.csv
+msgctxt "MetaDataOfAssetsNamespace,Confirm Modify"
+msgid "Confirm Modify"
+msgstr "Confirm Modify"
+
+#. Key:	Copy
+#. SourceLocation:	../Plugins/MetaDataOfAssets/Content/Localization/MetadataPlugin.csv
+#: ../Plugins/MetaDataOfAssets/Content/Localization/MetadataPlugin.csv
+msgctxt "MetaDataOfAssetsNamespace,Copy"
+msgid "Copy"
+msgstr "Copy"
+
+#. Key:	Delete
+#. SourceLocation:	../Plugins/MetaDataOfAssets/Content/Localization/MetadataPlugin.csv
+#: ../Plugins/MetaDataOfAssets/Content/Localization/MetadataPlugin.csv
+msgctxt "MetaDataOfAssetsNamespace,Delete"
+msgid "Delete"
+msgstr "Delete"
+
+#. Key:	Deletion failed: Asset [{Asset Name}] does not contain key [{Tag Name}]
+#. SourceLocation:	../Plugins/MetaDataOfAssets/Content/Localization/MetadataPlugin.csv
+#: ../Plugins/MetaDataOfAssets/Content/Localization/MetadataPlugin.csv
+msgctxt ""
+"MetaDataOfAssetsNamespace,Deletion failed: Asset [{Asset Name}] does not "
+"contain key [{Tag Name}]"
+msgid "Deletion failed: Asset [{Asset Name}] does not contain key [{Tag Name}]"
+msgstr ""
+"Deletion failed: Asset [{Asset Name}] does not contain key [{Tag Name}]"
+
+#. Key:	Do not overwrite any values for this asset? (Yes)
+#. SourceLocation:	../Plugins/MetaDataOfAssets/Content/Localization/MetadataPlugin.csv
+#: ../Plugins/MetaDataOfAssets/Content/Localization/MetadataPlugin.csv
+msgctxt ""
+"MetaDataOfAssetsNamespace,Do not overwrite any values for this asset? (Yes)"
+"\r\n"
+"Do not overwrite any values for all assets? (No)"
+msgid ""
+"Do not overwrite any values for this asset? (Yes)\r\n"
+"Do not overwrite any values for all assets? (No)"
+msgstr ""
+"Do not overwrite any values for this asset? (Yes)\r\n"
+"Do not overwrite any values for all assets? (No)"
+
+#. Key:	Duplicate Keys Exist
+#. SourceLocation:	../Plugins/MetaDataOfAssets/Content/Localization/MetadataPlugin.csv
+#: ../Plugins/MetaDataOfAssets/Content/Localization/MetadataPlugin.csv
+msgctxt "MetaDataOfAssetsNamespace,Duplicate Keys Exist"
+msgid "Duplicate Keys Exist"
+msgstr "Duplicate Keys Exist"
+
+#. Key:	Duplicate tag: {Tag}
+#. SourceLocation:	../Plugins/MetaDataOfAssets/Content/Localization/MetadataPlugin.csv
+#: ../Plugins/MetaDataOfAssets/Content/Localization/MetadataPlugin.csv
+msgctxt "MetaDataOfAssetsNamespace,Duplicate tag: {Tag}"
+msgid "Duplicate tag: {Tag}"
+msgstr "Duplicate tag: {Tag}"
+
+#. Key:	Input New Value
+#. SourceLocation:	../Plugins/MetaDataOfAssets/Content/Localization/MetadataPlugin.csv
+#: ../Plugins/MetaDataOfAssets/Content/Localization/MetadataPlugin.csv
+msgctxt "MetaDataOfAssetsNamespace,Input New Value"
+msgid "Input New Value"
+msgstr "Input New Value"
+
+#. Key:	Invalid assets are included. Skip invalid assets?
+#. SourceLocation:	../Plugins/MetaDataOfAssets/Content/Localization/MetadataPlugin.csv
+#: ../Plugins/MetaDataOfAssets/Content/Localization/MetadataPlugin.csv
+msgctxt ""
+"MetaDataOfAssetsNamespace,Invalid assets are included. Skip invalid assets?"
+msgid "Invalid assets are included. Skip invalid assets?"
+msgstr "Invalid assets are included. Skip invalid assets?"
+
+#. Key:	Key :
+#. SourceLocation:	../Plugins/MetaDataOfAssets/Content/Localization/MetadataPlugin.csv
+#: ../Plugins/MetaDataOfAssets/Content/Localization/MetadataPlugin.csv
+msgctxt "MetaDataOfAssetsNamespace,Key :"
+msgid "Key :"
+msgstr "Key :"
+
+#. Key:	Key cannot be empty
+#. SourceLocation:	../Plugins/MetaDataOfAssets/Content/Localization/MetadataPlugin.csv
+#: ../Plugins/MetaDataOfAssets/Content/Localization/MetadataPlugin.csv
+msgctxt "MetaDataOfAssetsNamespace,Key cannot be empty"
+msgid "Key cannot be empty"
+msgstr "Key cannot be empty"
+
+#. Key:	Key Is Empty
+#. SourceLocation:	../Plugins/MetaDataOfAssets/Content/Localization/MetadataPlugin.csv
+#: ../Plugins/MetaDataOfAssets/Content/Localization/MetadataPlugin.csv
+msgctxt "MetaDataOfAssetsNamespace,Key Is Empty"
+msgid "Key Is Empty"
+msgstr "Key Is Empty"
+
+#. Key:	Modification failed: Key is empty
+#. SourceLocation:	../Plugins/MetaDataOfAssets/Content/Localization/MetadataPlugin.csv
+#: ../Plugins/MetaDataOfAssets/Content/Localization/MetadataPlugin.csv
+msgctxt "MetaDataOfAssetsNamespace,Modification failed: Key is empty"
+msgid "Modification failed: Key is empty"
+msgstr "Modification failed: Key is empty"
+
+#. Key:	Modify
+#. SourceLocation:	../Plugins/MetaDataOfAssets/Content/Localization/MetadataPlugin.csv
+#: ../Plugins/MetaDataOfAssets/Content/Localization/MetadataPlugin.csv
+msgctxt "MetaDataOfAssetsNamespace,Modify"
+msgid "Modify"
+msgstr "Modify"
+
+#. Key:	Name
+#. SourceLocation:	../Plugins/MetaDataOfAssets/Content/Localization/MetadataPlugin.csv
+#: ../Plugins/MetaDataOfAssets/Content/Localization/MetadataPlugin.csv
+msgctxt "MetaDataOfAssetsNamespace,Name"
+msgid "Name"
+msgstr "Name"
+
+#. Key:	No data added
+#. SourceLocation:	../Plugins/MetaDataOfAssets/Content/Localization/MetadataPlugin.csv
+#: ../Plugins/MetaDataOfAssets/Content/Localization/MetadataPlugin.csv
+msgctxt "MetaDataOfAssetsNamespace,No data added"
+msgid "No data added"
+msgstr "No data added"
+
+#. Key:	No Value
+#. SourceLocation:	../Plugins/MetaDataOfAssets/Content/Localization/MetadataPlugin.csv
+#: ../Plugins/MetaDataOfAssets/Content/Localization/MetadataPlugin.csv
+msgctxt "MetaDataOfAssetsNamespace,No Value"
+msgid "No Value"
+msgstr "No Value"
+
+#. Key:	None
+#. SourceLocation:	../Plugins/MetaDataOfAssets/Content/Localization/MetadataPlugin.csv
+#: ../Plugins/MetaDataOfAssets/Content/Localization/MetadataPlugin.csv
+msgctxt "MetaDataOfAssetsNamespace,None"
+msgid "None"
+msgstr "None"
+
+#. Key:	Num
+#. SourceLocation:	../Plugins/MetaDataOfAssets/Content/Localization/MetadataPlugin.csv
+#: ../Plugins/MetaDataOfAssets/Content/Localization/MetadataPlugin.csv
+msgctxt "MetaDataOfAssetsNamespace,Num"
+msgid "Num"
+msgstr "Num"
+
+#. Key:	Number of metadata :
+#. SourceLocation:	../Plugins/MetaDataOfAssets/Content/Localization/MetadataPlugin.csv
+#: ../Plugins/MetaDataOfAssets/Content/Localization/MetadataPlugin.csv
+msgctxt "MetaDataOfAssetsNamespace,Number of metadata :"
+msgid "Number of metadata :"
+msgstr "Number of metadata :"
+
+#. Key:	Number of selected assets:
+#. SourceLocation:	../Plugins/MetaDataOfAssets/Content/Localization/MetadataPlugin.csv
+#: ../Plugins/MetaDataOfAssets/Content/Localization/MetadataPlugin.csv
+msgctxt "MetaDataOfAssetsNamespace,Number of selected assets:"
+msgid "Number of selected assets:"
+msgstr "Number of selected assets:"
+
+#. Key:	Overwrite all values for this asset? (Yes)
+#. SourceLocation:	../Plugins/MetaDataOfAssets/Content/Localization/MetadataPlugin.csv
+#: ../Plugins/MetaDataOfAssets/Content/Localization/MetadataPlugin.csv
+msgctxt ""
+"MetaDataOfAssetsNamespace,Overwrite all values for this asset? (Yes)\r\n"
+"Overwrite all values for all assets? (No)"
+msgid ""
+"Overwrite all values for this asset? (Yes)\r\n"
+"Overwrite all values for all assets? (No)"
+msgstr ""
+"Overwrite all values for this asset? (Yes)\r\n"
+"Overwrite all values for all assets? (No)"
+
+#. Key:	Prompt
+#. SourceLocation:	../Plugins/MetaDataOfAssets/Content/Localization/MetadataPlugin.csv
+#: ../Plugins/MetaDataOfAssets/Content/Localization/MetadataPlugin.csv
+msgctxt "MetaDataOfAssetsNamespace,Prompt"
+msgid "Prompt"
+msgstr "Prompt"
+
+#. Key:	Select assets for {Select Mode}
+#. SourceLocation:	../Plugins/MetaDataOfAssets/Content/Localization/MetadataPlugin.csv
+#: ../Plugins/MetaDataOfAssets/Content/Localization/MetadataPlugin.csv
+msgctxt "MetaDataOfAssetsNamespace,Select assets for {Select Mode}"
+msgid "Select assets for {Select Mode}"
+msgstr "Select assets for {Select Mode}"
+
+#. Key:	Select Mode
+#. SourceLocation:	../Plugins/MetaDataOfAssets/Content/Localization/MetadataPlugin.csv
+#: ../Plugins/MetaDataOfAssets/Content/Localization/MetadataPlugin.csv
+msgctxt "MetaDataOfAssetsNamespace,Select Mode"
+msgid "Select Mode"
+msgstr "Select Mode"
+
+#. Key:	Select source assets
+#. SourceLocation:	../Plugins/MetaDataOfAssets/Content/Localization/MetadataPlugin.csv
+#: ../Plugins/MetaDataOfAssets/Content/Localization/MetadataPlugin.csv
+msgctxt "MetaDataOfAssetsNamespace,Select source assets"
+msgid "Select source assets"
+msgstr "Select source assets"
+
+#. Key:	Select target assets
+#. SourceLocation:	../Plugins/MetaDataOfAssets/Content/Localization/MetadataPlugin.csv
+#: ../Plugins/MetaDataOfAssets/Content/Localization/MetadataPlugin.csv
+msgctxt "MetaDataOfAssetsNamespace,Select target assets"
+msgid "Select target assets"
+msgstr "Select target assets"
+
+#. Key:	Select the Tag to be modified
+#. SourceLocation:	../Plugins/MetaDataOfAssets/Content/Localization/MetadataPlugin.csv
+#: ../Plugins/MetaDataOfAssets/Content/Localization/MetadataPlugin.csv
+msgctxt "MetaDataOfAssetsNamespace,Select the Tag to be modified"
+msgid "Select the Tag to be modified"
+msgstr "Select the Tag to be modified"
+
+#. Key:	Succeed
+#. SourceLocation:	../Plugins/MetaDataOfAssets/Content/Localization/MetadataPlugin.csv
+#: ../Plugins/MetaDataOfAssets/Content/Localization/MetadataPlugin.csv
+msgctxt "MetaDataOfAssetsNamespace,Succeed"
+msgid "Succeed"
+msgstr "Succeed"
+
+#. Key:	Sync
+#. SourceLocation:	../Plugins/MetaDataOfAssets/Content/Localization/MetadataPlugin.csv
+#: ../Plugins/MetaDataOfAssets/Content/Localization/MetadataPlugin.csv
+msgctxt "MetaDataOfAssetsNamespace,Sync"
+msgid "Sync"
+msgstr "Sync"
+
+#. Key:	Sync assets in configured path
+#. SourceLocation:	../Plugins/MetaDataOfAssets/Content/Localization/MetadataPlugin.csv
+#: ../Plugins/MetaDataOfAssets/Content/Localization/MetadataPlugin.csv
+msgctxt "MetaDataOfAssetsNamespace,Sync assets in configured path"
+msgid "Sync assets in configured path"
+msgstr "Sync assets in configured path"
+
+#. Key:	The [{Tag}] tag already exists on asset [{Asset Name}]. Overwrite its value?
+#. SourceLocation:	../Plugins/MetaDataOfAssets/Content/Localization/MetadataPlugin.csv
+#: ../Plugins/MetaDataOfAssets/Content/Localization/MetadataPlugin.csv
+msgctxt ""
+"MetaDataOfAssetsNamespace,The [{Tag}] tag already exists on asset [{Asset "
+"Name}]. Overwrite its value?"
+msgid ""
+"The [{Tag}] tag already exists on asset [{Asset Name}]. Overwrite its value?"
+msgstr ""
+"The [{Tag}] tag already exists on asset [{Asset Name}]. Overwrite its value?"
+
+#. Key:	The configuration path contains an empty path
+#. SourceLocation:	../Plugins/MetaDataOfAssets/Content/Localization/MetadataPlugin.csv
+#: ../Plugins/MetaDataOfAssets/Content/Localization/MetadataPlugin.csv
+msgctxt ""
+"MetaDataOfAssetsNamespace,The configuration path contains an empty path"
+msgid "The configuration path contains an empty path"
+msgstr "The configuration path contains an empty path"
+
+#. Key:	There is an empty key in the added data row
+#. SourceLocation:	../Plugins/MetaDataOfAssets/Content/Localization/MetadataPlugin.csv
+#: ../Plugins/MetaDataOfAssets/Content/Localization/MetadataPlugin.csv
+msgctxt "MetaDataOfAssetsNamespace,There is an empty key in the added data row"
+msgid "There is an empty key in the added data row"
+msgstr ""
+
+#. Key:	Value
+#. SourceLocation:	../Plugins/MetaDataOfAssets/Content/Localization/MetadataPlugin.csv
+#: ../Plugins/MetaDataOfAssets/Content/Localization/MetadataPlugin.csv
+msgctxt "MetaDataOfAssetsNamespace,Value"
+msgid "Value"
+msgstr "Value"
+
+#. Key:	Value :
+#. SourceLocation:	../Plugins/MetaDataOfAssets/Content/Localization/MetadataPlugin.csv
+#: ../Plugins/MetaDataOfAssets/Content/Localization/MetadataPlugin.csv
+msgctxt "MetaDataOfAssetsNamespace,Value :"
+msgid "Value :"
+msgstr "Value :"
+
+#. Key:	MetaDataOfAssetsCommands
+#. SourceLocation:	Plugins/MetaDataOfAssets/Source/MetaDataOfAssets/Private/Command/MetaDataOfAssetsCommands.cpp(11)
+#: Plugins/MetaDataOfAssets/Source/MetaDataOfAssets/Private/Command/MetaDataOfAssetsCommands.cpp(11)
+msgctxt "MetaDataOfAssetsCommands,MetaDataOfAssetsCommands"
+msgid "MetaDataOfAssets Shortcut Key"
+msgstr "MetaDataOfAssets Shortcut Key"
+
+#. Key:	Command_OpenMain
+#. SourceLocation:	Plugins/MetaDataOfAssets/Source/MetaDataOfAssets/Private/Command/MetaDataOfAssetsCommands.cpp(22)
+#: Plugins/MetaDataOfAssets/Source/MetaDataOfAssets/Private/Command/MetaDataOfAssetsCommands.cpp(22)
+msgctxt "UICommands.MetaDataOfAssetsCommands,Command_OpenMain"
+msgid "Open Main Widget"
+msgstr "Open Main Widget"
+
+#. Key:	Command_OpenMain_ToolTip
+#. SourceLocation:	Plugins/MetaDataOfAssets/Source/MetaDataOfAssets/Private/Command/MetaDataOfAssetsCommands.cpp(22)
+#: Plugins/MetaDataOfAssets/Source/MetaDataOfAssets/Private/Command/MetaDataOfAssetsCommands.cpp(22)
+msgctxt "UICommands.MetaDataOfAssetsCommands,Command_OpenMain_ToolTip"
+msgid "Open Main Widget as a Floating Window"
+msgstr "Open Main Widget as a Floating Window"
+
+#. Key:	Command_CloseAll
+#. SourceLocation:	Plugins/MetaDataOfAssets/Source/MetaDataOfAssets/Private/Command/MetaDataOfAssetsCommands.cpp(23)
+#: Plugins/MetaDataOfAssets/Source/MetaDataOfAssets/Private/Command/MetaDataOfAssetsCommands.cpp(23)
+msgctxt "UICommands.MetaDataOfAssetsCommands,Command_CloseAll"
+msgid "Close All Widgets"
+msgstr "Close All Widgets"
+
+#. Key:	Command_CloseAll_ToolTip
+#. SourceLocation:	Plugins/MetaDataOfAssets/Source/MetaDataOfAssets/Private/Command/MetaDataOfAssetsCommands.cpp(23)
+#: Plugins/MetaDataOfAssets/Source/MetaDataOfAssets/Private/Command/MetaDataOfAssetsCommands.cpp(23)
+msgctxt "UICommands.MetaDataOfAssetsCommands,Command_CloseAll_ToolTip"
+msgid "Close All Opened Widgets"
+msgstr "Close All Opened Widgets"
+
+#. Key:	LoadingAssetProgress
+#. SourceLocation:	Plugins/MetaDataOfAssets/Source/MetaDataOfAssets/Private/Task/FAssetScanTask.cpp(40)
+#: Plugins/MetaDataOfAssets/Source/MetaDataOfAssets/Private/Task/FAssetScanTask.cpp(40)
+msgctxt "AssetSyncTask,LoadingAssetProgress"
+msgid "Loading Assets"
+msgstr "Loading Assets"
+
+#. Key:	MetaDataOfAssetsSettingsSection
+#. SourceLocation:	Plugins/MetaDataOfAssets/Source/MetaDataOfAssets/Public/Settings/MetaDataOfAssetsSettings.h(69)
+#: Plugins/MetaDataOfAssets/Source/MetaDataOfAssets/Public/Settings/MetaDataOfAssetsSettings.h(69)
+msgctxt "MetaDataOfAssets,MetaDataOfAssetsSettingsSection"
+msgid "MetaDataOfAssets"
+msgstr "MetaDataOfAssets"
+
+#~ msgctxt "MetaDataOfAssetsNamespace,Value is empty. Please re-enter."
+#~ msgid "Value is empty. Please re-enter."
+#~ msgstr "Value is empty. Please re-enter."

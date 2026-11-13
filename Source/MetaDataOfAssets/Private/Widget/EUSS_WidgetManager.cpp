@@ -9,14 +9,14 @@
 #include "LevelEditor.h"
 #include "StatusBarSubsystem.h"
 #include "Engine/World.h"
-// #include "Global/MetaDataOfAssetsGlobal.h"
-// #include "IBlutilityModule.h"
+#include "Framework/Application/SlateApplication.h"
 #include "Log/MetaDataOfAssetsLogChannel.h"
 #include "Modules/ModuleManager.h"
 #include "Settings/MetaDataOfAssetsSettings.h"
 #include "StructUtils/InstancedStruct.h"
 #include "Widgets/SWindow.h"
 #include "Widgets/Docking/SDockTab.h"
+#include "Widgets/SNullWidget.h"
 
 
 void UEUSS_WidgetManager::SetMainWidgetPath()
@@ -42,21 +42,21 @@ void UEUSS_WidgetManager::SetMainWidgetPath()
 	
 }
 
-void UEUSS_WidgetManager::OnTabClosed(TSharedRef<SDockTab> ClosedTab, TWeakObjectPtr<UUserWidget> WeakWidget, TWeakObjectPtr<UEditorUtilityWidgetBlueprint> WeakBlueprint)
+void UEUSS_WidgetManager::OnTabClosed(TSharedRef<SDockTab> InClosedTab, TWeakObjectPtr<UUserWidget> InWeakWidget, TWeakObjectPtr<UEditorUtilityWidgetBlueprint> InWeakBlueprint)
 {
-	UUserWidget* Widget = WeakWidget.Get();
+	UUserWidget* Widget = InWeakWidget.Get();
 	// 关闭子控件对应的 Tab
 	if (IsValid(Widget))
 	{
 		CloseDescendantTabs(Widget);
 	}
 	
-	UEditorUtilityWidgetBlueprint* Blueprint = WeakBlueprint.Get();
+	UEditorUtilityWidgetBlueprint* Blueprint = InWeakBlueprint.Get();
 	if (IsValid(Blueprint))
 	{
 		// 因为覆盖了 SpawnEditorUITab 原本设置的回调，
 		// 手动补回原生清理逻辑
-		Blueprint->UpdateRespawnListIfNeeded(ClosedTab);
+		Blueprint->UpdateRespawnListIfNeeded(InClosedTab);
 	}
 
 }
@@ -119,12 +119,14 @@ void UEUSS_WidgetManager::Deinitialize()
 
 void UEUSS_WidgetManager::RegisterMainWidgetTab()
 {
+	// 加载主控件资产
 	MainWidget = LoadMainWidget();
 	if (!MainWidget || !GEditor) return;
 
 	const FName MainWidgetTabID = MakeMainWidgetTabID(MainWidget);
 	const FName StatusBarName = MakeStatusBarName(MainWidget);
-	
+
+	// 构建生成参数
 	FEUWTabSpawnContext SpawnContext(
 		MainWidget,
 		MainWidgetTabID,
@@ -132,12 +134,8 @@ void UEUSS_WidgetManager::RegisterMainWidgetTab()
 		true,
 		FInstancedStruct());
 
+	// 添加到 TabSpawnContexts 中，后续通过 TabID 来查找生成参数
 	TabSpawnContexts.Add(SpawnContext.TabID, SpawnContext);
-	
-	// SpawnContext.Blueprint = MainWidget;
-	// SpawnContext.NewTabID = MainWidgetTabID;
-	// SpawnContext.bAddContentBrowserDrawer = true;
-	// SpawnContext.Params = FInstancedStruct();
 	
 	if (!RegisterTab_Custom(SpawnContext))
 	{
@@ -164,15 +162,13 @@ bool UEUSS_WidgetManager::RegisterTab_Custom(const FEUWTabSpawnContext& InSpawnC
 		TSharedPtr<FTabManager> LevelEditorTabManager = LevelEditorModule.GetLevelEditorTabManager();
 		if (!LevelEditorTabManager.IsValid()) return false;
 
-		// FEUWTabSpawnContext* SpawnContext = TabSpawnContexts.Find(InTabID);
-		// if (!SpawnContext) return false;
-
+		// 是否已注册
 		if (!LevelEditorTabManager->HasTabSpawner(InSpawnContext.TabID))
 		{
 			UEditorUtilityWidgetBlueprint* Blueprint = InSpawnContext.Blueprint.Get();
 			if (!Blueprint) return false;
 
-			// 注册 TabSpawner
+			// 注册 TabSpawner，绑定自定义生成 Tab 的回调函数
 			LevelEditorTabManager->RegisterTabSpawner(
 				InSpawnContext.TabID,
 				FOnSpawnTab::CreateUObject(
@@ -187,6 +183,7 @@ bool UEUSS_WidgetManager::RegisterTab_Custom(const FEUWTabSpawnContext& InSpawnC
 			Blueprint->SetRegistrationName(InSpawnContext.TabID);
 			RegisteredTabs.Add(InSpawnContext.TabID, Blueprint);
 
+			// 用于保存由本插件注册的 TabID
 			RegisteredTabID.Add(InSpawnContext.TabID);
 		}
 
@@ -196,7 +193,7 @@ bool UEUSS_WidgetManager::RegisterTab_Custom(const FEUWTabSpawnContext& InSpawnC
 	return false;
 }
 
-UEditorUtilityWidget* UEUSS_WidgetManager::SpawnAndRegisterTabWithId_Custom(UEditorUtilityWidgetBlueprint* InBlueprint, const FName InTabID, FInstancedStruct Params)
+UEditorUtilityWidget* UEUSS_WidgetManager::SpawnAndRegisterTabWithId_Custom(UEditorUtilityWidgetBlueprint* InBlueprint, const FName InTabID, FInstancedStruct InParams)
 {
 	// 参照 UEditorUtilitySubsystem::SpawnAndRegisterTabWithId
 	FEUWTabSpawnContext SpawnContext(
@@ -204,7 +201,7 @@ UEditorUtilityWidget* UEUSS_WidgetManager::SpawnAndRegisterTabWithId_Custom(UEdi
 		InTabID,
 		NAME_None,
 		false,
-		MoveTemp(Params));
+		MoveTemp(InParams));
 	
 	TabSpawnContexts.Add(SpawnContext.TabID, SpawnContext);
 	
@@ -216,7 +213,8 @@ UEditorUtilityWidget* UEUSS_WidgetManager::SpawnAndRegisterTabWithId_Custom(UEdi
 void UEUSS_WidgetManager::OnBlueprintCompiled(UBlueprint* InCompiledBlueprint, const FName InTabID)
 {
 	if (!GEditor || PendingTabContentRestore.Contains(InTabID)) return;
-	
+
+	// 防止重复添加
 	PendingTabContentRestore.Add(InTabID);
 	
 	GEditor->GetTimerManager()->SetTimerForNextTick(
@@ -232,16 +230,19 @@ void UEUSS_WidgetManager::RestoreTabContent(const FName InTabID)
 {
 	if (!GEditor) return;
 
+	// 查找生成参数
 	FEUWTabSpawnContext* SpawnContext = TabSpawnContexts.Find(InTabID);
 	if (!SpawnContext) return;
 
+	// 查找已存在的 Tab
 	TSharedPtr<SDockTab> Tab = FindExistingTab(SpawnContext->TabID);
 	if (!Tab.IsValid()) return;
-	
+
+	// 获得已创建的 Widget 实例
 	UEditorUtilityWidget* NewWidget = SpawnContext->Blueprint.Get()->GetCreatedWidget();
 	if (!IsValid(NewWidget)) return;
 
-	// 原有 OnTabClosed 绑定的是旧 Widget，需要重新绑定
+	// 重新绑定 OnTabClosed
 	Tab->SetOnTabClosed(
 		SDockTab::FOnTabClosedCallback::CreateUObject(
 			this,
@@ -254,14 +255,13 @@ void UEUSS_WidgetManager::RestoreTabContent(const FName InTabID)
 
 	// 重新初始化新 Widget
 	TScriptInterface<IWidgetInterface_MetaDataOfAssets> Interface(NewWidget);
-	if (Interface)
-	{
-		Interface->OnInitialize(SpawnContext->Params);
-	}
+	if (!Interface) return;
 
-	if (SpawnContext->bAddContentBrowserDrawer)
+	Interface->OnInitialize(SpawnContext->Params);
+
+	// 是否重新附加 ContentBrowserDrawer
+	if (SpawnContext->bAddContentBrowserDrawer && !SpawnContext->StatusBarName.IsNone())
 	{
-		// Native RegenerateCreatedTab 已经生成了新的 EUW 内容
 		TSharedRef<SWidget> EUWContent = Tab->GetContent();
 		
 		TSharedRef<SWidget> StatusBar =
@@ -279,26 +279,29 @@ void UEUSS_WidgetManager::RestoreTabContent(const FName InTabID)
 			.AutoHeight()
 			[
 				StatusBar
-			]);
+			]
+		);
 	}
 	
 	PendingTabContentRestore.Remove(InTabID);
 }
 
-TSharedPtr<SDockTab> UEUSS_WidgetManager::FindExistingTab(FName TabID)
+TSharedPtr<SDockTab> UEUSS_WidgetManager::FindExistingTab(const FName InTabID)
 {
+	// 从 LevelEditorTabManager 查找
 	if (FLevelEditorModule* LevelEditor = FModuleManager::GetModulePtr<FLevelEditorModule>(TEXT("LevelEditor")))
 	{
 		if (TSharedPtr<FTabManager> Manager = LevelEditor->GetLevelEditorTabManager())
 		{
-			if (TSharedPtr<SDockTab> Tab = Manager->FindExistingLiveTab(TabID))
+			if (TSharedPtr<SDockTab> Tab = Manager->FindExistingLiveTab(FTabId(InTabID)))
 			{
 				return Tab;
 			}
 		}
 	}
 
-	return FGlobalTabmanager::Get()->FindExistingLiveTab(TabID);
+	// 从 GlobalTabmanager 查找 Nomad Tab
+	return FGlobalTabmanager::Get()->FindExistingLiveTab(FTabId(InTabID));
 }
 
 void UEUSS_WidgetManager::SetToRootNode(UUserWidget* InRootWidget)
@@ -317,13 +320,13 @@ void UEUSS_WidgetManager::SetToRootNode(UUserWidget* InRootWidget)
 
 }
 
-void UEUSS_WidgetManager::AddToChildNode(UUserWidget* ParentWidget, UUserWidget* ChildWidget)
+void UEUSS_WidgetManager::AddToChildNode(UUserWidget* InParentWidget, UUserWidget* InChildWidget)
 {
-	if (!IsValid(ParentWidget) || !IsValid(ChildWidget)) return;
+	if (!IsValid(InParentWidget) || !IsValid(InChildWidget)) return;
 	
 	// 找到或创建父节点和子节点
-	UEuwTreeNode* ParentNode = CreateOrFindTreeNode(ParentWidget);
-	UEuwTreeNode* ChildNode = CreateOrFindTreeNode(ChildWidget);
+	UEuwTreeNode* ParentNode = CreateOrFindTreeNode(InParentWidget);
+	UEuwTreeNode* ChildNode = CreateOrFindTreeNode(InChildWidget);
 	
 	// 防止把自己加为自己子节点
 	if (ParentNode == ChildNode) return;
@@ -333,7 +336,7 @@ void UEUSS_WidgetManager::AddToChildNode(UUserWidget* ParentWidget, UUserWidget*
 	ParentNode->Children.AddUnique(ChildNode);
 	
 	UE_LOG(LogMetaDataOfAssets, Log, TEXT("[%hs] : %s 被添加为 %s 的子节点"),
-		__FUNCTION__, *ChildWidget->GetName(), *ParentWidget->GetName());
+		__FUNCTION__, *InChildWidget->GetName(), *InParentWidget->GetName());
 }
 
 TArray<UUserWidget*> UEUSS_WidgetManager::GetAllDescendants(UUserWidget* InWidget)
@@ -347,15 +350,17 @@ TArray<UUserWidget*> UEUSS_WidgetManager::GetAllDescendants(UUserWidget* InWidge
 	
 	UEuwTreeNode* Node = *NodePtr;
 	
-	// 深度优先遍历（迭代法）
+	/** 深度优先遍历（迭代法）*/
 	TArray<UEuwTreeNode*> Stack;
 	Stack.Add(Node);
 	
 	while (Stack.Num() > 0)
 	{
+		// 取出当前节点
 		UEuwTreeNode* Current = Stack.Pop();
 		if (!Current) continue;
-	
+
+		// 遍历子节点
 		for (UEuwTreeNode* ChildNode : Current->Children)
 		{
 			if (!IsValid(ChildNode)) continue;
@@ -371,8 +376,9 @@ TArray<UUserWidget*> UEUSS_WidgetManager::GetAllDescendants(UUserWidget* InWidge
 	return Result;
 }
 
-bool UEUSS_WidgetManager::TryFocusEditorUtilityTab(FName InTabID)
+bool UEUSS_WidgetManager::TryFocusEditorUtilityTab(const FName InTabID)
 {
+	// 查找已存在的 Tab
 	TSharedPtr<SDockTab> Tab = FindExistingTab(InTabID);
 	if (!Tab.IsValid()) return false;
 
@@ -397,8 +403,9 @@ bool UEUSS_WidgetManager::TryFocusEditorUtilityTab(FName InTabID)
 	return false;
 }
 
-TSharedRef<SDockTab> UEUSS_WidgetManager::OnSpawnEUWTab(const FSpawnTabArgs& Args, const FName InTabID)
+TSharedRef<SDockTab> UEUSS_WidgetManager::OnSpawnEUWTab(const FSpawnTabArgs& InArgs, const FName InTabID)
 {
+	// 查找生成参数
 	FEUWTabSpawnContext* SpawnContext = TabSpawnContexts.Find(InTabID);
 	if (!SpawnContext) return SNew(SDockTab).TabRole(ETabRole::NomadTab);
 	
@@ -410,13 +417,15 @@ TSharedRef<SDockTab> UEUSS_WidgetManager::OnSpawnEUWTab(const FSpawnTabArgs& Arg
 	}
 	
 	// 先按原生方式创建 Tab 和 EUW
-	TSharedRef<SDockTab> Tab = WidgetBlueprint->SpawnEditorUITab(Args);
+	TSharedRef<SDockTab> Tab = WidgetBlueprint->SpawnEditorUITab(InArgs);
 
+	// 防止重复绑定
 	if (CompiledHandle.IsValid())
 	{
 		MainWidget->OnCompiled().Remove(CompiledHandle);
 	}
 	
+	// 绑定蓝图编译完成的回调
 	CompiledHandle =
 		SpawnContext->Blueprint->OnCompiled().AddUObject(
 			this,
@@ -444,10 +453,9 @@ TSharedRef<SDockTab> UEUSS_WidgetManager::OnSpawnEUWTab(const FSpawnTabArgs& Arg
 
 	// 初始化控件
 	TScriptInterface<IWidgetInterface_MetaDataOfAssets> Interface(Widget);
-	if (Interface)
-	{
-		Interface->OnInitialize(SpawnContext->Params);
-	}
+	if (!Interface) return SNew(SDockTab).TabRole(ETabRole::NomadTab);
+
+	Interface->OnInitialize(SpawnContext->Params);
 	
 	// 只有 bAddContentBrowserDrawer 为 true 且 StatusBarName 不为空时才添加 ContentBrowserDrawer
 	if (SpawnContext->bAddContentBrowserDrawer && !SpawnContext->StatusBarName.IsNone())
@@ -483,18 +491,12 @@ TSharedRef<SDockTab> UEUSS_WidgetManager::OnSpawnEUWTab(const FSpawnTabArgs& Arg
 	return Tab;
 }
 
-// TSharedRef<SDockTab> UEUSS_WidgetManager::SpawnSubWidgetTab(const FSpawnTabArgs& Args,
-// 	UEditorUtilityWidgetBlueprint* InBlueprint)
-// {
-// 	
-// }
-
-UEuwTreeNode* UEUSS_WidgetManager::CreateOrFindTreeNode(UUserWidget* Widget)
+UEuwTreeNode* UEUSS_WidgetManager::CreateOrFindTreeNode(UUserWidget* InWidget)
 {
-	if (!IsValid(Widget)) return nullptr;
+	if (!IsValid(InWidget)) return nullptr;
 	
 	// 已存在则返回
-	TObjectPtr<UEuwTreeNode>* NodePtr = WidgetToNodeMap.Find(Widget);
+	TObjectPtr<UEuwTreeNode>* NodePtr = WidgetToNodeMap.Find(InWidget);
 	if (NodePtr && IsValid(*NodePtr))
 	{	
 		return *NodePtr;
@@ -502,79 +504,34 @@ UEuwTreeNode* UEUSS_WidgetManager::CreateOrFindTreeNode(UUserWidget* Widget)
 	
 	// 创建新节点
 	UEuwTreeNode* NewNode = NewObject<UEuwTreeNode>(this);
-	NewNode->Widget = Widget;
-	WidgetToNodeMap.Add(Widget, NewNode);
+	NewNode->Widget = InWidget;
+	WidgetToNodeMap.Add(InWidget, NewNode);
 	
 	
 	return NewNode;
 }
 
-// void UEUSS_WidgetManager::RemoveNodeAndDescendants(UUserWidget* InWidget)
-// {
-	// if (!IsValid(InWidget)) return;
-	//
-	// // 已经在移除中，直接返回，避免递归重复处理
-	// if (PendingRemoval.Contains(InWidget)) return;
-	// PendingRemoval.Add(InWidget);
-	//
-	// // 收集所有子控件
-	// TArray<UUserWidget*> Descendants = GetAllDescendants(InWidget);
-	//
-	// // 关闭所有子控件
-	// // 关闭子控件会触发它们自己的 NativeDestruct -> OnDeinitialize -> RemoveNodeAndDescendants
-	// // 用 PendingRemoval 确保不会重复处理当前节点
-	// for (UUserWidget* Descendant : Descendants)
-	// {
-	// 	if (IsValid(Descendant))
-	// 	{
-	// 		CloseWidgetTab(Descendant);
-	// 	}
-	// }
-	//
-	// // 关闭当前 Widget 自己的 Tab
-	// CloseWidgetTab(InWidget);
-	//
-	// // 清理树节点
-	// RemoveNodeFromTree(InWidget);
-	//
-	// // 移除标记
-	// PendingRemoval.Remove(InWidget);
-// }
-
-void UEUSS_WidgetManager::OnMainWidgetMoved(const FAssetData& AssetData, const FString& OldObjectPath)
+void UEUSS_WidgetManager::OnAssetsMoved(const FAssetData& InAssetData, const FString& InOldObjectPath)
 {
 	UMetaDataOfAssetsSettings* Settings = GetMutableDefault<UMetaDataOfAssetsSettings>();
 	
 	// 判断移动的是否是主控件的资产
-	if (Settings->MainWidgetPath == OldObjectPath)
+	if (Settings->MainWidgetPath == InOldObjectPath)
 	{
-		MainWidgetPath = AssetData.GetSoftObjectPath().ToString();
+		MainWidgetPath = InAssetData.GetSoftObjectPath().ToString();
 		// 保存主控件资产的路径
 		Settings->SetMainWidgetPath(MainWidgetPath);
 	}
 }
 
-bool UEUSS_WidgetManager::CloseEditorUtilityTab(FName InTabID)
+bool UEUSS_WidgetManager::CloseTabByID_Custom(const FName InTabID)
 {
+	// 参照 UEditorUtilitySubsystem::CloseTabByID
 	if (!IsRunningCommandlet())
 	{
-		FLevelEditorModule& LevelEditor = FModuleManager::GetModuleChecked<FLevelEditorModule>(TEXT("LevelEditor"));
-		if (TSharedPtr<FTabManager> Manager = LevelEditor.GetLevelEditorTabManager())
+		if (TSharedPtr<SDockTab> Tab = FindExistingTab(InTabID))
 		{
-			if (TSharedPtr<SDockTab> Tab = Manager->FindExistingLiveTab(InTabID))
-			{
-				Tab->RequestCloseTab();
-				return true;
-			}
-		}
-
-		/**
-		 * 由于 Nomad Tab 由 FGlobalTabmanager 管理，
-		 * 而 UEditorUtilitySubsystem::CloseTabByID 在 5.6 版本之前没有处理，所以手动调用关闭
-		 */
-		if (TSharedPtr<SDockTab> NomadTab = FGlobalTabmanager::Get()->FindExistingLiveTab(InTabID))
-		{
-			NomadTab->RequestCloseTab();
+			Tab->RequestCloseTab();
 			return true;
 		}
 	}
@@ -592,7 +549,7 @@ void UEUSS_WidgetManager::OnTaskStart()
 	}
 }
 
-void UEUSS_WidgetManager::OnTaskComplete()
+void UEUSS_WidgetManager::OnTaskFinished()
 {
 	// 任务完成后，启用所有已创建的 Widget
 	TArray<UUserWidget*> Loc_ActiveWidgets = GetActiveWidgets();
@@ -602,25 +559,25 @@ void UEUSS_WidgetManager::OnTaskComplete()
 	}
 }
 
-void UEUSS_WidgetManager::CloseWidgetTab(UUserWidget* Widget)
+void UEUSS_WidgetManager::CloseWidgetTab(UUserWidget* InWidget)
 {
-	if (!IsValid(Widget)) return;
+	if (!IsValid(InWidget)) return;
 
 	// 从 WidgetToTabName 中查找 TabID
-	FName* TabIdPtr = WidgetToTabName.Find(Widget);
+	FName* TabIdPtr = WidgetToTabName.Find(InWidget);
 	
 	if (!TabIdPtr || TabIdPtr->IsNone()) return;
 
 	// 关闭 Tab
-	CloseEditorUtilityTab(*TabIdPtr);
+	CloseTabByID_Custom(*TabIdPtr);
 }
 
-void UEUSS_WidgetManager::RemoveNodeFromTree(UUserWidget* Widget)
+void UEUSS_WidgetManager::RemoveNodeFromTree(UUserWidget* InWidget)
 {
-	if (!IsValid(Widget)) return;
+	if (!IsValid(InWidget)) return;
 	
 	// 查找节点
-	TObjectPtr<UEuwTreeNode>* NodePtr = WidgetToNodeMap.Find(Widget);
+	TObjectPtr<UEuwTreeNode>* NodePtr = WidgetToNodeMap.Find(InWidget);
 	if (!NodePtr || !IsValid(*NodePtr)) return;
 	
 	UEuwTreeNode* Node = *NodePtr;
@@ -638,17 +595,17 @@ void UEUSS_WidgetManager::RemoveNodeFromTree(UUserWidget* Widget)
 	}
 	
 	// 从映射中移除
-	WidgetToNodeMap.Remove(Widget);
+	WidgetToNodeMap.Remove(InWidget);
 	
-	UE_LOG(LogMetaDataOfAssets, Log, TEXT("[%hs] : 移除节点: %s"), __FUNCTION__, *Widget->GetName());
+	UE_LOG(LogMetaDataOfAssets, Log, TEXT("[%hs] : 移除节点: %s"), __FUNCTION__, *InWidget->GetName());
 }
 
-void UEUSS_WidgetManager::CloseDescendantTabs(UUserWidget* RootWidget)
+void UEUSS_WidgetManager::CloseDescendantTabs(UUserWidget* InRootWidget)
 {
-	if (!IsValid(RootWidget)) return;
+	if (!IsValid(InRootWidget)) return;
 
 	// 获得所有子节点的控件
-	TArray<UUserWidget*> Descendants = GetAllDescendants(RootWidget);
+	TArray<UUserWidget*> Descendants = GetAllDescendants(InRootWidget);
 
 	// 关闭所有子节点的控件，清理树节点
 	for (UUserWidget* Descendant : Descendants)
@@ -676,33 +633,33 @@ UEditorUtilityWidgetBlueprint* UEUSS_WidgetManager::LoadMainWidget()
 	return MainWidgetPtr;
 }
 
-FName UEUSS_WidgetManager::MakeMainWidgetTabID(const UEditorUtilityWidgetBlueprint* Blueprint)
+FName UEUSS_WidgetManager::MakeMainWidgetTabID(const UEditorUtilityWidgetBlueprint* InBlueprint)
 {
 	// 这个 TabID 是根据源代码中的 TabID 来构建的
 	// 详见 UEditorUtilitySubsystem::RegisterTabAndGetID 的 RegistrationName
-	return FName(*FString::Printf(TEXT("%s_ActiveTab"), *Blueprint->GetPathName()));
+	return FName(*FString::Printf(TEXT("%s_ActiveTab"), *InBlueprint->GetPathName()));
 }
 
-FName UEUSS_WidgetManager::MakeStatusBarName(const UEditorUtilityWidgetBlueprint* Blueprint)
+FName UEUSS_WidgetManager::MakeStatusBarName(const UEditorUtilityWidgetBlueprint* InBlueprint)
 {
-	return FName(*FString::Printf(TEXT("%s_StatusBar"), *Blueprint->GetPathName()));
+	return FName(*FString::Printf(TEXT("%s_StatusBar"), *InBlueprint->GetPathName()));
 }
 
-void UEUSS_WidgetManager::SpawnRegisteredTabByID_Custom(const FEUWTabSpawnContext& SpawnContext)
+void UEUSS_WidgetManager::SpawnRegisteredTabByID_Custom(const FEUWTabSpawnContext& InSpawnContext)
 {
 	// 参照 UEditorUtilitySubsystem::SpawnRegisteredTabByID
 	if (!IsRunningCommandlet())
 	{
 		// 尝试聚焦已经创建的主控件
-		if (TryFocusEditorUtilityTab(SpawnContext.TabID)) return;
+		if (TryFocusEditorUtilityTab(InSpawnContext.TabID)) return;
 		
 		FLevelEditorModule& LevelEditorModule = FModuleManager::GetModuleChecked<FLevelEditorModule>(TEXT("LevelEditor"));
 		if (TSharedPtr<FTabManager> LevelEditorTabManager = LevelEditorModule.GetLevelEditorTabManager())
 		{
-			if (LevelEditorTabManager->HasTabSpawner(SpawnContext.TabID))
+			if (LevelEditorTabManager->HasTabSpawner(InSpawnContext.TabID))
 			{
 				// TryInvokeTab 打开主控件
-				if (TSharedPtr<SDockTab> NewDockTab = LevelEditorTabManager->TryInvokeTab(SpawnContext.TabID))
+				if (TSharedPtr<SDockTab> NewDockTab = LevelEditorTabManager->TryInvokeTab(InSpawnContext.TabID))
 				{
 					// 启用状态与"是否处于调试模式"相关
 					NewDockTab->SetEnabled(FSlateApplication::Get().GetNormalExecutionAttribute());
@@ -719,6 +676,7 @@ void UEUSS_WidgetManager::CreateMainWidget()
 	FName MainWidgetTabID = MakeMainWidgetTabID(MainWidget);
 	const FName StatusBarName = MakeStatusBarName(MainWidget);
 
+	// 构建生成参数
 	FEUWTabSpawnContext SpawnContext(
 		MainWidget,
 		MainWidgetTabID,
@@ -737,7 +695,7 @@ bool UEUSS_WidgetManager::GetEnableDebugSetting()
 	return Settings->bEnableDebug;
 }
 
-UUserWidget* UEUSS_WidgetManager::CreateUserWidget(TSubclassOf<UUserWidget> WidgetClass, const FInstancedStruct& Params)
+UUserWidget* UEUSS_WidgetManager::CreateUserWidget(TSubclassOf<UUserWidget> InWidgetClass, const FInstancedStruct& InParams)
 {
 	if (!GEditor)
 	{
@@ -752,14 +710,14 @@ UUserWidget* UEUSS_WidgetManager::CreateUserWidget(TSubclassOf<UUserWidget> Widg
 		return nullptr;
 	}
 
-	if (!WidgetClass)
+	if (!InWidgetClass)
 	{
 		UE_LOG(LogMetaDataOfAssets, Error, TEXT("[%hs] : WidgetClass 无效"), __FUNCTION__);
 		return nullptr;
 	}
 
 	// 创建 UserWidget
-	UUserWidget* Widget = CreateWidget<UUserWidget>(EditorWorld, WidgetClass);
+	UUserWidget* Widget = CreateWidget<UUserWidget>(EditorWorld, InWidgetClass);
 	if (!Widget)
 	{
 		UE_LOG(LogMetaDataOfAssets, Error, TEXT("[%hs] : 创建 Widget 失败"), __FUNCTION__);
@@ -768,10 +726,9 @@ UUserWidget* UEUSS_WidgetManager::CreateUserWidget(TSubclassOf<UUserWidget> Widg
 
 	// Widget 只有继承了 IWidgetInterface_MetaDataPlugin，Interface 才有效
 	TScriptInterface<IWidgetInterface_MetaDataOfAssets> Interface(Widget);
-	if (Interface)
-	{
-		Interface->OnInitialize(Params);
-	}
+	if (!Interface) return nullptr;
+
+	Interface->OnInitialize(InParams);
 
 	UE_LOG(LogMetaDataOfAssets, Log, TEXT("[%hs] : 成功创建控件: [%s]"),
 		__FUNCTION__, *Widget->GetName());
@@ -779,7 +736,7 @@ UUserWidget* UEUSS_WidgetManager::CreateUserWidget(TSubclassOf<UUserWidget> Widg
 	return Widget;
 }
 
-UEditorUtilityWidget* UEUSS_WidgetManager::CreateEditorUtilityWidget(UEditorUtilityWidgetBlueprint* InBlueprint, FInstancedStruct Params)
+UEditorUtilityWidget* UEUSS_WidgetManager::CreateEditorUtilityWidget(UEditorUtilityWidgetBlueprint* InBlueprint, FInstancedStruct InParams)
 {
 	if (!GEditor)
 	{
@@ -802,33 +759,24 @@ UEditorUtilityWidget* UEUSS_WidgetManager::CreateEditorUtilityWidget(UEditorUtil
 
 	// 每次创建新 EUW 时都关闭旧的
 	CloseOldWidget(InBlueprint);
-	
-	// 为了防止 NativeConstruct 中重复创建
-	// SetInCreatingSubWidget(true);
-	
+
+	// 每次创建 EUW 时都使用不同的 TabID
 	FName TabID = FName(*FGuid::NewGuid().ToString());
-	// UEditorUtilityWidget* Widget = SpawnAndRegisterTabAndGetID(InBlueprint, TabID);
-	UEditorUtilityWidget* Widget = SpawnAndRegisterTabWithId_Custom(InBlueprint, TabID, MoveTemp(Params));
+	UEditorUtilityWidget* Widget = SpawnAndRegisterTabWithId_Custom(InBlueprint, TabID, MoveTemp(InParams));
 	if (!Widget)
 	{
-		// SetInCreatingSubWidget(false);
-
 		UE_LOG(LogMetaDataOfAssets, Error, TEXT("[%hs] : 创建 Widget 失败"), __FUNCTION__);
 		return nullptr;
 	}
 	
 	// 添加 Widget 和 TabID 的映射
 	AddTo_WidgetToTabName(Widget, TabID);
-	
 
 	// Widget 只有继承了 IWidgetInterface_MetaDataPlugin，Interface 才有效
 	TScriptInterface<IWidgetInterface_MetaDataOfAssets> Interface(Widget);
-	if (Interface)
-	{
-		Interface->OnInitialize(Params);
-	}
-	
-	// SetInCreatingSubWidget(false);
+	if (!Interface) return nullptr;
+
+	Interface->OnInitialize(InParams);
 	
 	UE_LOG(LogMetaDataOfAssets, Log, TEXT("[%hs] : 成功创建控件: [%s]"),
 		__FUNCTION__, *Widget->GetName());
@@ -836,30 +784,29 @@ UEditorUtilityWidget* UEUSS_WidgetManager::CreateEditorUtilityWidget(UEditorUtil
 	return Widget;
 }
 
-void UEUSS_WidgetManager::AddToActiveWidgets(UUserWidget* Widget)
+void UEUSS_WidgetManager::AddToActiveWidgets(UUserWidget* InWidget)
 {
-	ActiveWidgets.Add(Widget);
+	ActiveWidgets.Add(InWidget);
 }
 
-void UEUSS_WidgetManager::RemoveFromActiveWidgets(UUserWidget* Widget)
+void UEUSS_WidgetManager::RemoveFromActiveWidgets(UUserWidget* InWidget)
 {
-	ActiveWidgets.Remove(Widget);
+	ActiveWidgets.Remove(InWidget);
 }
 
-void UEUSS_WidgetManager::AddTo_WidgetToTabName(UUserWidget* Widget, FName TabName)
+void UEUSS_WidgetManager::AddTo_WidgetToTabName(UUserWidget* InWidget, FName InTabName)
 {
-	WidgetToTabName.Add(Widget, TabName);
+	WidgetToTabName.Add(InWidget, InTabName);
 }
 
-void UEUSS_WidgetManager::RemoveFrom_WidgetToTabName(UUserWidget* Widget)
+void UEUSS_WidgetManager::RemoveFrom_WidgetToTabName(UUserWidget* InWidget)
 {
-	WidgetToTabName.Remove(Widget);
+	WidgetToTabName.Remove(InWidget);
 }
 
 void UEUSS_WidgetManager::CloseOldWidget(UEditorUtilityWidgetBlueprint* InBlueprint)
 {
 	UEditorUtilityWidget* OldWidget = FindUtilityWidgetFromBlueprint(InBlueprint);
-	// FName OldTabID = NAME_None;
 	if (OldWidget)
 	{
 		CloseWidgetTab(OldWidget);
@@ -868,16 +815,36 @@ void UEUSS_WidgetManager::CloseOldWidget(UEditorUtilityWidgetBlueprint* InBluepr
 
 void UEUSS_WidgetManager::CloseAllWidgets()
 {
-	// 通过 WidgetToTabName 查找 TabID，通过 TabID 关闭控件
-	TArray<UUserWidget*> Loc_ActiveWidgets = GetActiveWidgets();
-	for (UUserWidget* Widget : Loc_ActiveWidgets)
+	TArray<UUserWidget*> WidgetsToClose = GetActiveWidgets();
+	
+	// 切换关卡触发关闭控件时，需要清理控件
+	for (UUserWidget* Widget : WidgetsToClose)
+	{
+		if (!IsValid(Widget)) continue;
+
+		TScriptInterface<IWidgetInterface_MetaDataOfAssets> Interface(Widget);
+		if (!Interface) continue;
+
+		Interface->OnDeinitialize();
+	}
+
+	for (UUserWidget* Widget : WidgetsToClose)
 	{
 		FName* TabID = WidgetToTabName.Find(Widget);
-		if (TabID)
+		if (!TabID) continue;
+
+		if (TSharedPtr<SDockTab> Tab = FindExistingTab(*TabID))
 		{
-			CloseEditorUtilityTab(*TabID);
+			Tab->SetContent(SNullWidget::NullWidget);
+			Tab->RequestCloseTab();
 		}
 	}
+
+	ActiveWidgets.Empty();
+	WidgetToTabName.Empty();
+	WidgetToNodeMap.Empty();
+	PendingRemoval.Empty();
+	RootNode = nullptr;
 }
 
 void UEUSS_WidgetManager::DisableDebug()

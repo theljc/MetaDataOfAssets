@@ -32,7 +32,6 @@ public class MetaDataOfAssets : ModuleRules
 			new string[]
 			{
 				"Core",
-
 			}
 		);
 

@@ -1,7 +1,6 @@
 // Copyright 2026 ljc. All rights reserved.
 
 #include "MetaDataOfAssets/Public/Task/FAssetScanTask.h"
-
 #include "Framework/Notifications/NotificationManager.h"
 #include "Widgets/Notifications/SNotificationList.h"
 #include "Editor.h"
@@ -37,7 +36,7 @@ void FAssetSyncTask::Start()
     
     // 进度条控件
     ProgressWidget = SNew(SProgressBarNotification_ScanAsset)
-        .ProgressText(NSLOCTEXT("AssetScanTask", "LoadingAssetProgress", "Loading Assets"));
+        .ProgressText(NSLOCTEXT("AssetSyncTask", "LoadingAssetProgress", "Loading Assets"));
     
     // 创建通知信息
     FNotificationInfo Info(ProgressWidget);
@@ -92,6 +91,11 @@ void FAssetSyncTask::Cancel()
     
     Finish(false);
 
+    if (!GEditor)
+    {
+        return;
+    }
+
     UEUSS_MetaDataManager* MetaDataManager = GEditor->GetEditorSubsystem<UEUSS_MetaDataManager>();
     if (!MetaDataManager) return;
 
@@ -136,7 +140,7 @@ void FAssetSyncTask::Finish(const bool bSuccess)
 
     ProgressWidget.Reset();
 
-    if (!bSuccess) return;
+    if (!bSuccess || !GEditor) return;
     
     /** 同步资产 */
     UEUSS_MetaDataManager* MetaDataManager = GEditor->GetEditorSubsystem<UEUSS_MetaDataManager>();
@@ -154,7 +158,7 @@ void FAssetSyncTask::Finish(const bool bSuccess)
         }
     }
     
-    WidgetManager->OnTaskComplete();
+    WidgetManager->OnTaskFinished();
     MetaDataManager->OnTaskFinished(this);
     
     UE_LOG(LogMetaDataOfAssets, Log, TEXT("%s"), TEXT("加载完成"))
