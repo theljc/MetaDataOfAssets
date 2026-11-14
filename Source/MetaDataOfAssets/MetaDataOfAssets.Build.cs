@@ -6,11 +6,11 @@ public class MetaDataOfAssets : ModuleRules
 {
 	public MetaDataOfAssets(ReadOnlyTargetRules Target) : base(Target)
 	{
-		PCHUsage = ModuleRules.PCHUsageMode.UseExplicitOrSharedPCHs;
+		// PCHUsage = ModuleRules.PCHUsageMode.UseExplicitOrSharedPCHs;
 		
-		// PCHUsage = ModuleRules.PCHUsageMode.NoPCHs;
+		PCHUsage = ModuleRules.PCHUsageMode.NoPCHs;
 		OptimizeCode = CodeOptimization.Never;
-		// bUseUnity = false;
+		bUseUnity = false;
 		
 		PublicIncludePaths.AddRange(
 			new string[] 

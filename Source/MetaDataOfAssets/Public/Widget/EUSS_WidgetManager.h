@@ -155,7 +155,7 @@ public:
 	void CreateMainWidget();
 	
 	// 主控件资产移动或重命名时触发，确保主窗口的资产移动后，下次启动编辑器依然能打开
-	void OnAssetsMoved(const FAssetData& InAssetData, const FString& InOldObjectPath);
+	void OnAssetMoved(const FAssetData& InAssetData, const FString& InOldObjectPath);
 	
 	// 关闭所有已创建的控件
 	void CloseAllWidgets();

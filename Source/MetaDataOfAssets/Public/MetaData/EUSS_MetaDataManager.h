@@ -109,11 +109,11 @@ public:
 	void SyncAsset(UObject* InAsset);
 
 	
-	// 资产删除回调
-	void OnAssetRemoved(const FAssetData& InAssetData);
+	// Package 删除时的回调
+	void OnPackageDeleted(UPackage* InPackage);
 
 	// 资产重命名或移动时迁移元数据状态
-	void OnAssetsMoved(const FAssetData& InAssetData, const FString& InOldObjectPath);
+	void OnAssetMoved(const FAssetData& InAssetData, const FString& InOldObjectPath);
 	
 	// 资产同步任务完成时的回调
 	void OnTaskFinished(FAssetSyncTask* InFinishedTask);
@@ -152,9 +152,6 @@ private:
 	// 此变量用于标记资产的元数据是否被同步过，外层 key 表示资产路径，内层结构体表示元数据的键值对
 	TMap<FSoftObjectPath, FAssetMetaDataState> AssetTagStates;
 
-	// 防止 AssetDeleted 和 PackageDeleted 对同一路径重复触发删除事件
-	TSet<FSoftObjectPath> RemovedAssetPaths;
-	
 	// 资产同步任务
 	TSharedPtr<FAssetSyncTask> AssetSyncTask;
 	

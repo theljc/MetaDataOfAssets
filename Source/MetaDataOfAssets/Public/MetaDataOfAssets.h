@@ -24,11 +24,10 @@ public:
 	void OnButtonClicked();
 
 	// 资产移动回调
-	void OnAssetsMoved(const FAssetData& AssetData, const FString& OldObjectPath);
+	void OnAssetMoved(const FAssetData& AssetData, const FString& OldObjectPath);
 
 	// 资产删除回调
-	void OnAssetRemoved(const FAssetData& AssetData);
-	void OnPackageRemoved(UPackage* InPackage);
+	void OnPackageDeleted(UPackage* InPackage);
 
 	// 编辑器初始化完成的回调
 	void OnEditorInitialized(double Double);

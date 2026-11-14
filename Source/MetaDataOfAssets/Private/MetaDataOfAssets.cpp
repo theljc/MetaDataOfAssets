@@ -88,7 +88,6 @@ void FMetaDataOfAssetsModule::StartupModule()
 		, FToolBarExtensionDelegate::CreateLambda([](FToolBarBuilder& Builder)
 			{
 				Builder.AddToolBarButton(FMetaDataOfAssetsCommands::Get().Command_OpenMain);
-				// Builder.AddToolBarButton(FTestCommands::Get().Command_CloseAll);
 			}));
 
 	// 使按钮出现在工具栏
@@ -97,18 +96,16 @@ void FMetaDataOfAssetsModule::StartupModule()
 	
 	// 获得资产注册表模块
 	IAssetRegistry& AssetRegistry = FModuleManager::LoadModuleChecked<FAssetRegistryModule>("AssetRegistry").Get();
-	// 绑定资产删除事件
-	AssetRemovedDelegateHandle = AssetRegistry.OnAssetRemoved().AddRaw(
-		this,
-		&FMetaDataOfAssetsModule::OnAssetRemoved);
-	// 移动资产时也会触发重命名事件
+
+	// 绑定资产重命名事件，移动资产和重命名资产都会触发
 	AssetRenamedDelegateHandle = AssetRegistry.OnAssetRenamed().AddRaw(
 		this,
-		&FMetaDataOfAssetsModule::OnAssetsMoved);
+		&FMetaDataOfAssetsModule::OnAssetMoved);
 	
-	// AssetRenamedDelegateHandle = FEditorDelegates::OnPackageDeleted.AddRaw(
-	// 	this,
-	// 	&FMetaDataOfAssetsModule::OnPackageRemoved);
+	// 绑定 Package 的删除事件，移动、删除、重命名都会触发
+	AssetRemovedDelegateHandle = FEditorDelegates::OnPackageDeleted.AddRaw(
+		this,
+		&FMetaDataOfAssetsModule::OnPackageDeleted);
 	
 	// 编辑器初始化完成的回调
 	EditorInitializedDelegateHandle = FEditorDelegates::OnEditorInitialized.AddRaw(
@@ -278,34 +275,29 @@ void FMetaDataOfAssetsModule::OnButtonClicked()
 	}
 }
 
-void FMetaDataOfAssetsModule::OnAssetsMoved(const FAssetData& AssetData, const FString& OldObjectPath)
+void FMetaDataOfAssetsModule::OnAssetMoved(const FAssetData& AssetData, const FString& OldObjectPath)
 {
 	UEUSS_MetaDataManager* MetaDataManager = GEditor->GetEditorSubsystem<UEUSS_MetaDataManager>();
 	if (MetaDataManager)
 	{
-		MetaDataManager->OnAssetsMoved(AssetData, OldObjectPath);
+		MetaDataManager->OnAssetMoved(AssetData, OldObjectPath);
 	}
 	
 	UEUSS_WidgetManager* WidgetManager = GEditor->GetEditorSubsystem<UEUSS_WidgetManager>();
 	if (WidgetManager)
 	{
-		WidgetManager->OnAssetsMoved(AssetData, OldObjectPath);
+		WidgetManager->OnAssetMoved(AssetData, OldObjectPath);
 	}
 	
 }
 
-void FMetaDataOfAssetsModule::OnAssetRemoved(const FAssetData& AssetData)
+void FMetaDataOfAssetsModule::OnPackageDeleted(UPackage* InPackage)
 {
 	UEUSS_MetaDataManager* MetaDataManager = GEditor->GetEditorSubsystem<UEUSS_MetaDataManager>();
 	if (MetaDataManager)
 	{
-		MetaDataManager->OnAssetRemoved(AssetData);
+		MetaDataManager->OnPackageDeleted(InPackage);
 	}
-}
-
-void FMetaDataOfAssetsModule::OnPackageRemoved(UPackage* InPackage)
-{
-	UE_LOG(LogMetaDataOfAssets, Warning, TEXT("OnPackageRemoved: %s"), *InPackage->GetFName().ToString())
 }
 
 void FMetaDataOfAssetsModule::OnMapLoad(const FString& InFilename, FCanLoadMap& OutCanLoadMap)

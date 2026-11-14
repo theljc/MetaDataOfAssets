@@ -54,8 +54,7 @@ void UEUSS_WidgetManager::OnTabClosed(TSharedRef<SDockTab> InClosedTab, TWeakObj
 	UEditorUtilityWidgetBlueprint* Blueprint = InWeakBlueprint.Get();
 	if (IsValid(Blueprint))
 	{
-		// 因为覆盖了 SpawnEditorUITab 原本设置的回调，
-		// 手动补回原生清理逻辑
+		// 因为覆盖了 SpawnEditorUITab 原本设置的回调1，手动补回原生清理逻辑
 		Blueprint->UpdateRespawnListIfNeeded(InClosedTab);
 	}
 
@@ -511,7 +510,7 @@ UEuwTreeNode* UEUSS_WidgetManager::CreateOrFindTreeNode(UUserWidget* InWidget)
 	return NewNode;
 }
 
-void UEUSS_WidgetManager::OnAssetsMoved(const FAssetData& InAssetData, const FString& InOldObjectPath)
+void UEUSS_WidgetManager::OnAssetMoved(const FAssetData& InAssetData, const FString& InOldObjectPath)
 {
 	UMetaDataOfAssetsSettings* Settings = GetMutableDefault<UMetaDataOfAssetsSettings>();
 	
@@ -816,6 +815,16 @@ void UEUSS_WidgetManager::CloseOldWidget(UEditorUtilityWidgetBlueprint* InBluepr
 void UEUSS_WidgetManager::CloseAllWidgets()
 {
 	TArray<UUserWidget*> WidgetsToClose = GetActiveWidgets();
+	TArray<FName> TabIDsToClose;
+
+	// 先保存 TabID，因为之后 OnDeinitialize 会进行清理
+	for (UUserWidget* Widget : WidgetsToClose)
+	{
+		if (FName* TabID = WidgetToTabName.Find(Widget))
+		{
+			TabIDsToClose.AddUnique(*TabID);
+		}
+	}
 	
 	// 切换关卡触发关闭控件时，需要清理控件
 	for (UUserWidget* Widget : WidgetsToClose)
@@ -828,12 +837,10 @@ void UEUSS_WidgetManager::CloseAllWidgets()
 		Interface->OnDeinitialize();
 	}
 
-	for (UUserWidget* Widget : WidgetsToClose)
+	// 通过 TabID 查找并关闭 Tab
+	for (const FName TabID : TabIDsToClose)
 	{
-		FName* TabID = WidgetToTabName.Find(Widget);
-		if (!TabID) continue;
-
-		if (TSharedPtr<SDockTab> Tab = FindExistingTab(*TabID))
+		if (TSharedPtr<SDockTab> Tab = FindExistingTab(TabID))
 		{
 			Tab->SetContent(SNullWidget::NullWidget);
 			Tab->RequestCloseTab();
