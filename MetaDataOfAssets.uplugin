@@ -46,6 +46,10 @@
 		{
 			"Name": "MetaDataPlugin_TextFiles",
 			"LoadingPolicy": "Editor"
+		},
+		{
+			"Name": "MetaDataPlugin_Package",
+			"LoadingPolicy": "Editor"
 		}
 	]
 }

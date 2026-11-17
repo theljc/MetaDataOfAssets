@@ -27,7 +27,7 @@ public:
 	void OnAssetMoved(const FAssetData& AssetData, const FString& OldObjectPath);
 
 	// 资产删除回调
-	void OnPackageDeleted(UPackage* InPackage);
+	void OnAssetRemoved(const FAssetData& AssetData);
 
 	// 编辑器初始化完成的回调
 	void OnEditorInitialized(double Double);

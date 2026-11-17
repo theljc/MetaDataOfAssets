@@ -1,0 +1,409 @@
+﻿# MetaDataPlugin_Package English translation.
+# Fill out your copyright notice in the Description page of Project Settings.
+# 
+msgid ""
+msgstr ""
+"Project-Id-Version: MetaDataPlugin_Package\n"
+"POT-Creation-Date: 2026-11-17 08:12\n"
+"PO-Revision-Date: 2026-11-17 08:12\n"
+"Language-Team: \n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. Key:	 Input Key 
+#. SourceLocation:	/MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+#: /MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+msgctxt "ST_Blueprint_MetaDataOfAssets, Input Key "
+msgid " Input Key "
+msgstr " Input Key "
+
+#. Key:	 Input Value 
+#. SourceLocation:	/MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+#: /MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+msgctxt "ST_Blueprint_MetaDataOfAssets, Input Value "
+msgid " Input Value "
+msgstr " Input Value "
+
+#. Key:	Add
+#. SourceLocation:	/MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+#: /MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+msgctxt "ST_Blueprint_MetaDataOfAssets,Add"
+msgid "Add"
+msgstr "Add"
+
+#. Key:	Add data row
+#. SourceLocation:	/MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+#: /MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+msgctxt "ST_Blueprint_MetaDataOfAssets,Add data row"
+msgid "Add data row"
+msgstr "Add data row"
+
+#. Key:	Add selected assets
+#. SourceLocation:	/MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+#: /MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+msgctxt "ST_Blueprint_MetaDataOfAssets,Add selected assets"
+msgid "Add selected assets"
+msgstr "Add selected assets"
+
+#. Key:	Asset Name :
+#. SourceLocation:	/MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+#: /MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+msgctxt "ST_Blueprint_MetaDataOfAssets,Asset Name :"
+msgid "Asset Name :"
+msgstr "Asset Name :"
+
+#. Key:	Batch Add
+#. SourceLocation:	/MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+#: /MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+msgctxt "ST_Blueprint_MetaDataOfAssets,Batch Add"
+msgid "Batch Add"
+msgstr "Batch Add"
+
+#. Key:	Batch Copy
+#. SourceLocation:	/MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+#: /MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+msgctxt "ST_Blueprint_MetaDataOfAssets,Batch Copy"
+msgid "Batch Copy"
+msgstr "Batch Copy"
+
+#. Key:	Batch Delete
+#. SourceLocation:	/MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+#: /MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+msgctxt "ST_Blueprint_MetaDataOfAssets,Batch Delete"
+msgid "Batch Delete"
+msgstr "Batch Delete"
+
+#. Key:	Batch Modify
+#. SourceLocation:	/MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+#: /MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+msgctxt "ST_Blueprint_MetaDataOfAssets,Batch Modify"
+msgid "Batch Modify"
+msgstr "Batch Modify"
+
+#. Key:	Batch operation
+#. SourceLocation:	/MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+#: /MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+msgctxt "ST_Blueprint_MetaDataOfAssets,Batch operation"
+msgid "Batch operation"
+msgstr "Batch operation"
+
+#. Key:	Batch Sync
+#. SourceLocation:	/MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+#: /MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+msgctxt "ST_Blueprint_MetaDataOfAssets,Batch Sync"
+msgid "Batch Sync"
+msgstr "Batch Sync"
+
+#. Key:	Cancel
+#. SourceLocation:	/MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+#: /MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+msgctxt "ST_Blueprint_MetaDataOfAssets,Cancel"
+msgid "Cancel"
+msgstr "Cancel"
+
+#. Key:	Clear
+#. SourceLocation:	/MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+#: /MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+msgctxt "ST_Blueprint_MetaDataOfAssets,Clear"
+msgid "Clear"
+msgstr "Clear"
+
+#. Key:	Clear all
+#. SourceLocation:	/MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+#: /MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+msgctxt "ST_Blueprint_MetaDataOfAssets,Clear all"
+msgid "Clear all"
+msgstr "Clear all"
+
+#. Key:	Configuration is empty
+#. SourceLocation:	/MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+#: /MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+msgctxt "ST_Blueprint_MetaDataOfAssets,Configuration is empty"
+msgid "Configuration is empty"
+msgstr "Configuration is empty"
+
+#. Key:	Confirm
+#. SourceLocation:	/MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+#: /MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+msgctxt "ST_Blueprint_MetaDataOfAssets,Confirm"
+msgid "Confirm"
+msgstr "Confirm"
+
+#. Key:	Confirm Add
+#. SourceLocation:	/MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+#: /MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+msgctxt "ST_Blueprint_MetaDataOfAssets,Confirm Add"
+msgid "Confirm Add"
+msgstr "Confirm Add"
+
+#. Key:	Confirm Delete
+#. SourceLocation:	/MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+#: /MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+msgctxt "ST_Blueprint_MetaDataOfAssets,Confirm Delete"
+msgid "Confirm Delete"
+msgstr "Confirm Delete"
+
+#. Key:	Confirm Modify
+#. SourceLocation:	/MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+#: /MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+msgctxt "ST_Blueprint_MetaDataOfAssets,Confirm Modify"
+msgid "Confirm Modify"
+msgstr "Confirm Modify"
+
+#. Key:	Copy
+#. SourceLocation:	/MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+#: /MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+msgctxt "ST_Blueprint_MetaDataOfAssets,Copy"
+msgid "Copy"
+msgstr "Copy"
+
+#. Key:	Delete
+#. SourceLocation:	/MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+#: /MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+msgctxt "ST_Blueprint_MetaDataOfAssets,Delete"
+msgid "Delete"
+msgstr "Delete"
+
+#. Key:	Deletion failed: Asset [{Asset Name}] does not contain key [{Tag Name}]
+#. SourceLocation:	/MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+#: /MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+msgctxt "ST_Blueprint_MetaDataOfAssets,Deletion failed: Asset [{Asset Name}] does not contain key [{Tag Name}]"
+msgid "Deletion failed: Asset [{Asset Name}] does not contain key [{Tag Name}]"
+msgstr "Deletion failed: Asset [{Asset Name}] does not contain key [{Tag Name}]"
+
+#. Key:	Do not overwrite any values for this asset? (Yes)
+Do not overwrite any values for all assets? (No)
+#. SourceLocation:	/MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+#: /MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+msgctxt "ST_Blueprint_MetaDataOfAssets,Do not overwrite any values for this asset? (Yes)\r\nDo not overwrite any values for all assets? (No)"
+msgid "Do not overwrite any values for this asset? (Yes)\r\nDo not overwrite any values for all assets? (No)"
+msgstr "Do not overwrite any values for this asset? (Yes)\r\nDo not overwrite any values for all assets? (No)"
+
+#. Key:	Duplicate Keys Exist
+#. SourceLocation:	/MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+#: /MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+msgctxt "ST_Blueprint_MetaDataOfAssets,Duplicate Keys Exist"
+msgid "Duplicate Keys Exist"
+msgstr "Duplicate Keys Exist"
+
+#. Key:	Duplicate tag: {Tag}
+#. SourceLocation:	/MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+#: /MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+msgctxt "ST_Blueprint_MetaDataOfAssets,Duplicate tag: {Tag}"
+msgid "Duplicate tag: {Tag}"
+msgstr "Duplicate tag: {Tag}"
+
+#. Key:	Input New Value
+#. SourceLocation:	/MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+#: /MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+msgctxt "ST_Blueprint_MetaDataOfAssets,Input New Value"
+msgid "Input New Value"
+msgstr "Input New Value"
+
+#. Key:	Invalid assets are included. Skip invalid assets?
+#. SourceLocation:	/MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+#: /MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+msgctxt "ST_Blueprint_MetaDataOfAssets,Invalid assets are included. Skip invalid assets?"
+msgid "Invalid assets are included. Skip invalid assets?"
+msgstr "Invalid assets are included. Skip invalid assets?"
+
+#. Key:	Key :
+#. SourceLocation:	/MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+#: /MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+msgctxt "ST_Blueprint_MetaDataOfAssets,Key :"
+msgid "Key :"
+msgstr "Key :"
+
+#. Key:	Key cannot be empty
+#. SourceLocation:	/MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+#: /MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+msgctxt "ST_Blueprint_MetaDataOfAssets,Key cannot be empty"
+msgid "Key cannot be empty"
+msgstr "Key cannot be empty"
+
+#. Key:	Key Is Empty
+#. SourceLocation:	/MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+#: /MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+msgctxt "ST_Blueprint_MetaDataOfAssets,Key Is Empty"
+msgid "Key Is Empty"
+msgstr "Key Is Empty"
+
+#. Key:	Modification failed: Key is empty
+#. SourceLocation:	/MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+#: /MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+msgctxt "ST_Blueprint_MetaDataOfAssets,Modification failed: Key is empty"
+msgid "Modification failed: Key is empty"
+msgstr "Modification failed: Key is empty"
+
+#. Key:	Modify
+#. SourceLocation:	/MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+#: /MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+msgctxt "ST_Blueprint_MetaDataOfAssets,Modify"
+msgid "Modify"
+msgstr "Modify"
+
+#. Key:	Name
+#. SourceLocation:	/MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+#: /MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+msgctxt "ST_Blueprint_MetaDataOfAssets,Name"
+msgid "Name"
+msgstr "Name"
+
+#. Key:	No data added
+#. SourceLocation:	/MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+#: /MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+msgctxt "ST_Blueprint_MetaDataOfAssets,No data added"
+msgid "No data added"
+msgstr "No data added"
+
+#. Key:	No Value
+#. SourceLocation:	/MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+#: /MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+msgctxt "ST_Blueprint_MetaDataOfAssets,No Value"
+msgid "No Value"
+msgstr "No Value"
+
+#. Key:	None
+#. SourceLocation:	/MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+#: /MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+msgctxt "ST_Blueprint_MetaDataOfAssets,None"
+msgid "None"
+msgstr "None"
+
+#. Key:	Num
+#. SourceLocation:	/MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+#: /MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+msgctxt "ST_Blueprint_MetaDataOfAssets,Num"
+msgid "Num"
+msgstr "Num"
+
+#. Key:	Number of metadata :
+#. SourceLocation:	/MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+#: /MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+msgctxt "ST_Blueprint_MetaDataOfAssets,Number of metadata :"
+msgid "Number of metadata :"
+msgstr "Number of metadata :"
+
+#. Key:	Number of selected assets:
+#. SourceLocation:	/MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+#: /MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+msgctxt "ST_Blueprint_MetaDataOfAssets,Number of selected assets:"
+msgid "Number of selected assets:"
+msgstr "Number of selected assets:"
+
+#. Key:	Overwrite all values for this asset? (Yes)
+Overwrite all values for all assets? (No)
+#. SourceLocation:	/MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+#: /MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+msgctxt "ST_Blueprint_MetaDataOfAssets,Overwrite all values for this asset? (Yes)\r\nOverwrite all values for all assets? (No)"
+msgid "Overwrite all values for this asset? (Yes)\r\nOverwrite all values for all assets? (No)"
+msgstr "Overwrite all values for this asset? (Yes)\r\nOverwrite all values for all assets? (No)"
+
+#. Key:	Prompt
+#. SourceLocation:	/MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+#: /MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+msgctxt "ST_Blueprint_MetaDataOfAssets,Prompt"
+msgid "Prompt"
+msgstr "Prompt"
+
+#. Key:	Select assets for {Select Mode}
+#. SourceLocation:	/MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+#: /MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+msgctxt "ST_Blueprint_MetaDataOfAssets,Select assets for {Select Mode}"
+msgid "Select assets for {Select Mode}"
+msgstr "Select assets for {Select Mode}"
+
+#. Key:	Select Mode
+#. SourceLocation:	/MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+#: /MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+msgctxt "ST_Blueprint_MetaDataOfAssets,Select Mode"
+msgid "Select Mode"
+msgstr "Select Mode"
+
+#. Key:	Select source assets
+#. SourceLocation:	/MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+#: /MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+msgctxt "ST_Blueprint_MetaDataOfAssets,Select source assets"
+msgid "Select source assets"
+msgstr "Select source assets"
+
+#. Key:	Select target assets
+#. SourceLocation:	/MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+#: /MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+msgctxt "ST_Blueprint_MetaDataOfAssets,Select target assets"
+msgid "Select target assets"
+msgstr "Select target assets"
+
+#. Key:	Select the Tag to be modified
+#. SourceLocation:	/MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+#: /MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+msgctxt "ST_Blueprint_MetaDataOfAssets,Select the Tag to be modified"
+msgid "Select the Tag to be modified"
+msgstr "Select the Tag to be modified"
+
+#. Key:	Succeed
+#. SourceLocation:	/MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+#: /MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+msgctxt "ST_Blueprint_MetaDataOfAssets,Succeed"
+msgid "Succeed"
+msgstr "Succeed"
+
+#. Key:	Sync
+#. SourceLocation:	/MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+#: /MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+msgctxt "ST_Blueprint_MetaDataOfAssets,Sync"
+msgid "Sync"
+msgstr "Sync"
+
+#. Key:	Sync assets in configured path
+#. SourceLocation:	/MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+#: /MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+msgctxt "ST_Blueprint_MetaDataOfAssets,Sync assets in configured path"
+msgid "Sync assets in configured path"
+msgstr "Sync assets in configured path"
+
+#. Key:	The [{Tag}] tag already exists on asset [{Asset Name}]. Overwrite its value?
+#. SourceLocation:	/MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+#: /MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+msgctxt "ST_Blueprint_MetaDataOfAssets,The [{Tag}] tag already exists on asset [{Asset Name}]. Overwrite its value?"
+msgid "The [{Tag}] tag already exists on asset [{Asset Name}]. Overwrite its value?"
+msgstr "The [{Tag}] tag already exists on asset [{Asset Name}]. Overwrite its value?"
+
+#. Key:	The configuration path contains an empty path
+#. SourceLocation:	/MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+#: /MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+msgctxt "ST_Blueprint_MetaDataOfAssets,The configuration path contains an empty path"
+msgid "The configuration path contains an empty path"
+msgstr "The configuration path contains an empty path"
+
+#. Key:	There is an empty key in the added data row
+#. SourceLocation:	/MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+#: /MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+msgctxt "ST_Blueprint_MetaDataOfAssets,There is an empty key in the added data row"
+msgid "There is an empty key in the added data row"
+msgstr "There is an empty key in the added data row"
+
+#. Key:	Value
+#. SourceLocation:	/MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+#: /MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+msgctxt "ST_Blueprint_MetaDataOfAssets,Value"
+msgid "Value"
+msgstr "Value"
+
+#. Key:	Value :
+#. SourceLocation:	/MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+#: /MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+msgctxt "ST_Blueprint_MetaDataOfAssets,Value :"
+msgid "Value :"
+msgstr "Value :"
+
+#. Key:	2E15409040F6FB58A0998FA29C6D3804
+#. SourceLocation:	/MetaDataOfAssets/Widget/SubWidget/BatchOperation/EUWBP_BatchAdd.EUWBP_BatchAdd_C:ExecuteUbergraph_EUWBP_BatchAdd [Script Bytecode]
+#: /MetaDataOfAssets/Widget/SubWidget/BatchOperation/EUWBP_BatchAdd.EUWBP_BatchAdd_C:ExecuteUbergraph_EUWBP_BatchAdd [Script Bytecode]
+msgctxt ",2E15409040F6FB58A0998FA29C6D3804"
+msgid "0"
+msgstr "0"
+

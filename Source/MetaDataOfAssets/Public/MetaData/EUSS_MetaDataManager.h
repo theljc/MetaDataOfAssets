@@ -8,6 +8,7 @@
 
 class FAssetSyncTask;
 class UMetaDataOfAssetsSettings;
+struct FAssetData;
 struct FScanDirectorySetting;
 class UWidget;
 
@@ -28,6 +29,15 @@ struct FAssetMetaDataState
 
 	// 此资产实际计入引用计数的 Tag
 	TSet<FName> CountedTags;
+};
+
+struct FMetaDataUpdateResult
+{
+	// 资产自身的元数据相对上一次快照是否发生变化
+	bool bAssetChanged = false;
+
+	// AssetRegistry 中该资产的 Tag 是否需要刷新
+	bool bRegistryTagsChanged = false;
 };
 
 
@@ -72,13 +82,14 @@ public:
 	UPROPERTY(BlueprintAssignable, Category = "MetaDataOfAssets")
 	FOnAssetDeleted OnAssetDeleted;
 
+	
 	// 主控件关闭时，设置已添加的资产
 	UFUNCTION(BlueprintCallable, Category = "MetaDataOfAssets")
-	void SetAddedAssets(const TArray<UObject*> InAssetRefs) { AddedAssets = InAssetRefs; }
+	void SetAddedAssets(const TArray<UObject*>& InAssetRefs);
 
 	// 获得上一次主控件关闭时已添加的资产
 	UFUNCTION(BlueprintCallable, Category = "MetaDataOfAssets")
-	TArray<UObject*> GetAddedAssets() { return AddedAssets; }
+	TArray<UObject*> GetAddedAssets() const;
 	
 	// 扫描项目设置中配置路径的资产
 	UFUNCTION(BlueprintCallable, Category = "MetaDataOfAssets")
@@ -109,13 +120,13 @@ public:
 	void SyncAsset(UObject* InAsset);
 
 	
-	// Package 删除时的回调
-	void OnPackageDeleted(UPackage* InPackage);
+	// 资产删除时的回调函数
+	void OnAssetRemoved(const FAssetData& InAssetData);
 
-	// 资产重命名或移动时迁移元数据状态
+	// 资产重命名或移动时清理旧路径状态，不迁移到新路径
 	void OnAssetMoved(const FAssetData& InAssetData, const FString& InOldObjectPath);
 	
-	// 资产同步任务完成时的回调
+	// 资产同步任务完成时的回调函数
 	void OnTaskFinished(FAssetSyncTask* InFinishedTask);
 	
 private:
@@ -135,22 +146,27 @@ private:
 	// 计算元数据修改前的快照，是后续计算元数据差异的基准
 	void CalcAssetTagStateBaseline(UObject* InAsset);
 	
-	// 在删除模式下，更新资产的标签状态
-	void UpdateAssetTagStates(UObject* InAsset);
+	// 更新资产的标签状态
+	FMetaDataUpdateResult UpdateAssetTagStates(UObject* InAsset);
 	
 	// 资产被删除时，从已注册的标签中移除
 	void RemoveFromAssetTagStates(const FSoftObjectPath& InAssetPath);
 
+	// 资产被删除时，从已添加资产列表中移除
+	void RemoveAddedAsset(const FSoftObjectPath& InAssetPath);
+
 	
 	// 保存所有已添加的资产
-	UPROPERTY()
-	TArray<TObjectPtr<UObject>> AddedAssets;
+	TArray<TSoftObjectPtr<UObject>> AddedAssets;
 	
 	// 以引用计数的方式保存已注册的标签
 	TMap<FName, int32> RegisteredTags;
 
 	// 此变量用于标记资产的元数据是否被同步过，外层 key 表示资产路径，内层结构体表示元数据的键值对
 	TMap<FSoftObjectPath, FAssetMetaDataState> AssetTagStates;
+
+	// 防止同一资产路径的删除事件被重复处理
+	TSet<FSoftObjectPath> RemovedAssetPaths;
 
 	// 资产同步任务
 	TSharedPtr<FAssetSyncTask> AssetSyncTask;

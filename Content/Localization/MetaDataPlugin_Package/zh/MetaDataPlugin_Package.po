@@ -1,0 +1,420 @@
+# Fill out your copyright notice in the Description page of Project Settings.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: MetaDataPlugin_Package\n"
+"POT-Creation-Date: 2026-11-17 08:12\n"
+"PO-Revision-Date: 2026-11-17 16:24+0800\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: zh\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Poedit 3.9\n"
+
+#. Key:	 Input Key
+#. SourceLocation:	/MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+#: /MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+msgctxt "ST_Blueprint_MetaDataOfAssets, Input Key "
+msgid " Input Key "
+msgstr " 输入键 "
+
+#. Key:	 Input Value
+#. SourceLocation:	/MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+#: /MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+msgctxt "ST_Blueprint_MetaDataOfAssets, Input Value "
+msgid " Input Value "
+msgstr " 输入值 "
+
+#. Key:	Add
+#. SourceLocation:	/MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+#: /MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+msgctxt "ST_Blueprint_MetaDataOfAssets,Add"
+msgid "Add"
+msgstr "添加"
+
+#. Key:	Add data row
+#. SourceLocation:	/MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+#: /MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+msgctxt "ST_Blueprint_MetaDataOfAssets,Add data row"
+msgid "Add data row"
+msgstr "添加数据行"
+
+#. Key:	Add selected assets
+#. SourceLocation:	/MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+#: /MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+msgctxt "ST_Blueprint_MetaDataOfAssets,Add selected assets"
+msgid "Add selected assets"
+msgstr "添加选中的资产"
+
+#. Key:	Asset Name :
+#. SourceLocation:	/MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+#: /MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+msgctxt "ST_Blueprint_MetaDataOfAssets,Asset Name :"
+msgid "Asset Name :"
+msgstr "资产名："
+
+#. Key:	Batch Add
+#. SourceLocation:	/MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+#: /MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+msgctxt "ST_Blueprint_MetaDataOfAssets,Batch Add"
+msgid "Batch Add"
+msgstr "批量添加"
+
+#. Key:	Batch Copy
+#. SourceLocation:	/MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+#: /MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+msgctxt "ST_Blueprint_MetaDataOfAssets,Batch Copy"
+msgid "Batch Copy"
+msgstr "批量复制"
+
+#. Key:	Batch Delete
+#. SourceLocation:	/MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+#: /MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+msgctxt "ST_Blueprint_MetaDataOfAssets,Batch Delete"
+msgid "Batch Delete"
+msgstr "批量删除"
+
+#. Key:	Batch Modify
+#. SourceLocation:	/MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+#: /MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+msgctxt "ST_Blueprint_MetaDataOfAssets,Batch Modify"
+msgid "Batch Modify"
+msgstr "批量修改"
+
+#. Key:	Batch operation
+#. SourceLocation:	/MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+#: /MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+msgctxt "ST_Blueprint_MetaDataOfAssets,Batch operation"
+msgid "Batch operation"
+msgstr "批量操作"
+
+#. Key:	Batch Sync
+#. SourceLocation:	/MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+#: /MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+msgctxt "ST_Blueprint_MetaDataOfAssets,Batch Sync"
+msgid "Batch Sync"
+msgstr "批量同步"
+
+#. Key:	Cancel
+#. SourceLocation:	/MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+#: /MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+msgctxt "ST_Blueprint_MetaDataOfAssets,Cancel"
+msgid "Cancel"
+msgstr "取消"
+
+#. Key:	Clear
+#. SourceLocation:	/MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+#: /MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+msgctxt "ST_Blueprint_MetaDataOfAssets,Clear"
+msgid "Clear"
+msgstr "清除"
+
+#. Key:	Clear all
+#. SourceLocation:	/MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+#: /MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+msgctxt "ST_Blueprint_MetaDataOfAssets,Clear all"
+msgid "Clear all"
+msgstr "清除所有"
+
+#. Key:	Configuration is empty
+#. SourceLocation:	/MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+#: /MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+msgctxt "ST_Blueprint_MetaDataOfAssets,Configuration is empty"
+msgid "Configuration is empty"
+msgstr "配置为空"
+
+#. Key:	Confirm
+#. SourceLocation:	/MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+#: /MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+msgctxt "ST_Blueprint_MetaDataOfAssets,Confirm"
+msgid "Confirm"
+msgstr "确认"
+
+#. Key:	Confirm Add
+#. SourceLocation:	/MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+#: /MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+msgctxt "ST_Blueprint_MetaDataOfAssets,Confirm Add"
+msgid "Confirm Add"
+msgstr "确认添加"
+
+#. Key:	Confirm Delete
+#. SourceLocation:	/MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+#: /MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+msgctxt "ST_Blueprint_MetaDataOfAssets,Confirm Delete"
+msgid "Confirm Delete"
+msgstr "确认删除"
+
+#. Key:	Confirm Modify
+#. SourceLocation:	/MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+#: /MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+msgctxt "ST_Blueprint_MetaDataOfAssets,Confirm Modify"
+msgid "Confirm Modify"
+msgstr "确认修改"
+
+#. Key:	Copy
+#. SourceLocation:	/MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+#: /MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+msgctxt "ST_Blueprint_MetaDataOfAssets,Copy"
+msgid "Copy"
+msgstr "复制"
+
+#. Key:	Delete
+#. SourceLocation:	/MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+#: /MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+msgctxt "ST_Blueprint_MetaDataOfAssets,Delete"
+msgid "Delete"
+msgstr "删除"
+
+#. Key:	Deletion failed: Asset [{Asset Name}] does not contain key [{Tag Name}]
+#. SourceLocation:	/MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+#: /MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+msgctxt "ST_Blueprint_MetaDataOfAssets,Deletion failed: Asset [{Asset Name}] does not contain key [{Tag Name}]"
+msgid "Deletion failed: Asset [{Asset Name}] does not contain key [{Tag Name}]"
+msgstr "删除失败：资产 [{Asset Name}] 中不包含键 [{Tag Name}]"
+
+#. Key:	Do not overwrite any values for this asset? (Yes)
+#. SourceLocation:	/MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+#: /MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+msgctxt ""
+"ST_Blueprint_MetaDataOfAssets,Do not overwrite any values for this asset? (Yes)\r\n"
+"Do not overwrite any values for all assets? (No)"
+msgid ""
+"Do not overwrite any values for this asset? (Yes)\r\n"
+"Do not overwrite any values for all assets? (No)"
+msgstr ""
+"单个资产全部不覆盖？（是）\n"
+"所有资产全部不覆盖？（否）"
+
+#. Key:	Duplicate Keys Exist
+#. SourceLocation:	/MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+#: /MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+msgctxt "ST_Blueprint_MetaDataOfAssets,Duplicate Keys Exist"
+msgid "Duplicate Keys Exist"
+msgstr "存在重复的键"
+
+#. Key:	Duplicate tag: {Tag}
+#. SourceLocation:	/MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+#: /MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+msgctxt "ST_Blueprint_MetaDataOfAssets,Duplicate tag: {Tag}"
+msgid "Duplicate tag: {Tag}"
+msgstr "存在重复的标签：{Tag}"
+
+#. Key:	Input New Value
+#. SourceLocation:	/MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+#: /MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+msgctxt "ST_Blueprint_MetaDataOfAssets,Input New Value"
+msgid "Input New Value"
+msgstr "输入新值"
+
+#. Key:	Invalid assets are included. Skip invalid assets?
+#. SourceLocation:	/MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+#: /MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+msgctxt "ST_Blueprint_MetaDataOfAssets,Invalid assets are included. Skip invalid assets?"
+msgid "Invalid assets are included. Skip invalid assets?"
+msgstr "资产中包含无效资产，是否跳过无效资产？"
+
+#. Key:	Key :
+#. SourceLocation:	/MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+#: /MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+msgctxt "ST_Blueprint_MetaDataOfAssets,Key :"
+msgid "Key :"
+msgstr "键："
+
+#. Key:	Key cannot be empty
+#. SourceLocation:	/MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+#: /MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+msgctxt "ST_Blueprint_MetaDataOfAssets,Key cannot be empty"
+msgid "Key cannot be empty"
+msgstr "标签不能为空"
+
+#. Key:	Key Is Empty
+#. SourceLocation:	/MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+#: /MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+msgctxt "ST_Blueprint_MetaDataOfAssets,Key Is Empty"
+msgid "Key Is Empty"
+msgstr "键为空"
+
+#. Key:	Modification failed: Key is empty
+#. SourceLocation:	/MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+#: /MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+msgctxt "ST_Blueprint_MetaDataOfAssets,Modification failed: Key is empty"
+msgid "Modification failed: Key is empty"
+msgstr "修改失败：键为空"
+
+#. Key:	Modify
+#. SourceLocation:	/MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+#: /MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+msgctxt "ST_Blueprint_MetaDataOfAssets,Modify"
+msgid "Modify"
+msgstr "修改"
+
+#. Key:	Name
+#. SourceLocation:	/MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+#: /MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+msgctxt "ST_Blueprint_MetaDataOfAssets,Name"
+msgid "Name"
+msgstr "名字"
+
+#. Key:	No data added
+#. SourceLocation:	/MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+#: /MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+msgctxt "ST_Blueprint_MetaDataOfAssets,No data added"
+msgid "No data added"
+msgstr "未添加数据"
+
+#. Key:	No Value
+#. SourceLocation:	/MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+#: /MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+msgctxt "ST_Blueprint_MetaDataOfAssets,No Value"
+msgid "No Value"
+msgstr "空值"
+
+#. Key:	None
+#. SourceLocation:	/MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+#: /MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+msgctxt "ST_Blueprint_MetaDataOfAssets,None"
+msgid "None"
+msgstr "None"
+
+#. Key:	Num
+#. SourceLocation:	/MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+#: /MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+msgctxt "ST_Blueprint_MetaDataOfAssets,Num"
+msgid "Num"
+msgstr "数量"
+
+#. Key:	Number of metadata :
+#. SourceLocation:	/MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+#: /MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+msgctxt "ST_Blueprint_MetaDataOfAssets,Number of metadata :"
+msgid "Number of metadata :"
+msgstr "元数据数量："
+
+#. Key:	Number of selected assets:
+#. SourceLocation:	/MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+#: /MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+msgctxt "ST_Blueprint_MetaDataOfAssets,Number of selected assets:"
+msgid "Number of selected assets:"
+msgstr "已选择的资产数量："
+
+#. Key:	Overwrite all values for this asset? (Yes)
+#. SourceLocation:	/MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+#: /MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+msgctxt ""
+"ST_Blueprint_MetaDataOfAssets,Overwrite all values for this asset? (Yes)\r\n"
+"Overwrite all values for all assets? (No)"
+msgid ""
+"Overwrite all values for this asset? (Yes)\r\n"
+"Overwrite all values for all assets? (No)"
+msgstr ""
+"单个资产全部覆盖？（是）\n"
+"所有资产全部覆盖？（否）"
+
+#. Key:	Prompt
+#. SourceLocation:	/MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+#: /MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+msgctxt "ST_Blueprint_MetaDataOfAssets,Prompt"
+msgid "Prompt"
+msgstr "提示"
+
+#. Key:	Select assets for {Select Mode}
+#. SourceLocation:	/MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+#: /MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+msgctxt "ST_Blueprint_MetaDataOfAssets,Select assets for {Select Mode}"
+msgid "Select assets for {Select Mode}"
+msgstr "选择要 {Select Mode} 的资产"
+
+#. Key:	Select Mode
+#. SourceLocation:	/MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+#: /MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+msgctxt "ST_Blueprint_MetaDataOfAssets,Select Mode"
+msgid "Select Mode"
+msgstr "选择模式"
+
+#. Key:	Select source assets
+#. SourceLocation:	/MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+#: /MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+msgctxt "ST_Blueprint_MetaDataOfAssets,Select source assets"
+msgid "Select source assets"
+msgstr "选择源资产"
+
+#. Key:	Select target assets
+#. SourceLocation:	/MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+#: /MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+msgctxt "ST_Blueprint_MetaDataOfAssets,Select target assets"
+msgid "Select target assets"
+msgstr "选择目标资产"
+
+#. Key:	Select the Tag to be modified
+#. SourceLocation:	/MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+#: /MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+msgctxt "ST_Blueprint_MetaDataOfAssets,Select the Tag to be modified"
+msgid "Select the Tag to be modified"
+msgstr "选择要修改的 Tag"
+
+#. Key:	Succeed
+#. SourceLocation:	/MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+#: /MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+msgctxt "ST_Blueprint_MetaDataOfAssets,Succeed"
+msgid "Succeed"
+msgstr "成功"
+
+#. Key:	Sync
+#. SourceLocation:	/MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+#: /MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+msgctxt "ST_Blueprint_MetaDataOfAssets,Sync"
+msgid "Sync"
+msgstr "同步"
+
+#. Key:	Sync assets in configured path
+#. SourceLocation:	/MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+#: /MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+msgctxt "ST_Blueprint_MetaDataOfAssets,Sync assets in configured path"
+msgid "Sync assets in configured path"
+msgstr "同步配置路径中的资产"
+
+#. Key:	The [{Tag}] tag already exists on asset [{Asset Name}]. Overwrite its value?
+#. SourceLocation:	/MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+#: /MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+msgctxt "ST_Blueprint_MetaDataOfAssets,The [{Tag}] tag already exists on asset [{Asset Name}]. Overwrite its value?"
+msgid "The [{Tag}] tag already exists on asset [{Asset Name}]. Overwrite its value?"
+msgstr "[{Asset Name}] 资产的 [{Tag}] 标签已存在，是否覆盖其值？"
+
+#. Key:	The configuration path contains an empty path
+#. SourceLocation:	/MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+#: /MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+msgctxt "ST_Blueprint_MetaDataOfAssets,The configuration path contains an empty path"
+msgid "The configuration path contains an empty path"
+msgstr "配置路径存在空路径"
+
+#. Key:	There is an empty key in the added data row
+#. SourceLocation:	/MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+#: /MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+msgctxt "ST_Blueprint_MetaDataOfAssets,There is an empty key in the added data row"
+msgid "There is an empty key in the added data row"
+msgstr "添加的数据行中包含空键"
+
+#. Key:	Value
+#. SourceLocation:	/MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+#: /MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+msgctxt "ST_Blueprint_MetaDataOfAssets,Value"
+msgid "Value"
+msgstr "值"
+
+#. Key:	Value :
+#. SourceLocation:	/MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+#: /MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+msgctxt "ST_Blueprint_MetaDataOfAssets,Value :"
+msgid "Value :"
+msgstr "值："
+
+#. Key:	2E15409040F6FB58A0998FA29C6D3804
+#. SourceLocation:	/MetaDataOfAssets/Widget/SubWidget/BatchOperation/EUWBP_BatchAdd.EUWBP_BatchAdd_C:ExecuteUbergraph_EUWBP_BatchAdd [Script Bytecode]
+#: /MetaDataOfAssets/Widget/SubWidget/BatchOperation/EUWBP_BatchAdd.EUWBP_BatchAdd_C:ExecuteUbergraph_EUWBP_BatchAdd
+#: [Script Bytecode]
+msgctxt ",2E15409040F6FB58A0998FA29C6D3804"
+msgid "0"
+msgstr "0"

@@ -3,6 +3,7 @@
 #include "MetaDataOfAssets.h"
 
 #include "MetaData/EUSS_MetaDataManager.h"
+#include "Editor.h"
 #include "LevelEditor.h"
 #include "Command/MetaDataOfAssetsCommands.h"
 #include "Style/MetaDataOfAssetsStyle.h"
@@ -20,6 +21,23 @@
 
 
 #define LOCTEXT_NAMESPACE "FMetaDataOfAssetsModule"
+
+namespace
+{
+	UEUSS_MetaDataManager* GetMetaDataManagerSafe()
+	{
+		return GEditor
+			? GEditor->GetEditorSubsystem<UEUSS_MetaDataManager>()
+			: nullptr;
+	}
+
+	UEUSS_WidgetManager* GetWidgetManagerSafe()
+	{
+		return GEditor
+			? GEditor->GetEditorSubsystem<UEUSS_WidgetManager>()
+			: nullptr;
+	}
+}
 
 void FMetaDataOfAssetsModule::StartupModule()
 {
@@ -61,11 +79,11 @@ void FMetaDataOfAssetsModule::StartupModule()
 	
 
 	// 加载 csv 文件
-	LOCTABLE_FROMFILE_GAME(
-		"MetaDataPluginTableID",
-		"MetaDataOfAssetsNamespace",
-		"../Plugins/MetaDataOfAssets/Content/Localization/MetadataPlugin.csv"
-	);
+	// LOCTABLE_FROMFILE_GAME(
+	// 	"MetaDataPluginTableID",
+	// 	"MetaDataOfAssetsNamespace",
+	// 	"../Plugins/MetaDataOfAssets/Content/Localization/MetadataPlugin.csv"
+	// );
 
 	
 	// 注册控制台命令
@@ -102,10 +120,10 @@ void FMetaDataOfAssetsModule::StartupModule()
 		this,
 		&FMetaDataOfAssetsModule::OnAssetMoved);
 	
-	// 绑定 Package 的删除事件，移动、删除、重命名都会触发
-	AssetRemovedDelegateHandle = FEditorDelegates::OnPackageDeleted.AddRaw(
+	// 绑定具体资产的删除事件
+	AssetRemovedDelegateHandle = AssetRegistry.OnAssetRemoved().AddRaw(
 		this,
-		&FMetaDataOfAssetsModule::OnPackageDeleted);
+		&FMetaDataOfAssetsModule::OnAssetRemoved);
 	
 	// 编辑器初始化完成的回调
 	EditorInitializedDelegateHandle = FEditorDelegates::OnEditorInitialized.AddRaw(
@@ -240,7 +258,7 @@ void FMetaDataOfAssetsModule::RegisterCustomConsoleCommand()
 
 void FMetaDataOfAssetsModule::DisableDebug()
 {
-	UEUSS_WidgetManager* WidgetManager = GEditor->GetEditorSubsystem<UEUSS_WidgetManager>();
+	UEUSS_WidgetManager* WidgetManager = GetWidgetManagerSafe();
 	if (WidgetManager)
 	{
 		WidgetManager->DisableDebug();
@@ -249,7 +267,7 @@ void FMetaDataOfAssetsModule::DisableDebug()
 
 void FMetaDataOfAssetsModule::EnableDebug()
 {
-	UEUSS_WidgetManager* WidgetManager = GEditor->GetEditorSubsystem<UEUSS_WidgetManager>();
+	UEUSS_WidgetManager* WidgetManager = GetWidgetManagerSafe();
 	if (WidgetManager)
 	{
 		WidgetManager->EnableDebug();
@@ -258,7 +276,7 @@ void FMetaDataOfAssetsModule::EnableDebug()
 
 void FMetaDataOfAssetsModule::RemoveAllWidget()
 {
-	UEUSS_WidgetManager* WidgetManager = GEditor->GetEditorSubsystem<UEUSS_WidgetManager>();
+	UEUSS_WidgetManager* WidgetManager = GetWidgetManagerSafe();
 	if (WidgetManager)
 	{
 		WidgetManager->CloseAllWidgets();
@@ -267,7 +285,7 @@ void FMetaDataOfAssetsModule::RemoveAllWidget()
 
 void FMetaDataOfAssetsModule::OnButtonClicked()
 {
-	UEUSS_WidgetManager* WidgetManager = GEditor->GetEditorSubsystem<UEUSS_WidgetManager>();
+	UEUSS_WidgetManager* WidgetManager = GetWidgetManagerSafe();
 	if (WidgetManager)
 	{
 		// 点击按钮时，创建主窗口
@@ -277,13 +295,13 @@ void FMetaDataOfAssetsModule::OnButtonClicked()
 
 void FMetaDataOfAssetsModule::OnAssetMoved(const FAssetData& AssetData, const FString& OldObjectPath)
 {
-	UEUSS_MetaDataManager* MetaDataManager = GEditor->GetEditorSubsystem<UEUSS_MetaDataManager>();
+	UEUSS_MetaDataManager* MetaDataManager = GetMetaDataManagerSafe();
 	if (MetaDataManager)
 	{
 		MetaDataManager->OnAssetMoved(AssetData, OldObjectPath);
 	}
 	
-	UEUSS_WidgetManager* WidgetManager = GEditor->GetEditorSubsystem<UEUSS_WidgetManager>();
+	UEUSS_WidgetManager* WidgetManager = GetWidgetManagerSafe();
 	if (WidgetManager)
 	{
 		WidgetManager->OnAssetMoved(AssetData, OldObjectPath);
@@ -291,20 +309,18 @@ void FMetaDataOfAssetsModule::OnAssetMoved(const FAssetData& AssetData, const FS
 	
 }
 
-void FMetaDataOfAssetsModule::OnPackageDeleted(UPackage* InPackage)
+void FMetaDataOfAssetsModule::OnAssetRemoved(const FAssetData& AssetData)
 {
-	UEUSS_MetaDataManager* MetaDataManager = GEditor->GetEditorSubsystem<UEUSS_MetaDataManager>();
+	UEUSS_MetaDataManager* MetaDataManager = GetMetaDataManagerSafe();
 	if (MetaDataManager)
 	{
-		MetaDataManager->OnPackageDeleted(InPackage);
+		MetaDataManager->OnAssetRemoved(AssetData);
 	}
 }
 
 void FMetaDataOfAssetsModule::OnMapLoad(const FString& InFilename, FCanLoadMap& OutCanLoadMap)
 {
-	if (!GEditor) return;
-
-	UEUSS_WidgetManager* WidgetManager = GEditor->GetEditorSubsystem<UEUSS_WidgetManager>();
+	UEUSS_WidgetManager* WidgetManager = GetWidgetManagerSafe();
 	if (WidgetManager)
 	{
 		WidgetManager->CloseAllWidgets();
@@ -313,8 +329,8 @@ void FMetaDataOfAssetsModule::OnMapLoad(const FString& InFilename, FCanLoadMap& 
 
 void FMetaDataOfAssetsModule::OnEditorInitialized(double Double)
 {
-	UEUSS_MetaDataManager* MetaDataManager = GEditor->GetEditorSubsystem<UEUSS_MetaDataManager>();
-	UEUSS_WidgetManager* WidgetManager = GEditor->GetEditorSubsystem<UEUSS_WidgetManager>();
+	UEUSS_MetaDataManager* MetaDataManager = GetMetaDataManagerSafe();
+	UEUSS_WidgetManager* WidgetManager = GetWidgetManagerSafe();
 	if (MetaDataManager && WidgetManager)
 	{
 		WidgetManager->RegisterMainWidgetTab();

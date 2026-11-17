@@ -41,6 +41,12 @@ void UEUW_BaseUtilityWidget::OnClose_Implementation()
 
 void UEUW_BaseUtilityWidget::OnInitialize(const FInstancedStruct& Params)
 {
+	if (!GEditor)
+	{
+		UE_LOG(LogMetaDataOfAssets, Warning, TEXT("[%hs] : GEditor 无效"), __FUNCTION__);
+		return;
+	}
+
 	// 获得 Subsystem
 	UEUSS_WidgetManager* WidgetManager = GEditor->GetEditorSubsystem<UEUSS_WidgetManager>();
 	if (!IsValid(WidgetManager))
@@ -69,6 +75,11 @@ void UEUW_BaseUtilityWidget::OnInitialize(const FInstancedStruct& Params)
 
 void UEUW_BaseUtilityWidget::OnDeinitialize()
 {
+	if (!GEditor)
+	{
+		return;
+	}
+
 	// 获得 Subsystem
 	UEUSS_WidgetManager* WidgetManager = GEditor->GetEditorSubsystem<UEUSS_WidgetManager>();
 	if (!IsValid(WidgetManager)) return;

@@ -5,6 +5,7 @@
 #include "Settings/MetaDataOfAssetsSettings.h"
 #include "AssetRegistry/AssetRegistryModule.h"
 #include "AssetRegistry/IAssetRegistry.h"
+#include "UObject/AssetRegistryTagsContext.h"
 #include "Engine/AssetManagerSettings.h"
 #include "Log/MetaDataOfAssetsLogChannel.h"
 #include "Task/FAssetScanTask.h"
@@ -26,11 +27,60 @@ void UEUSS_MetaDataManager::Deinitialize()
 {
 	if (AssetSyncTask.IsValid())
 	{
+		// 取消资产同步任务
 		AssetSyncTask->Cancel();
 		AssetSyncTask.Reset();
 	}
 	
 	Super::Deinitialize();
+}
+
+void UEUSS_MetaDataManager::SetAddedAssets(const TArray<UObject*>& InAssetRefs)
+{
+	AddedAssets.Reset();
+	AddedAssets.Reserve(InAssetRefs.Num());
+
+	TSet<FSoftObjectPath> AddedPaths;
+	for (UObject* Asset : InAssetRefs)
+	{
+		if (!IsValid(Asset)) continue;
+
+		const FSoftObjectPath AssetPath(Asset);
+		bool bAlreadyExists = false;
+		// 是否有重复资产
+		AddedPaths.Add(AssetPath, &bAlreadyExists);
+		
+		// 不添加重复资产
+		if (!bAlreadyExists)
+		{
+			AddedAssets.Add(TSoftObjectPtr<UObject>(AssetPath));
+		}
+	}
+}
+
+TArray<UObject*> UEUSS_MetaDataManager::GetAddedAssets() const
+{
+	TArray<UObject*> Result;
+	Result.Reserve(AddedAssets.Num());
+
+	// 遍历已添加的资产
+	for (const TSoftObjectPtr<UObject>& SoftAsset : AddedAssets)
+	{
+		// 判断是否已加载
+		UObject* Asset = SoftAsset.Get();
+		if (!IsValid(Asset))
+		{
+			// 未加载则加载
+			Asset = SoftAsset.LoadSynchronous();
+		}
+
+		if (IsValid(Asset))
+		{
+			Result.Add(Asset);
+		}
+	}
+
+	return Result;
 }
 
 TArray<FScanDirectorySetting> UEUSS_MetaDataManager::GetNormalizedPathSettings(const TArray<FScanDirectorySetting>& InSettings)
@@ -161,14 +211,17 @@ void UEUSS_MetaDataManager::CalcAssetTagStateBaseline(UObject* InAsset)
 		return;
 	}
 
+	RemovedAssetPaths.Remove(AssetPath);
+
 	// 资产首次同步时，添加元数据快照
 	FAssetMetaDataState& Baseline = AssetTagStates.Add(AssetPath);
 	Baseline.MetaDataSnapshot = UEditorAssetLibrary::GetMetadataTagValues(InAsset);
 }
 
-void UEUSS_MetaDataManager::UpdateAssetTagStates(UObject* InAsset)
+FMetaDataUpdateResult UEUSS_MetaDataManager::UpdateAssetTagStates(UObject* InAsset)
 {
-	if (!IsValid(InAsset)) return;
+	FMetaDataUpdateResult Result;
+	if (!IsValid(InAsset)) return Result;
 
 	TMap<FName, FString> ObjectMetaDataMap = UEditorAssetLibrary::GetMetadataTagValues(InAsset);
 	
@@ -177,6 +230,7 @@ void UEUSS_MetaDataManager::UpdateAssetTagStates(UObject* InAsset)
 
 	// 查找资产已保存的元数据快照
 	FAssetMetaDataState* ExistingTagMap = AssetTagStates.Find(AssetPath);
+	const bool bHadExistingState = ExistingTagMap != nullptr;
 
 	TMap<FName, FString> PreviousMetaData;
 	TSet<FName> PreviousCountedTags;
@@ -189,10 +243,15 @@ void UEUSS_MetaDataManager::UpdateAssetTagStates(UObject* InAsset)
 	// 只移除真实删除的 Tag
 	for (const TPair<FName, FString>& Previous : PreviousMetaData)
 	{
-		if (!ObjectMetaDataMap.Contains(Previous.Key) &&
-			PreviousCountedTags.Contains(Previous.Key))
+		if (!ObjectMetaDataMap.Contains(Previous.Key))
 		{
-			RemoveTagFromRegisteredTags(Previous.Key, InAsset);
+			Result.bRegistryTagsChanged = true;
+			Result.bAssetChanged |= bHadExistingState;
+
+			if (PreviousCountedTags.Contains(Previous.Key))
+			{
+				RemoveTagFromRegisteredTags(Previous.Key, InAsset);
+			}
 		}
 	}
 
@@ -204,6 +263,9 @@ void UEUSS_MetaDataManager::UpdateAssetTagStates(UObject* InAsset)
 		const FString* PreviousValue = PreviousMetaData.Find(Current.Key);
 		if (!PreviousValue)
 		{
+			Result.bRegistryTagsChanged = true;
+			Result.bAssetChanged |= bHadExistingState;
+
 			AddTagToRegisteredTags(Current.Key, InAsset);
 			if (bAllowManageAssetRegistryTagsDelete)
 			{
@@ -220,6 +282,8 @@ void UEUSS_MetaDataManager::UpdateAssetTagStates(UObject* InAsset)
 			if (*PreviousValue != Current.Value)
 			{
 				bValueChanged = true;
+				Result.bAssetChanged = true;
+				Result.bRegistryTagsChanged = true;
 			}
 		}
 	}
@@ -233,6 +297,8 @@ void UEUSS_MetaDataManager::UpdateAssetTagStates(UObject* InAsset)
 	{
 		OnMetaDataModified.Broadcast(InAsset);
 	}
+
+	return Result;
 }
 
 void UEUSS_MetaDataManager::RemoveFromAssetTagStates(const FSoftObjectPath& InAssetPath)
@@ -251,7 +317,7 @@ void UEUSS_MetaDataManager::RemoveFromAssetTagStates(const FSoftObjectPath& InAs
 
 			int32& Count = *CountPtr;
 			// 引用计数减 1
-			Count--;
+			--Count;
 
 			// 引用计数为 0 时，从资产注册表移除
 			if (Count <= 0)
@@ -265,10 +331,26 @@ void UEUSS_MetaDataManager::RemoveFromAssetTagStates(const FSoftObjectPath& InAs
 	AssetTagStates.Remove(InAssetPath);
 }
 
-void UEUSS_MetaDataManager::OnPackageDeleted(UPackage* InPackage)
+void UEUSS_MetaDataManager::RemoveAddedAsset(const FSoftObjectPath& InAssetPath)
 {
-	const FString PackageName = InPackage->GetName();
-	const FSoftObjectPath AssetPath(PackageName);
+	// 从 AddedAssets 中移除 InAssetPath 对应的资产
+	AddedAssets.RemoveAll(
+		[&InAssetPath](const TSoftObjectPtr<UObject>& SoftAsset)
+		{
+			return SoftAsset.ToSoftObjectPath() == InAssetPath;
+		});
+}
+
+void UEUSS_MetaDataManager::OnAssetRemoved(const FAssetData& InAssetData)
+{
+	const FSoftObjectPath AssetPath(InAssetData.GetSoftObjectPath());
+
+	// 防止重复触发
+	bool bAlreadyHandled = false;
+	RemovedAssetPaths.Add(AssetPath, &bAlreadyHandled);
+	if (bAlreadyHandled) return;
+
+	RemoveAddedAsset(AssetPath);
 
 	// 无论是否自动管理 AssetRegistry 标签的删除，删除资产都必须清理缓存状态
 	RemoveFromAssetTagStates(AssetPath);
@@ -277,22 +359,18 @@ void UEUSS_MetaDataManager::OnPackageDeleted(UPackage* InPackage)
 	OnAssetDeleted.Broadcast(AssetPath);
 }
 
-void UEUSS_MetaDataManager::OnAssetMoved(const FAssetData& InAssetData, const FString& InOldObjectPath)
+void UEUSS_MetaDataManager::OnAssetMoved(
+	const FAssetData& InAssetData,
+	const FString& InOldObjectPath)
 {
 	const FSoftObjectPath OldPath(InOldObjectPath);
 	const FSoftObjectPath NewPath(InAssetData.GetSoftObjectPath());
+	if (OldPath == NewPath || !OldPath.IsValid()) return;
 
-	if (OldPath == NewPath) return;
-
-	FAssetMetaDataState* ExistingState = AssetTagStates.Find(OldPath);
-	// 资产未同步过则无需处理
-	if (!ExistingState) return;
-
-	// 更新此资产对应的元数据快照
-	FAssetMetaDataState MetadataState = MoveTemp(*ExistingState);
-	AssetTagStates.Remove(OldPath);
-	AssetTagStates.Add(NewPath, MoveTemp(MetadataState));
-	
+	// 不迁移旧状态：移动后由用户重新添加并同步新路径
+	RemovedAssetPaths.Add(OldPath);
+	RemoveAddedAsset(OldPath);
+	RemoveFromAssetTagStates(OldPath);
 }
 
 void UEUSS_MetaDataManager::AddMetaData(UObject* InAsset, const FName InTagToAdd, const FString InValueToAdd)
@@ -427,11 +505,39 @@ void UEUSS_MetaDataManager::SyncAsset(UObject* InAsset)
 		return;
 	}
 	
-	// 根据保存的快照，更新 AssetTagStates
-	UpdateAssetTagStates(InAsset);
+	RemovedAssetPaths.Remove(FSoftObjectPath(InAsset));
 
-	// 保存资产
-	UEditorAssetLibrary::SaveLoadedAsset(InAsset, false);
+	// 根据保存的快照，更新 AssetTagStates
+	const FMetaDataUpdateResult UpdateResult = UpdateAssetTagStates(InAsset);
+
+	if (UpdateResult.bAssetChanged)
+	{
+		// 资产元数据对比快照发生了变化，必须进行保存
+		if (!UEditorAssetLibrary::SaveLoadedAsset(InAsset, false))
+		{
+			UE_LOG(
+				LogMetaDataOfAssets,
+				Warning,
+				TEXT("[%hs] : 资产保存失败: %s"),
+				__FUNCTION__,
+				*InAsset->GetPathName());
+
+			// 保存失败时至少刷新资产注册表的搜索数据
+			FModuleManager::LoadModuleChecked<FAssetRegistryModule>(
+				TEXT("AssetRegistry")).Get().AssetUpdateTags(
+					InAsset,
+					EAssetRegistryTagsCaller::Fast);
+		}
+	}
+	else if (UpdateResult.bRegistryTagsChanged)
+	{
+		// 首次扫描资产时，不保存资产
+		FModuleManager::LoadModuleChecked<FAssetRegistryModule>(
+			TEXT("AssetRegistry")).Get().AssetUpdateTags(
+				InAsset,
+				EAssetRegistryTagsCaller::Fast);
+	}
+
 	OnAssetSynced.Broadcast(InAsset);
 }
 
@@ -492,7 +598,7 @@ void UEUSS_MetaDataManager::RemoveTagFromRegisteredTags(const FName InTagToRemov
 	}
 
 	// 引用计数减 1
-	Count--;
+	--Count;
 	if (Count == 0)
 	{
 		RegisteredTags.Remove(InTagToRemove);

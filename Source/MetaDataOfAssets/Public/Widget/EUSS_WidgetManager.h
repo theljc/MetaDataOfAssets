@@ -86,9 +86,22 @@ struct FEUWTabSpawnContext
 	
 	bool bAddContentBrowserDrawer;
 
+	// 关闭 Tab 后是否保留 Spawner 和生成参数
+	bool bKeepSpawnerAfterClose = false;
+
 	UPROPERTY()
 	FInstancedStruct Params;
 
+};
+
+// 用于 EUW 蓝图编译
+struct FEUWCompiledDelegateBinding
+{
+	// EUW 蓝图对象
+	TWeakObjectPtr<UEditorUtilityWidgetBlueprint> Blueprint;
+	
+	// 回调函数句柄
+	FDelegateHandle Handle;
 };
 
 
@@ -113,12 +126,8 @@ public:
 	// 控件被移除时触发，提供委托，但未使用
 	UPROPERTY(BlueprintAssignable, Category = "MetaDataOfAssets", meta = (DisplayName = "OnWidgetRemoved"))
 	FOnWidgetInstanceRemoved OnWidgetInstanceRemoved;
-
-
-	// 从配置中获取是否启用打印字符串设置
-	UFUNCTION(BlueprintCallable, BlueprintPure, Category = "MetaDataOfAssets")
-	bool GetEnableDebugSetting();
-
+	
+	
 	/**
 	 * 用于创建 UserWidget
 	 *
@@ -139,6 +148,10 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "MetaDataOfAssets")
 	UEditorUtilityWidget* CreateEditorUtilityWidget(UEditorUtilityWidgetBlueprint* InBlueprint, FInstancedStruct InParams);
 
+	// 从配置中获取是否启用打印字符串设置
+	UFUNCTION(BlueprintCallable, BlueprintPure, Category = "MetaDataOfAssets")
+	bool GetEnableDebugSetting();
+	
 	// 创建树的根节点
 	UFUNCTION(BlueprintCallable, Category = "MetaDataOfAssets")
 	void SetToRootNode(UUserWidget* InRootWidget);
@@ -199,7 +212,11 @@ private:
 	void SpawnRegisteredTabByID_Custom(const FEUWTabSpawnContext& InSpawnContext);
 	
 	// 标签页被关闭时
-	void OnTabClosed(TSharedRef<SDockTab> InClosedTab, TWeakObjectPtr<UUserWidget> InWeakWidget, TWeakObjectPtr<UEditorUtilityWidgetBlueprint> InWeakBlueprint);
+	void OnTabClosed(
+		TSharedRef<SDockTab> InClosedTab,
+		FName InTabID,
+		TWeakObjectPtr<UUserWidget> InWeakWidget,
+		TWeakObjectPtr<UEditorUtilityWidgetBlueprint> InWeakBlueprint);
 	
 	// 标签页被创建时
 	TSharedRef<SDockTab> OnSpawnEUWTab(const FSpawnTabArgs& InArgs, const FName InTabID);
@@ -209,6 +226,17 @@ private:
 	
 	// 蓝图编译回调
 	void OnBlueprintCompiled(UBlueprint* InCompiledBlueprint, const FName InTabID);
+
+	// 绑定和注销各 Tab 对应的 Blueprint 编译回调
+	void BindBlueprintCompiled(
+		UEditorUtilityWidgetBlueprint* InBlueprint,
+		FName InTabID);
+	
+	// 解除蓝图编译回调绑定
+	void UnbindBlueprintCompiled(FName InTabID);
+	
+	// 解除所有蓝图编译回调绑定
+	void UnbindAllBlueprintCompiled();
 
 	// 蓝图编译后，用于恢复标签页的内容
 	void RestoreTabContent(const FName InTabID);
@@ -235,6 +263,12 @@ private:
 	
 	// 从树中移除单个节点
 	void RemoveNodeFromTree(UUserWidget* InWidget);
+
+	// Tab 关闭时清理对应的 WidgetManager 状态
+	void CleanupClosedTabState(FName InTabID, UUserWidget* InWidget);
+
+	// 关闭非持久 Tab 后注销其 Spawner 和生成参数
+	void CleanupTabSpawnerAfterClose(FName InTabID);
 	
 	// 移除所有子节点对应的标签页
 	void CloseDescendantTabs(UUserWidget* InRootWidget);
@@ -250,7 +284,7 @@ private:
 	FName MakeMainWidgetTabID(const UEditorUtilityWidgetBlueprint* InBlueprint);
 
 	// 构建 StatusBar 的名称
-	FName MakeStatusBarName(const UEditorUtilityWidgetBlueprint* InBlueprint);
+	FName MakeStatusBarName(const FName InTabID);
 	
 	
 	// 主控件资产的路径
@@ -292,7 +326,9 @@ private:
 
 	// 保存已注册的 Spawner 的 TabID
 	TSet<FName> RegisteredTabID;
+
+	// 每个 TabID 对应独立的 Blueprint 编译回调
+	TMap<FName, FEUWCompiledDelegateBinding> CompiledBindings;
 	
 	FTSTicker::FDelegateHandle RetryTickerHandle;
-	FDelegateHandle CompiledHandle;
 };
