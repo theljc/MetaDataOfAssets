@@ -7,8 +7,6 @@
 #include "WidgetInterface_MetaDataOfAssets.h"
 #include "EUW_BaseUtilityWidget.generated.h"
 
-struct FInstancedStruct;
-
 
 /**
  * 本插件的所有 EditorUtilityWidget 都继承自该基类

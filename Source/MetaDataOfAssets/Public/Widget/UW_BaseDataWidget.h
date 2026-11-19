@@ -7,8 +7,6 @@
 #include "WidgetInterface_MetaDataOfAssets.h"
 #include "UW_BaseDataWidget.generated.h"
 
-struct FInstancedStruct;
-
 
 /**
  * 本插件的所有 UserWidget 都继承自该基类

@@ -2,17 +2,19 @@
 
 #pragma once
 
+#include "Containers/Ticker.h"
 #include "CoreMinimal.h"
-#include "Editor/Blutility/Public/EditorUtilitySubsystem.h"
-#include "InstancedStruct.h"
+#include "EditorUtilitySubsystem.h"
 #include "StructUtils/InstancedStruct.h"
-#include "EditorUtilityWidgetBlueprint.h"
 #include "EUSS_WidgetManager.generated.h"
 
-class FAssetSyncTask;
-struct FInstancedStruct;
-class UUserWidget;
+class SDockTab;
+class UBlueprint;
 class UEditorUtilityWidget;
+class UEditorUtilityWidgetBlueprint;
+class UUserWidget;
+struct FAssetData;
+class FSpawnTabArgs;
 
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnWidgetInstanceCreated, UUserWidget*, Widget);
@@ -46,14 +48,7 @@ struct FEUWTabSpawnContext
 	GENERATED_BODY()
 
 	// 默认构造函数
-	FEUWTabSpawnContext()
-		: Blueprint(nullptr)
-		, TabID(NAME_None)
-		, StatusBarName(NAME_None)
-		, bAddContentBrowserDrawer(false)
-		, Params(FInstancedStruct())
-	{
-	}
+	FEUWTabSpawnContext();
 
 	/**
 	 * 必须传入 Blueprint 和 TabID
@@ -69,14 +64,7 @@ struct FEUWTabSpawnContext
 		const FName InTabID,
 		const FName InStatusBarName = NAME_None,
 		const bool bInAddContentBrowserDrawer = false,
-		FInstancedStruct InParams = FInstancedStruct())
-		: Blueprint(InBlueprint)
-		, TabID(InTabID)
-		, StatusBarName(InStatusBarName)
-		, bAddContentBrowserDrawer(bInAddContentBrowserDrawer)
-		, Params(MoveTemp(InParams))
-	{
-	}
+		FInstancedStruct InParams = FInstancedStruct());
 	
 	TWeakObjectPtr<UEditorUtilityWidgetBlueprint> Blueprint;
 

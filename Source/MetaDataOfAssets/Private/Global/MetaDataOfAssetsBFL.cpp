@@ -26,43 +26,27 @@ bool UMetaDataOfAssetsBFL::IsNameBlank(const FName& InName)
 
 TArray<FName> UMetaDataOfAssetsBFL::CalcIntersectionOfMetaData(const TArray<UObject*>& InAssets)
 {
-	if (InAssets.IsEmpty())
-	{
-		return TArray<FName>();
-	}
+	if (InAssets.IsEmpty()) return TArray<FName>();
 
 	TSet<FName> Result;
-	TSet<FName> SetToCompare;
-
-	if (!IsValid(InAssets[0])) 	return TArray<FName>();
-
-	// 以第一个资产中的元数据为基准进行比较
-	TMap<FName, FString> MetadataTagValues = UEditorAssetLibrary::GetMetadataTagValues(InAssets[0]);
-	TArray<FName> MetadataKeys;
-	MetadataTagValues.GetKeys(MetadataKeys);
-	SetToCompare.Append(MetadataKeys);
-
-	// 遍历所有资产
-	for (UObject* Asset : InAssets)
+	for (int32 AssetIndex = 0; AssetIndex < InAssets.Num(); ++AssetIndex)
 	{
+		UObject* Asset = InAssets[AssetIndex];
 		if (!IsValid(Asset)) return TArray<FName>();
 
-		MetadataTagValues.Empty();
-		MetadataKeys.Empty();
-		Result.Empty();
-		
-		MetadataTagValues = UEditorAssetLibrary::GetMetadataTagValues(Asset);
+		const TMap<FName, FString> MetadataTagValues = UEditorAssetLibrary::GetMetadataTagValues(Asset);
+		TArray<FName> MetadataKeys;
 		MetadataTagValues.GetKeys(MetadataKeys);
-		Result.Append(MetadataKeys);
 
-		// Intersect 计算两个集合的交集
-		TSet<FName> TempSet = Result.Intersect(SetToCompare);
+		if (AssetIndex == 0)
+		{
+			Result.Append(MetadataKeys);
+			continue;
+		}
 
-		// 交集为空则返回空数组
-		if (TempSet.IsEmpty()) return TArray<FName>();
-
-		// 交集的结果作为新的基准进行下一次比较
-		Result = TempSet;
+		// 每次都使用上一次的交集结果继续比较，保证得到所有资产的 N 路交集
+		Result = Result.Intersect(TSet<FName>(MetadataKeys));
+		if (Result.IsEmpty()) return TArray<FName>();
 	}
 
 	// 集合转换为数组

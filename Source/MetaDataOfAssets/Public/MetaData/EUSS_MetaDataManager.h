@@ -3,14 +3,13 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Editor/Blutility/Public/EditorUtilitySubsystem.h"
+#include "EditorUtilitySubsystem.h"
+#include "Settings/MetaDataOfAssetsSettings.h"
+#include "UObject/SoftObjectPath.h"
 #include "EUSS_MetaDataManager.generated.h"
 
 class FAssetSyncTask;
-class UMetaDataOfAssetsSettings;
 struct FAssetData;
-struct FScanDirectorySetting;
-class UWidget;
 
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnAssetDeleted, FSoftObjectPath, AssetPath);

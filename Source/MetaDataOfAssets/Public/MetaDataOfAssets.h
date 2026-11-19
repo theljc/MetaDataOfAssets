@@ -4,10 +4,10 @@
 
 #include "CoreMinimal.h"
 #include "Modules/ModuleManager.h"
-#include "Framework/Docking/TabManager.h"
 
 class FUICommandList;
 class FExtender;
+struct FAssetData;
 struct FCanLoadMap;
 
 

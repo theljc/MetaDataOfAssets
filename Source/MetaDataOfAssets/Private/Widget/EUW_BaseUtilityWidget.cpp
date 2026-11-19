@@ -3,9 +3,7 @@
 #include "Widget/EUW_BaseUtilityWidget.h"
 #include "Widget/EUSS_WidgetManager.h"
 #include "Editor.h"
-#include "EditorUtilityWidgetBlueprint.h"
 #include "Log/MetaDataOfAssetsLogChannel.h"
-#include "StructUtils/InstancedStruct.h"
 
 
 void UEUW_BaseUtilityWidget::NativeConstruct()

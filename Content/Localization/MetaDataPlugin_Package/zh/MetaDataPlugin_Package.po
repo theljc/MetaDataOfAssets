@@ -3,8 +3,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: MetaDataPlugin_Package\n"
-"POT-Creation-Date: 2026-11-17 08:12\n"
-"PO-Revision-Date: 2026-11-17 16:24+0800\n"
+"POT-Creation-Date: 2026-11-18 07:21\n"
+"PO-Revision-Date: 2026-11-18 15:23+0800\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: zh\n"
@@ -27,6 +27,13 @@ msgstr " 输入键 "
 msgctxt "ST_Blueprint_MetaDataOfAssets, Input Value "
 msgid " Input Value "
 msgstr " 输入值 "
+
+#. Key:	0
+#. SourceLocation:	/MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+#: /MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+msgctxt "ST_Blueprint_MetaDataOfAssets,0"
+msgid "0"
+msgstr "0"
 
 #. Key:	Add
 #. SourceLocation:	/MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
@@ -171,7 +178,9 @@ msgstr "删除"
 #. Key:	Deletion failed: Asset [{Asset Name}] does not contain key [{Tag Name}]
 #. SourceLocation:	/MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
 #: /MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
-msgctxt "ST_Blueprint_MetaDataOfAssets,Deletion failed: Asset [{Asset Name}] does not contain key [{Tag Name}]"
+msgctxt ""
+"ST_Blueprint_MetaDataOfAssets,Deletion failed: Asset [{Asset Name}] does not "
+"contain key [{Tag Name}]"
 msgid "Deletion failed: Asset [{Asset Name}] does not contain key [{Tag Name}]"
 msgstr "删除失败：资产 [{Asset Name}] 中不包含键 [{Tag Name}]"
 
@@ -179,7 +188,8 @@ msgstr "删除失败：资产 [{Asset Name}] 中不包含键 [{Tag Name}]"
 #. SourceLocation:	/MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
 #: /MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
 msgctxt ""
-"ST_Blueprint_MetaDataOfAssets,Do not overwrite any values for this asset? (Yes)\r\n"
+"ST_Blueprint_MetaDataOfAssets,Do not overwrite any values for this asset? "
+"(Yes)\r\n"
 "Do not overwrite any values for all assets? (No)"
 msgid ""
 "Do not overwrite any values for this asset? (Yes)\r\n"
@@ -212,7 +222,9 @@ msgstr "输入新值"
 #. Key:	Invalid assets are included. Skip invalid assets?
 #. SourceLocation:	/MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
 #: /MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
-msgctxt "ST_Blueprint_MetaDataOfAssets,Invalid assets are included. Skip invalid assets?"
+msgctxt ""
+"ST_Blueprint_MetaDataOfAssets,Invalid assets are included. Skip invalid "
+"assets?"
 msgid "Invalid assets are included. Skip invalid assets?"
 msgstr "资产中包含无效资产，是否跳过无效资产？"
 
@@ -236,6 +248,13 @@ msgstr "标签不能为空"
 msgctxt "ST_Blueprint_MetaDataOfAssets,Key Is Empty"
 msgid "Key Is Empty"
 msgstr "键为空"
+
+#. Key:	Message
+#. SourceLocation:	/MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+#: /MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
+msgctxt "ST_Blueprint_MetaDataOfAssets,Message"
+msgid "Message"
+msgstr "提示"
 
 #. Key:	Modification failed: Key is empty
 #. SourceLocation:	/MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
@@ -313,13 +332,6 @@ msgstr ""
 "单个资产全部覆盖？（是）\n"
 "所有资产全部覆盖？（否）"
 
-#. Key:	Prompt
-#. SourceLocation:	/MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
-#: /MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
-msgctxt "ST_Blueprint_MetaDataOfAssets,Prompt"
-msgid "Prompt"
-msgstr "提示"
-
 #. Key:	Select assets for {Select Mode}
 #. SourceLocation:	/MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
 #: /MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
@@ -379,21 +391,26 @@ msgstr "同步配置路径中的资产"
 #. Key:	The [{Tag}] tag already exists on asset [{Asset Name}]. Overwrite its value?
 #. SourceLocation:	/MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
 #: /MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
-msgctxt "ST_Blueprint_MetaDataOfAssets,The [{Tag}] tag already exists on asset [{Asset Name}]. Overwrite its value?"
-msgid "The [{Tag}] tag already exists on asset [{Asset Name}]. Overwrite its value?"
+msgctxt ""
+"ST_Blueprint_MetaDataOfAssets,The [{Tag}] tag already exists on asset "
+"[{Asset Name}]. Overwrite its value?"
+msgid ""
+"The [{Tag}] tag already exists on asset [{Asset Name}]. Overwrite its value?"
 msgstr "[{Asset Name}] 资产的 [{Tag}] 标签已存在，是否覆盖其值？"
 
 #. Key:	The configuration path contains an empty path
 #. SourceLocation:	/MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
 #: /MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
-msgctxt "ST_Blueprint_MetaDataOfAssets,The configuration path contains an empty path"
+msgctxt ""
+"ST_Blueprint_MetaDataOfAssets,The configuration path contains an empty path"
 msgid "The configuration path contains an empty path"
 msgstr "配置路径存在空路径"
 
 #. Key:	There is an empty key in the added data row
 #. SourceLocation:	/MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
 #: /MetaDataOfAssets/Localization/ST_Blueprint_MetaDataOfAssets.ST_Blueprint_MetaDataOfAssets
-msgctxt "ST_Blueprint_MetaDataOfAssets,There is an empty key in the added data row"
+msgctxt ""
+"ST_Blueprint_MetaDataOfAssets,There is an empty key in the added data row"
 msgid "There is an empty key in the added data row"
 msgstr "添加的数据行中包含空键"
 
@@ -411,10 +428,6 @@ msgctxt "ST_Blueprint_MetaDataOfAssets,Value :"
 msgid "Value :"
 msgstr "值："
 
-#. Key:	2E15409040F6FB58A0998FA29C6D3804
-#. SourceLocation:	/MetaDataOfAssets/Widget/SubWidget/BatchOperation/EUWBP_BatchAdd.EUWBP_BatchAdd_C:ExecuteUbergraph_EUWBP_BatchAdd [Script Bytecode]
-#: /MetaDataOfAssets/Widget/SubWidget/BatchOperation/EUWBP_BatchAdd.EUWBP_BatchAdd_C:ExecuteUbergraph_EUWBP_BatchAdd
-#: [Script Bytecode]
-msgctxt ",2E15409040F6FB58A0998FA29C6D3804"
-msgid "0"
-msgstr "0"
+#~ msgctxt "ST_Blueprint_MetaDataOfAssets,Prompt"
+#~ msgid "Prompt"
+#~ msgstr "提示"

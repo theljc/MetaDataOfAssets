@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Styling/AppStyle.h"
 #include "Widgets/DeclarativeSyntaxSupport.h"
 #include "Widgets/SBoxPanel.h"
 #include "Widgets/SCompoundWidget.h"
@@ -12,8 +13,6 @@
 #include "Widgets/Notifications/INotificationWidget.h"
 #include "Widgets/Notifications/SProgressBar.h"
 #include "Widgets/Text/STextBlock.h"
-
-class SProgressBar;
 
 
 class SProgressBarNotification_ScanAsset : public SCompoundWidget, public INotificationWidget

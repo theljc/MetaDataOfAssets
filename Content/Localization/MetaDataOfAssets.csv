@@ -8,7 +8,7 @@ None,None
 Succeed,Succeed
 Duplicate Keys Exist,Duplicate Keys Exist
 Key Is Empty,Key Is Empty
-Prompt,Prompt
+Message,Message
 The configuration path contains an empty path,The configuration path contains an empty path
 Configuration is empty,Configuration is empty
  Input Key , Input Key 
@@ -58,3 +58,4 @@ Select assets for {Select Mode},Select assets for {Select Mode}
 Select source assets,Select source assets
 Select target assets,Select target assets
 There is an empty key in the added data row,There is an empty key in the added data row
+0,0

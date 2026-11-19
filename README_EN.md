@@ -58,7 +58,7 @@
   - **Scan Settings**: Available after **`Allow Manage Asset Registry Tags Delete`** is enabled.
     - **Directory**: Specifies the directories to scan.
     - **Recursive**: Determines whether to scan the directory recursively.
-- [Editor Preferences -> Keyboard Shortcuts]
+- [Editor Preferences -> Keyboard Shortcuts] (Starting with version 5.8, this is located under [Edit -> Keyboard Shortcuts])
   - MetaDataOfAssets Shortcut Key
     - **Open Main Widget**: The shortcut for opening the main widget. You can customize it. The default shortcut is **`Alt + Z`**.
     - **Close All Widgets**: Closes all widgets created by this plugin. You can customize it. The default shortcut is **`Alt + Shift + Z`**.

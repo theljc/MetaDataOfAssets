@@ -13,10 +13,33 @@
 #include "Log/MetaDataOfAssetsLogChannel.h"
 #include "Modules/ModuleManager.h"
 #include "Settings/MetaDataOfAssetsSettings.h"
-#include "StructUtils/InstancedStruct.h"
 #include "Widgets/SWindow.h"
 #include "Widgets/Docking/SDockTab.h"
 #include "Widgets/SNullWidget.h"
+
+
+FEUWTabSpawnContext::FEUWTabSpawnContext()
+	: Blueprint(nullptr)
+	, TabID(NAME_None)
+	, StatusBarName(NAME_None)
+	, bAddContentBrowserDrawer(false)
+	, Params(FInstancedStruct())
+{
+}
+
+FEUWTabSpawnContext::FEUWTabSpawnContext(
+	UEditorUtilityWidgetBlueprint* InBlueprint,
+	const FName InTabID,
+	const FName InStatusBarName,
+	const bool bInAddContentBrowserDrawer,
+	FInstancedStruct InParams)
+	: Blueprint(InBlueprint)
+	, TabID(InTabID)
+	, StatusBarName(InStatusBarName)
+	, bAddContentBrowserDrawer(bInAddContentBrowserDrawer)
+	, Params(MoveTemp(InParams))
+{
+}
 
 
 void UEUSS_WidgetManager::Initialize(FSubsystemCollectionBase& Collection)

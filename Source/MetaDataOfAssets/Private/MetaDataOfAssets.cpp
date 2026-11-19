@@ -1,7 +1,6 @@
 // Copyright 2026 ljc. All rights reserved.
 
 #include "MetaDataOfAssets.h"
-
 #include "MetaData/EUSS_MetaDataManager.h"
 #include "Editor.h"
 #include "LevelEditor.h"
@@ -12,12 +11,10 @@
 #include "ISettingsSection.h"
 #include "AssetRegistry/AssetRegistryModule.h"
 #include "Widget/EUSS_WidgetManager.h"
-
-#include "PropertyEditorModule.h"
 #include "Global/MetaDataOfAssetsGlobal.h"
 #include "Interfaces/IMainFrameModule.h"
-#include "Internationalization/StringTableRegistry.h"
-#include "Log/MetaDataOfAssetsLogChannel.h"
+// #include "Internationalization/StringTableRegistry.h"
+// #include "Log/MetaDataOfAssetsLogChannel.h"
 
 
 #define LOCTEXT_NAMESPACE "FMetaDataOfAssetsModule"
@@ -76,14 +73,6 @@ void FMetaDataOfAssetsModule::StartupModule()
 				UMetaDataOfAssetsSettings::GetConfigFilePath());
 		});
 	}
-	
-
-	// 加载 csv 文件
-	// LOCTABLE_FROMFILE_GAME(
-	// 	"MetaDataPluginTableID",
-	// 	"MetaDataOfAssetsNamespace",
-	// 	"../Plugins/MetaDataOfAssets/Content/Localization/MetadataPlugin.csv"
-	// );
 
 	
 	// 注册控制台命令
