@@ -21,10 +21,7 @@ void FMetaDataOfAssetsStyle::Initialize()
 
 void FMetaDataOfAssetsStyle::Shutdown()
 {
-	if (!StyleInstance.IsValid())
-	{
-		return;
-	}
+	if (!StyleInstance.IsValid()) return;
 
 	FSlateStyleRegistry::UnRegisterSlateStyle(*StyleInstance);
 	ensure(StyleInstance.IsUnique());

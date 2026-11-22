@@ -216,8 +216,8 @@ bool UEUSS_WidgetManager::RegisterTab_Custom(const FEUWTabSpawnContext& InSpawnC
 					this,
 					&UEUSS_WidgetManager::OnSpawnEUWTab,
 					InSpawnContext.TabID
-					)
 				)
+			)
 			.SetDisplayName(Blueprint->GetTabDisplayName())
 			.SetMenuType(ETabSpawnerMenuType::Hidden);	// 在 Tools 分类中隐藏此控件
 

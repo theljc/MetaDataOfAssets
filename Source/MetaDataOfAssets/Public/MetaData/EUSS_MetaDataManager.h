@@ -164,9 +164,6 @@ private:
 	// 此变量用于标记资产的元数据是否被同步过，外层 key 表示资产路径，内层结构体表示元数据的键值对
 	TMap<FSoftObjectPath, FAssetMetaDataState> AssetTagStates;
 
-	// 防止同一资产路径的删除事件被重复处理
-	TSet<FSoftObjectPath> RemovedAssetPaths;
-
 	// 资产同步任务
 	TSharedPtr<FAssetSyncTask> AssetSyncTask;
 	

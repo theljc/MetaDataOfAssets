@@ -3,8 +3,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: MetaDataPlugin_TextFiles\n"
-"POT-Creation-Date: 2026-11-17 08:26\n"
-"PO-Revision-Date: 2026-11-17 16:27+0800\n"
+"POT-Creation-Date: 2026-11-19 15:40\n"
+"PO-Revision-Date: 2026-11-19 23:44+0800\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: zh\n"
@@ -55,6 +55,13 @@ msgstr "关闭所有已打开的控件"
 msgctxt "AssetSyncTask,LoadingAssetProgress"
 msgid "Loading Assets"
 msgstr "加载资产"
+
+#. Key:	MetaDataOfAssetsSettingsSection
+#. SourceLocation:	Plugins/MetaDataOfAssets/Source/MetaDataOfAssets/Public/Settings/MetaDataOfAssetsSettings.h(70)
+#: Plugins/MetaDataOfAssets/Source/MetaDataOfAssets/Public/Settings/MetaDataOfAssetsSettings.h(70)
+msgctxt "MetaDataOfAssets,MetaDataOfAssetsSettingsSection"
+msgid "MetaDataOfAssets"
+msgstr "资产元数据"
 
 #~ msgctxt "MetaDataOfAssetsNamespace, Input Key "
 #~ msgid " Input Key "
@@ -287,10 +294,6 @@ msgstr "加载资产"
 #~ msgctxt "MetaDataOfAssetsNamespace,Value :"
 #~ msgid "Value :"
 #~ msgstr "值："
-
-#~ msgctxt "MetaDataOfAssets,MetaDataOfAssetsSettingsSection"
-#~ msgid "MetaDataOfAssets"
-#~ msgstr "资产元数据"
 
 #~ msgctxt "MetaDataOfAssetsNamespace,Value is empty. Please re-enter."
 #~ msgid "Value is empty. Please re-enter."

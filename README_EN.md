@@ -149,11 +149,12 @@ MetaDataOfAssets/
 - This is an editor plugin.
 - To use this plugin, you need to enable both the `Struct Utils` and `Editor Scripting Utilities` plugins.
 - The plugin is localized in Chinese and English. The displayed text changes automatically when the Editor language is switched in [Editor Preferences -> Region & Language].
-- The default name of the main widget asset is EUW_MainWidget. If you move or rename this asset (do not delete it), you must restart the editor.
+- The default name of the main widget blueprint is EUW_MainWidget. If you move or rename this asset (do not delete it), you must restart the editor.
 - This asset is loaded when assets are added to the main widget and when **`Sync assets in configured path`** is clicked.
 - When **`Sync assets in configured path`** is clicked, assets are loaded across multiple frames in the editor, and the loading progress is displayed in the bottom-right corner. After loading is complete, a save operation will be performed on all loaded assets.
 - If you need to modify the Blueprint, recommend closing any open widgets and reopening them after compiled.
 - Do not use the `Run Utility Widget` button in the blueprint to open the widget.
+- The `Spawn as Nomad Tab` option in the main widget blueprint defaults to true and is not recommended to be modified. If modified, the editor must be restarted. (This rule applies to UE 5.6 and later versions, but it is recommended to follow this rule for other versions as well.)
 - If the `Allow Manage Asset Registry Tags Delete` option is enabled, the asset must be resynchronized in the following cases:
   - Metadata was added manually
   - The asset was **moved**, **deleted**, or **renamed**

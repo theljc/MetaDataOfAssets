@@ -13,8 +13,6 @@
 #include "Widget/EUSS_WidgetManager.h"
 #include "Global/MetaDataOfAssetsGlobal.h"
 #include "Interfaces/IMainFrameModule.h"
-// #include "Internationalization/StringTableRegistry.h"
-// #include "Log/MetaDataOfAssetsLogChannel.h"
 
 
 #define LOCTEXT_NAMESPACE "FMetaDataOfAssetsModule"
