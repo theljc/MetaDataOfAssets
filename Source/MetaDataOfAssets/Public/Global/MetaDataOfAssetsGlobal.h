@@ -4,8 +4,11 @@
 
 #include "CoreMinimal.h"
 
+class UEUSS_MetaDataManager;
+class UEUSS_WidgetManager;
 
-namespace MetaDataOfAssetsConstant
+
+namespace MetaDataOfAssetsGlobal
 {
 	// 自定义控制台命令
 	inline const TCHAR* GetEnableDebugConsoleCommand()
@@ -17,4 +20,8 @@ namespace MetaDataOfAssetsConstant
 	{
 		return TEXT("MetaDataOfAssets.DisableDebug");
 	}
+	
+	UEUSS_WidgetManager* GetWidgetManagerSafe();
+	UEUSS_MetaDataManager* GetMetaDataManagerSafe();
+	
 }

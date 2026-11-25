@@ -15,6 +15,7 @@
 #include "Widgets/Text/STextBlock.h"
 
 
+// 参照 SNotificationProgressWidget
 class SProgressBarNotification_ScanAsset : public SCompoundWidget, public INotificationWidget
 {
 public:

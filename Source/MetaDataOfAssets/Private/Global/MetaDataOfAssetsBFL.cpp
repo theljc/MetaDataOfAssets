@@ -2,7 +2,6 @@
 
 #include "Global/MetaDataOfAssetsBFL.h"
 #include "EditorAssetLibrary.h"
-#include "Log/MetaDataOfAssetsLogChannel.h"
 
 
 bool UMetaDataOfAssetsBFL::IsStringBlank(const FString& InStr)
@@ -29,28 +28,55 @@ TArray<FName> UMetaDataOfAssetsBFL::CalcIntersectionOfMetaData(const TArray<UObj
 {
 	if (InAssets.IsEmpty()) return TArray<FName>();
 
+	TSet<const UObject*> ExistAssets;
+	ExistAssets.Reserve(InAssets.Num());
+
+	// 最终交集的结果
 	TSet<FName> Result;
-	for (int32 AssetIndex = 0; AssetIndex < InAssets.Num(); ++AssetIndex)
+	
+	// 遍历资产
+	for (UObject* Asset : InAssets)
 	{
-		UObject* Asset = InAssets[AssetIndex];
 		if (!IsValid(Asset)) return TArray<FName>();
 
-		const TMap<FName, FString> MetadataTagValues = UEditorAssetLibrary::GetMetadataTagValues(Asset);
-		TArray<FName> MetadataKeys;
-		MetadataTagValues.GetKeys(MetadataKeys);
+		// 资产已存在则跳过
+		bool bAlreadyExist = false;
+		ExistAssets.Add(Asset, &bAlreadyExist);
+		if (bAlreadyExist) continue;
 
-		if (AssetIndex == 0)
+		// 获取资产的元数据标签值
+		const TMap<FName, FString> MetadataTagValues = UEditorAssetLibrary::GetMetadataTagValues(Asset);
+		
+		// 如果 Result 为空，表示首次遍历
+		if (Result.IsEmpty())
 		{
-			Result.Append(MetadataKeys);
+			Result.Reserve(MetadataTagValues.Num());
+			// 添加到 Result
+			for (const TPair<FName, FString>& MetadataTag : MetadataTagValues)
+			{
+				Result.Add(MetadataTag.Key);
+			}
+
+			// 如果 Result 为空表示第一个资产就没有元数据，则交集一定为空
+			if (Result.IsEmpty()) return TArray<FName>();
 			continue;
 		}
 
-		// 每次都使用上一次的交集结果继续比较，保证得到所有资产的 N 路交集
-		Result = Result.Intersect(TSet<FName>(MetadataKeys));
+		// 遍历 Result
+		for (auto It = Result.CreateIterator(); It; ++It)
+		{
+			// 如果当前遍历的资产的元数据中不包含 Result 中的标签则从 Result 中移除（表示交集中不应该包含该标签）
+			if (!MetadataTagValues.Contains(*It))
+			{
+				It.RemoveCurrent();
+			}
+		}
+
+		// 如果交集为空则直接返回
 		if (Result.IsEmpty()) return TArray<FName>();
 	}
 
-	// 集合转换为数组
+	// TSet 转 TArray
 	return Result.Array();
 }
 
@@ -63,91 +89,4 @@ TMap<int32, UObject*> UMetaDataOfAssetsBFL::SortMapByKeyAsc(const TMap<int32, UO
 	});
 	
 	return Result;
-}
-
-void UMetaDataOfAssetsBFL::SortMapByKeyAsc2(const TMap<int32, UObject*>& SourceMap, TMap<int32, UObject*>& OutMap)
-{
-	checkf(false, TEXT("SortMapByKeyAsc2"));
-}
-
-DEFINE_FUNCTION(UMetaDataOfAssetsBFL::execSortMapByKeyAsc2)
-{
-	// 读取 SourceMap
-	Stack.StepCompiledIn<FMapProperty>(nullptr);
-	FMapProperty* SourceMapProp = CastField<FMapProperty>(Stack.MostRecentProperty);
-	void* SourceMapAddr = Stack.MostRecentPropertyAddress;
-
-	// 读取 OutMap
-	Stack.StepCompiledIn<FMapProperty>(nullptr);
-	FMapProperty* OutMapProp = CastField<FMapProperty>(Stack.MostRecentProperty);
-	void* OutMapAddr = Stack.MostRecentPropertyAddress;
-
-	P_FINISH;
-
-	if (!SourceMapProp || !OutMapProp || !SourceMapAddr || !OutMapAddr)
-	{
-		return;
-	}
-
-	GenericSortMapByKey(SourceMapProp, SourceMapAddr, OutMapAddr, /*bAscending=*/true);
-}
-
-void UMetaDataOfAssetsBFL::GenericSortMapByKey(FMapProperty* MapProp, const void* SourceMapAddr, void* OutMapAddr,
-	bool bAscending)
-{
-	// 键必须是 int
-	if (!MapProp->KeyProp || !CastField<FIntProperty>(MapProp->KeyProp))
-	{
-		UE_LOG(LogMetaDataOfAssets, Error,
-			TEXT("[%hs]：键类型必须是 int, 当前类型：%s"),
-			__FUNCTION__, MapProp->KeyProp ? *MapProp->KeyProp->GetCPPType() : TEXT("null"));
-		
-		return;
-	}
-
-	// 用 FScriptMapHelper 访问 Source Map
-	FScriptMapHelper SourceMapHelper(MapProp, SourceMapAddr);
-
-	/** 从 MapHelper 获得所有键值对 */
-	struct FKV { int32 Key; const uint8* ValuePtr; };
-	TArray<FKV> Pairs;
-	Pairs.Reserve(SourceMapHelper.Num());
-
-	for (int32 i = 0; i < SourceMapHelper.Num(); ++i)
-	{
-		const int32 Key = *reinterpret_cast<const int32*>(SourceMapHelper.GetKeyPtr(i));
-		const uint8* ValuePtr = SourceMapHelper.GetValuePtr(i);
-		Pairs.Add(FKV(Key, ValuePtr));
-	}
-
-	// 排序
-	if (bAscending)
-	{
-		Pairs.Sort([](const FKV& A, const FKV& B) { return A.Key < B.Key; });
-	}
-	else
-	{
-		Pairs.Sort([](const FKV& A, const FKV& B) { return A.Key > B.Key; });
-	}
-
-	// Pairs 中保存了排序后的键值对，写回 OutMapHelper
-	FScriptMapHelper OutMapHelper(MapProp, OutMapAddr);
-	// 写回前清空
-	OutMapHelper.EmptyValues();
-
-	const FProperty* KeyProp = MapProp->KeyProp;
-	const FProperty* ValueProp = MapProp->ValueProp;
-
-	for (const FKV& Pair : Pairs)
-	{
-		const int32 NewIndex = OutMapHelper.AddDefaultValue_Invalid_NeedsRehash();
-		uint8* NewKeyPtr = static_cast<uint8*>(OutMapHelper.GetKeyPtr(NewIndex));
-		uint8* NewValuePtr = static_cast<uint8*>(OutMapHelper.GetValuePtr(NewIndex));
-
-		KeyProp->CopyCompleteValue(NewKeyPtr, &Pair.Key);
-		ValueProp->CopyCompleteValue(NewValuePtr, Pair.ValuePtr);
-	}
-
-	// 重建哈希，使迭代顺序与插入顺序一致
-	OutMapHelper.Rehash();
 }

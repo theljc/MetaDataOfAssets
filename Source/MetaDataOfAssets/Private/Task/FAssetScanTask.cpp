@@ -6,10 +6,12 @@
 #include "Editor.h"
 #include "Engine/AssetManager.h"
 #include "Engine/StreamableManager.h"
+#include "Global/MetaDataOfAssetsGlobal.h"
 #include "Log/MetaDataOfAssetsLogChannel.h"
 #include "MetaData/EUSS_MetaDataManager.h"
 #include "Task/SProgressBarNotification_ScanAsset.h"
 #include "Widget/EUSS_WidgetManager.h"
+#include "Misc/ScopeExit.h"
 
 
 void FAssetSyncTask::Start()
@@ -18,17 +20,13 @@ void FAssetSyncTask::Start()
     // 局部变量，出函数后释放
     TSharedRef<FAssetSyncTask> KeepAlive = AsShared();
     
-    if (!GEditor || bFinished)
-    {
-        Cancel();
-        return;
-    }
+    if (bFinished) return;
     
-    UEUSS_WidgetManager* WidgetManager = GEditor->GetEditorSubsystem<UEUSS_WidgetManager>();
+    UEUSS_WidgetManager* WidgetManager = MetaDataOfAssetsGlobal::GetWidgetManagerSafe();
     
     if (Assets.Num() == 0 || !WidgetManager)
     {
-        Cancel();
+        Finish(false);
         return;
     }
 
@@ -52,7 +50,7 @@ void FAssetSyncTask::Start()
     {
         LoadedItems.AddUnique(Asset.GetSoftObjectPath());
     }
-    
+
     TWeakPtr<FAssetSyncTask> WeakTask = AsShared();
     
     // 加载资产
@@ -68,67 +66,47 @@ void FAssetSyncTask::Start()
             }
         })
     );
-    
-    // 每隔 0.1 秒执行一次 Tick，更新进度条
-    TickHandle = FTSTicker::GetCoreTicker().AddTicker(
-        FTickerDelegate::CreateSP(AsShared(), &FAssetSyncTask::Tick),
-        0.1f
-    );
-    
-}
 
-void FAssetSyncTask::Cancel()
-{
-    TSharedRef<FAssetSyncTask> KeepAlive = AsShared();
-
-    if (bFinished) return;
-    
-    if (StreamableHandle.IsValid())
+    if (!StreamableHandle.IsValid())
     {
-        StreamableHandle->CancelHandle();
-        StreamableHandle.Reset();
+        Finish(false);
     }
-    
-    Finish(false);
-
-    if (!GEditor)
-    {
-        return;
-    }
-
-    UEUSS_MetaDataManager* MetaDataManager = GEditor->GetEditorSubsystem<UEUSS_MetaDataManager>();
-    if (!MetaDataManager) return;
-
-    MetaDataManager->OnTaskFinished(this);
-    
-}
-
-bool FAssetSyncTask::Tick(float DeltaTime)
-{
-    if (bFinished) return false;
-    
-    if (ProgressWidget.IsValid() && StreamableHandle.IsValid())
-    {
-        // 更新进度条
-        ProgressWidget->SetProgressPercent(StreamableHandle->GetProgress());
-    }
-    
-    return true; // 继续 Tick
 }
 
 void FAssetSyncTask::Finish(const bool bSuccess)
 {
     TSharedRef<FAssetSyncTask> KeepAlive = AsShared();
-
+    
     if (bFinished) return;
-    
     bFinished = true;
+    Phase = EPhase::Finished;
     
-    // 停止 Tick
-    if (TickHandle.IsValid())
+    UEUSS_MetaDataManager* MetaDataManager = MetaDataOfAssetsGlobal::GetMetaDataManagerSafe();
+    UEUSS_WidgetManager* WidgetManager = MetaDataOfAssetsGlobal::GetWidgetManagerSafe();
+    
+    ON_SCOPE_EXIT
     {
-        FTSTicker::GetCoreTicker().RemoveTicker(TickHandle);
-        TickHandle.Reset();
+        if (MetaDataManager)
+        {
+            MetaDataManager->OnTaskFinished(this);
+        }
+        
+        if (WidgetManager)
+        {
+            WidgetManager->OnTaskFinished();
+        }
+    };
+    
+    if (SyncTickHandle.IsValid())
+    {
+        FTSTicker::GetCoreTicker().RemoveTicker(SyncTickHandle);
+        SyncTickHandle.Reset();
+    }
+    
+    if (StreamableHandle.IsValid())
+    {
+        StreamableHandle->CancelHandle();
+        StreamableHandle.Reset();
     }
 
     // 关闭通知
@@ -140,38 +118,113 @@ void FAssetSyncTask::Finish(const bool bSuccess)
 
     ProgressWidget.Reset();
 
-    if (!bSuccess || !GEditor) return;
-    
-    /** 同步资产 */
-    UEUSS_MetaDataManager* MetaDataManager = GEditor->GetEditorSubsystem<UEUSS_MetaDataManager>();
-    UEUSS_WidgetManager* WidgetManager = GEditor->GetEditorSubsystem<UEUSS_WidgetManager>();
-    if (!MetaDataManager || !WidgetManager) return;
-    
-    for (FAssetData& LoadedItem : Assets)
+    if (bSuccess)
     {
-        // 已经加载过，GetAsset 不会再次加载
-        UObject* Asset = LoadedItem.GetAsset();
-        if (IsValid(Asset))
-        {
-            MetaDataManager->SyncAsset(Asset);
-            UE_LOG(LogMetaDataOfAssets, Log, TEXT("加载资产: %s"), *Asset->GetName())
-        }
+        UE_LOG(
+            LogMetaDataOfAssets,
+            Log,
+            TEXT("[%hs] 资产同步完成: 成功 %d, 失败 %d, 总数 %d"),
+            __FUNCTION__,
+            SyncedAssetCount,
+            FailedAssetCount,
+            Assets.Num());
     }
-    
-    WidgetManager->OnTaskFinished();
-    MetaDataManager->OnTaskFinished(this);
-    
-    UE_LOG(LogMetaDataOfAssets, Log, TEXT("%s"), TEXT("加载完成"))
+    else
+    {
+        UE_LOG(LogMetaDataOfAssets, Warning, TEXT("[%hs] 资产同步任务已取消"), __FUNCTION__);
+    }
 }
 
 void FAssetSyncTask::OnLoadComplete()
 {
-    if (bFinished) return;
+    /** 资产加载完成后，开始同步资产 */
+    if (bFinished || Phase != EPhase::Loading) return;
     
-    if (ProgressWidget.IsValid() && StreamableHandle.IsValid())
+    Phase = EPhase::Syncing;
+
+    if (ProgressWidget.IsValid())
     {
-        ProgressWidget->SetProgressPercent(StreamableHandle->GetProgress());
+        ProgressWidget->SetProgressText(
+            NSLOCTEXT("AssetSyncTask", "SyncingAssetProgress", "Syncing Assets"));
+        ProgressWidget->SetProgressPercent(0.0f);
     }
-    
-    Finish(true);
+
+    // 每帧同步资产
+    SyncTickHandle = FTSTicker::GetCoreTicker().AddTicker(
+        FTickerDelegate::CreateSP(AsShared(), &FAssetSyncTask::SyncTick),
+        0.0f
+    );
+
+    if (!SyncTickHandle.IsValid())
+    {
+        Finish(false);
+    }
+}
+
+bool FAssetSyncTask::SyncTick(float DeltaTime)
+{
+    if (bFinished || Phase != EPhase::Syncing) return false;
+
+    UEUSS_MetaDataManager* MetaDataManager = MetaDataOfAssetsGlobal::GetMetaDataManagerSafe();
+    if (!MetaDataManager)
+    {
+        Finish(false);
+        return false;
+    }
+
+    // 记录当前时间戳 + 预算时间
+    const double SyncDeadline = FPlatformTime::Seconds() + SyncTimeBudgetSeconds;
+    // 当前帧已处理的资产数量
+    int32 ProcessedThisTick = 0;
+
+    while (NextSyncIndex < Assets.Num() && ProcessedThisTick < SyncBatchSize)
+    {
+        FAssetData& AssetData = Assets[NextSyncIndex];
+        // 已经加载过资产，GetAsset 不会再次加载
+        UObject* Asset = AssetData.GetAsset();
+
+        if (IsValid(Asset))
+        {
+            // 同步资产
+            MetaDataManager->SyncAsset(Asset);
+            ++SyncedAssetCount;
+        }
+        else
+        {
+            ++FailedAssetCount;
+            UE_LOG(
+                LogMetaDataOfAssets,
+                Warning,
+                TEXT("[%hs] 无法同步加载失败的资产: %s"),
+                __FUNCTION__,
+                *AssetData.GetSoftObjectPath().ToString());
+        }
+
+        ++NextSyncIndex;
+        ++ProcessedThisTick;
+
+        // 判断是否超时
+        if (FPlatformTime::Seconds() >= SyncDeadline)
+        {
+            break;
+        }
+    }
+
+    if (ProgressWidget.IsValid())
+    {
+        // 更新进度条
+        const float SyncProgress = Assets.Num() > 0
+            ? static_cast<float>(NextSyncIndex) / static_cast<float>(Assets.Num())
+            : 1.0f;
+        ProgressWidget->SetProgressPercent(FMath::Clamp(SyncProgress, 0.0f, 1.0f));
+    }
+
+    // 判断是否完成同步
+    if (NextSyncIndex >= Assets.Num())
+    {
+        Finish(true);
+        return false;
+    }
+
+    return true;
 }

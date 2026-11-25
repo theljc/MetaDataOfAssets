@@ -38,18 +38,4 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "MetaDataOfAssets")
 	static TMap<int32, UObject*> SortMapByKeyAsc(const TMap<int32, UObject*>& SourceMap);
 	
-	// 按 Key 升序排序 Map，键必须是 int32，值可以是类型任意
-	UFUNCTION(BlueprintCallable, CustomThunk, Category = "MetaDataOfAssets")
-	static void SortMapByKeyAsc2(
-		const TMap<int32, UObject*>& SourceMap,
-		TMap<int32, UObject*>& OutMap);
-	
-	DECLARE_FUNCTION(execSortMapByKeyAsc2);
-	
-	static void GenericSortMapByKey(
-		FMapProperty* MapProp,
-		const void* SourceMapAddr,
-		void* OutMapAddr,
-		bool bAscending);
-	
 };

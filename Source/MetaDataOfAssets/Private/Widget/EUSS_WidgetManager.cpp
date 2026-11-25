@@ -16,6 +16,7 @@
 #include "Widgets/SWindow.h"
 #include "Widgets/Docking/SDockTab.h"
 #include "Widgets/SNullWidget.h"
+#include "Misc/ScopeExit.h"
 
 
 FEUWTabSpawnContext::FEUWTabSpawnContext()

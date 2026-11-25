@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Engine/DeveloperSettings.h"
+#include "UObject/SoftObjectPath.h"
 #include "MetaDataOfAssetsSettings.generated.h"
 
 
@@ -42,6 +43,10 @@ public:
 	UPROPERTY(Config, EditAnywhere, Category = "MetaDataOfAssets", meta = (EditCondition = "bAllowManageAssetRegistryTagsDelete"))
 	TArray<FScanDirectorySetting> ScanSettings;
 
+	// 每次同步的资产数量
+	UPROPERTY(Config, EditAnywhere, Category = "MetaDataOfAssets", meta = (ClampMin = "1", ClampMax = "32"))
+	int32 SyncBatchSize = 32;
+	
 	// 是否启用调试
 	UPROPERTY(Config)
 	bool bEnableDebug = true;

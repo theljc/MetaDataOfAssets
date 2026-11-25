@@ -3,6 +3,7 @@
 #include "Widget/EUW_BaseUtilityWidget.h"
 #include "Widget/EUSS_WidgetManager.h"
 #include "Editor.h"
+#include "Global/MetaDataOfAssetsGlobal.h"
 #include "Log/MetaDataOfAssetsLogChannel.h"
 
 
@@ -39,14 +40,8 @@ void UEUW_BaseUtilityWidget::OnClose_Implementation()
 
 void UEUW_BaseUtilityWidget::OnInitialize(const FInstancedStruct& Params)
 {
-	if (!GEditor)
-	{
-		UE_LOG(LogMetaDataOfAssets, Warning, TEXT("[%hs] : GEditor 无效"), __FUNCTION__);
-		return;
-	}
-
 	// 获得 Subsystem
-	UEUSS_WidgetManager* WidgetManager = GEditor->GetEditorSubsystem<UEUSS_WidgetManager>();
+	UEUSS_WidgetManager* WidgetManager = MetaDataOfAssetsGlobal::GetWidgetManagerSafe();
 	if (!IsValid(WidgetManager))
 	{
 		UE_LOG(LogMetaDataOfAssets, Error, TEXT("[%hs] : WidgetManager 无效"), __FUNCTION__);
@@ -68,18 +63,12 @@ void UEUW_BaseUtilityWidget::OnInitialize(const FInstancedStruct& Params)
 	IWidgetInterface_MetaDataOfAssets::Execute_OnOpen(this, Params);
 
 	UE_LOG(LogMetaDataOfAssets, Log, TEXT("[%hs] : 已初始化控件 [%s]"), __FUNCTION__, *GetName());
-	
 }
 
 void UEUW_BaseUtilityWidget::OnDeinitialize()
 {
-	if (!GEditor)
-	{
-		return;
-	}
-
 	// 获得 Subsystem
-	UEUSS_WidgetManager* WidgetManager = GEditor->GetEditorSubsystem<UEUSS_WidgetManager>();
+	UEUSS_WidgetManager* WidgetManager = MetaDataOfAssetsGlobal::GetWidgetManagerSafe();
 	if (!IsValid(WidgetManager)) return;
 
 	// 关闭时，确保控件存在
@@ -104,5 +93,4 @@ void UEUW_BaseUtilityWidget::OnDeinitialize()
 	}
 	
 	UE_LOG(LogMetaDataOfAssets, Log, TEXT("[%hs] : 已移除控件 [%s]"), __FUNCTION__, *GetName());
-
 }

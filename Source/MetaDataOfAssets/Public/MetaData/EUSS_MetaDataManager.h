@@ -100,15 +100,15 @@ public:
 	
 	// 添加元数据
 	UFUNCTION(BlueprintCallable, Category = "MetaDataOfAssets")
-	void AddMetaData(UObject* InAsset, const FName InTagToAdd, const FString InValueToAdd);
+	void AddMetaData(UObject* InAsset, const TArray<FName>& InTagToAdd, const TArray<FString>& InValueToAdd);
 
 	// 修改元数据
 	UFUNCTION(BlueprintCallable, Category = "MetaDataOfAssets")
-	void ModifyMetaData(UObject* InAsset, const FName InTagToAdd, const FString InValueToAdd);
+	void ModifyMetaData(UObject* InAsset, const TArray<FName>& InTagToModify, const TArray<FString>& InValueToModify);
 
 	// 删除元数据
 	UFUNCTION(BlueprintCallable, Category = "MetaDataOfAssets")
-	void DeleteMetaData(UObject* InAsset, const FName InTagToAdd);
+	void DeleteMetaData(UObject* InAsset, const TArray<FName>& InTagToDelete);
 
 	// 复制元数据
 	UFUNCTION(BlueprintCallable, Category = "MetaDataOfAssets")
@@ -131,16 +131,16 @@ public:
 private:
 	
 	// 添加标签到资产注册表
-	void AddTagToRegisteredTags(const FName InTagToAdd, UObject* InAsset);
+	void AddTagToRegisteredTags(const TArray<FName>& InTagToAdd, UObject* InAsset);
 
 	// 从资产注册表移除标签
-	void RemoveTagFromRegisteredTags(const FName InTagToRemove, UObject* InAsset);
+	void RemoveTagFromRegisteredTags(const TArray<FName>& InTagToRemove, UObject* InAsset);
 	
 	// 注册标签到全局资产注册表
-	void AddTagToAssetRegistry(const FName InTagToAdd);
+	void AddTagToAssetRegistry(const TArray<FName>& InTagToAdd);
 
 	// 从资产注册表中移除
-	void RemoveTagFromAssetRegistry(const FName InTagToRemove);
+	void RemoveTagFromAssetRegistry(const TArray<FName>& InTagToRemove);
 	
 	// 计算元数据修改前的快照，是后续计算元数据差异的基准
 	void CalcAssetTagStateBaseline(UObject* InAsset);

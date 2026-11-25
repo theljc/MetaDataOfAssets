@@ -17,22 +17,6 @@
 
 #define LOCTEXT_NAMESPACE "FMetaDataOfAssetsModule"
 
-namespace
-{
-	UEUSS_MetaDataManager* GetMetaDataManagerSafe()
-	{
-		return GEditor
-			? GEditor->GetEditorSubsystem<UEUSS_MetaDataManager>()
-			: nullptr;
-	}
-
-	UEUSS_WidgetManager* GetWidgetManagerSafe()
-	{
-		return GEditor
-			? GEditor->GetEditorSubsystem<UEUSS_WidgetManager>()
-			: nullptr;
-	}
-}
 
 void FMetaDataOfAssetsModule::StartupModule()
 {
@@ -192,8 +176,8 @@ void FMetaDataOfAssetsModule::ShutdownModule()
 	bSettingsRegistered = false;
 
 	// 取消注册控制台命令
-	IConsoleManager::Get().UnregisterConsoleObject(MetaDataOfAssetsConstant::GetDisableDebugConsoleCommand());
-	IConsoleManager::Get().UnregisterConsoleObject(MetaDataOfAssetsConstant::GetEnableDebugConsoleCommand());
+	IConsoleManager::Get().UnregisterConsoleObject(MetaDataOfAssetsGlobal::GetDisableDebugConsoleCommand());
+	IConsoleManager::Get().UnregisterConsoleObject(MetaDataOfAssetsGlobal::GetEnableDebugConsoleCommand());
 
 	FMetaDataOfAssetsCommands::Unregister();
 	FMetaDataOfAssetsStyle::Shutdown();
@@ -229,14 +213,14 @@ void FMetaDataOfAssetsModule::BindCommandActions()
 void FMetaDataOfAssetsModule::RegisterCustomConsoleCommand()
 {
 	IConsoleManager::Get().RegisterConsoleCommand(
-		MetaDataOfAssetsConstant::GetDisableDebugConsoleCommand(),
+		MetaDataOfAssetsGlobal::GetDisableDebugConsoleCommand(),
 		TEXT("Disable UE_LOG and PrintString of the MetaDataPlugin"),
 		FConsoleCommandDelegate::CreateRaw(this, &FMetaDataOfAssetsModule::DisableDebug),
 		ECVF_Default
 	);
 
 	IConsoleManager::Get().RegisterConsoleCommand(
-		MetaDataOfAssetsConstant::GetEnableDebugConsoleCommand(),
+		MetaDataOfAssetsGlobal::GetEnableDebugConsoleCommand(),
 		TEXT("Enable UE_LOG and PrintString of the MetaDataPlugin"),
 		FConsoleCommandDelegate::CreateRaw(this, &FMetaDataOfAssetsModule::EnableDebug),
 		ECVF_Default
@@ -245,7 +229,7 @@ void FMetaDataOfAssetsModule::RegisterCustomConsoleCommand()
 
 void FMetaDataOfAssetsModule::DisableDebug()
 {
-	UEUSS_WidgetManager* WidgetManager = GetWidgetManagerSafe();
+	UEUSS_WidgetManager* WidgetManager = MetaDataOfAssetsGlobal::GetWidgetManagerSafe();
 	if (WidgetManager)
 	{
 		WidgetManager->DisableDebug();
@@ -254,7 +238,7 @@ void FMetaDataOfAssetsModule::DisableDebug()
 
 void FMetaDataOfAssetsModule::EnableDebug()
 {
-	UEUSS_WidgetManager* WidgetManager = GetWidgetManagerSafe();
+	UEUSS_WidgetManager* WidgetManager = MetaDataOfAssetsGlobal::GetWidgetManagerSafe();
 	if (WidgetManager)
 	{
 		WidgetManager->EnableDebug();
@@ -263,7 +247,7 @@ void FMetaDataOfAssetsModule::EnableDebug()
 
 void FMetaDataOfAssetsModule::RemoveAllWidget()
 {
-	UEUSS_WidgetManager* WidgetManager = GetWidgetManagerSafe();
+	UEUSS_WidgetManager* WidgetManager = MetaDataOfAssetsGlobal::GetWidgetManagerSafe();
 	if (WidgetManager)
 	{
 		WidgetManager->CloseAllWidgets();
@@ -272,7 +256,7 @@ void FMetaDataOfAssetsModule::RemoveAllWidget()
 
 void FMetaDataOfAssetsModule::OnButtonClicked()
 {
-	UEUSS_WidgetManager* WidgetManager = GetWidgetManagerSafe();
+	UEUSS_WidgetManager* WidgetManager = MetaDataOfAssetsGlobal::GetWidgetManagerSafe();
 	if (WidgetManager)
 	{
 		// 点击按钮时，创建主窗口
@@ -282,13 +266,13 @@ void FMetaDataOfAssetsModule::OnButtonClicked()
 
 void FMetaDataOfAssetsModule::OnAssetMoved(const FAssetData& AssetData, const FString& OldObjectPath)
 {
-	UEUSS_MetaDataManager* MetaDataManager = GetMetaDataManagerSafe();
+	UEUSS_MetaDataManager* MetaDataManager = MetaDataOfAssetsGlobal::GetMetaDataManagerSafe();
 	if (MetaDataManager)
 	{
 		MetaDataManager->OnAssetMoved(AssetData, OldObjectPath);
 	}
 	
-	UEUSS_WidgetManager* WidgetManager = GetWidgetManagerSafe();
+	UEUSS_WidgetManager* WidgetManager = MetaDataOfAssetsGlobal::GetWidgetManagerSafe();
 	if (WidgetManager)
 	{
 		WidgetManager->OnAssetMoved(AssetData, OldObjectPath);
@@ -298,7 +282,7 @@ void FMetaDataOfAssetsModule::OnAssetMoved(const FAssetData& AssetData, const FS
 
 void FMetaDataOfAssetsModule::OnAssetRemoved(const FAssetData& AssetData)
 {
-	UEUSS_MetaDataManager* MetaDataManager = GetMetaDataManagerSafe();
+	UEUSS_MetaDataManager* MetaDataManager = MetaDataOfAssetsGlobal::GetMetaDataManagerSafe();
 	if (MetaDataManager)
 	{
 		MetaDataManager->OnAssetRemoved(AssetData);
@@ -307,7 +291,7 @@ void FMetaDataOfAssetsModule::OnAssetRemoved(const FAssetData& AssetData)
 
 void FMetaDataOfAssetsModule::OnMapLoad(const FString& InFilename, FCanLoadMap& OutCanLoadMap)
 {
-	UEUSS_WidgetManager* WidgetManager = GetWidgetManagerSafe();
+	UEUSS_WidgetManager* WidgetManager = MetaDataOfAssetsGlobal::GetWidgetManagerSafe();
 	if (WidgetManager)
 	{
 		WidgetManager->CloseAllWidgets();
@@ -316,8 +300,8 @@ void FMetaDataOfAssetsModule::OnMapLoad(const FString& InFilename, FCanLoadMap& 
 
 void FMetaDataOfAssetsModule::OnEditorInitialized(double Double)
 {
-	UEUSS_MetaDataManager* MetaDataManager = GetMetaDataManagerSafe();
-	UEUSS_WidgetManager* WidgetManager = GetWidgetManagerSafe();
+	UEUSS_MetaDataManager* MetaDataManager = MetaDataOfAssetsGlobal::GetMetaDataManagerSafe();
+	UEUSS_WidgetManager* WidgetManager = MetaDataOfAssetsGlobal::GetWidgetManagerSafe();
 	if (MetaDataManager && WidgetManager)
 	{
 		WidgetManager->RegisterMainWidgetTab();
