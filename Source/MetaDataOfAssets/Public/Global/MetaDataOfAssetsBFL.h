@@ -17,14 +17,16 @@ class METADATAOFASSETS_API UMetaDataOfAssetsBFL : public UBlueprintFunctionLibra
 	
 public:
 	
-	// 判断字符串是否为空
+	// 判断命名是否有效，由于 FName 可能超过长度限制，所以用 FString 接收
 	UFUNCTION(BlueprintPure, Category = "MetaDataOfAssets")
-	static bool IsStringBlank(const FString& InStr);
+	static bool IsNameValid(const FString& InStr);
+	
+	// 判断字符串是否超过 FName 的长度限制
+	static bool IsStringOutOfNameSize(const FString& InStr);
 
-	// 判断命名是否为空
-	UFUNCTION(BlueprintPure, Category = "MetaDataOfAssets")
-	static bool IsNameBlank(const FName& InName);
-
+	// 判断字符串的字符是否有效
+	static bool IsStringCharValid(const FString& InStr);
+	
 	/**
 	 * 计算资产中所有元数据的交集
 	 *

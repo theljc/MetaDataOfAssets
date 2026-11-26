@@ -76,32 +76,70 @@ namespace MetaDataOfAssetsTest
 	}
 }
 
+
 IMPLEMENT_SIMPLE_AUTOMATION_TEST(
-	FMetaDataOfAssetsBFLStringValidationTest,
-	"MetaDataOfAssets.Unit.BFL.StringValidation",
+	FMetaDataOfAssetsBFLNameValidationTest,
+	"MetaDataOfAssets.Unit.BFL.NameValidation",
 	EAutomationTestFlags::EditorContext | EAutomationTestFlags::EngineFilter)
 
-bool FMetaDataOfAssetsBFLStringValidationTest::RunTest(const FString& Parameters)
+bool FMetaDataOfAssetsBFLNameValidationTest::RunTest(const FString& Parameters)
 {
 	TestTrue(
-		TEXT("空字符串应为空"),
-		UMetaDataOfAssetsBFL::IsStringBlank(FString()));
+		TEXT("大小写字母、数字和下划线组合应有效"),
+		UMetaDataOfAssetsBFL::IsNameValid(TEXT("MetaData_01")));
 	TestTrue(
-		TEXT("仅包含空白字符的字符串应为空"),
-		UMetaDataOfAssetsBFL::IsStringBlank(TEXT(" \t\r\n")));
-	TestFalse(
-		TEXT("包含文本的字符串不应为空"),
-		UMetaDataOfAssetsBFL::IsStringBlank(TEXT("Metadata")));
+		TEXT("仅包含大写字母应有效"),
+		UMetaDataOfAssetsBFL::IsNameValid(TEXT("METADATA")));
+	TestTrue(
+		TEXT("仅包含小写字母应有效"),
+		UMetaDataOfAssetsBFL::IsNameValid(TEXT("metadata")));
+	TestTrue(
+		TEXT("仅包含数字应有效"),
+		UMetaDataOfAssetsBFL::IsNameValid(TEXT("123456")));
+	TestTrue(
+		TEXT("下划线开头应有效"),
+		UMetaDataOfAssetsBFL::IsNameValid(TEXT("_Internal01")));
 
-	TestTrue(
-		TEXT("NAME_None 应为空"),
-		UMetaDataOfAssetsBFL::IsNameBlank(NAME_None));
-	TestTrue(
-		TEXT("仅包含空白字符的名称应为空"),
-		UMetaDataOfAssetsBFL::IsNameBlank(FName(TEXT("  "))));
 	TestFalse(
-		TEXT("可见名称不应为空"),
-		UMetaDataOfAssetsBFL::IsNameBlank(FName(TEXT("Shared.Key"))));
+		TEXT("空字符串应无效"),
+		UMetaDataOfAssetsBFL::IsNameValid(FString()));
+	TestFalse(
+		TEXT("点号应无效"),
+		UMetaDataOfAssetsBFL::IsNameValid(TEXT("Shared.Key")));
+	TestFalse(
+		TEXT("短横线应无效"),
+		UMetaDataOfAssetsBFL::IsNameValid(TEXT("Meta-Data")));
+	TestFalse(
+		TEXT("空格应无效"),
+		UMetaDataOfAssetsBFL::IsNameValid(TEXT("Meta Data")));
+	TestFalse(
+		TEXT("制表符应无效"),
+		UMetaDataOfAssetsBFL::IsNameValid(TEXT("Meta\tData")));
+	TestFalse(
+		TEXT("换行符应无效"),
+		UMetaDataOfAssetsBFL::IsNameValid(TEXT("Meta\nData")));
+	TestFalse(
+		TEXT("中文应无效"),
+		UMetaDataOfAssetsBFL::IsNameValid(TEXT("名称_01")));
+	TestFalse(
+		TEXT("斜杠应无效"),
+		UMetaDataOfAssetsBFL::IsNameValid(TEXT("Meta/Data")));
+	TestFalse(
+		TEXT("冒号应无效"),
+		UMetaDataOfAssetsBFL::IsNameValid(TEXT("Meta:Data")));
+	TestFalse(
+		TEXT("Emoji 应无效"),
+		UMetaDataOfAssetsBFL::IsNameValid(TEXT("Meta😀Data")));
+
+	const FString MaxLengthName = FString::ChrN(NAME_SIZE - 1, TEXT('A'));
+	const FString TooLongName = FString::ChrN(NAME_SIZE, TEXT('A'));
+	
+	TestTrue(
+		TEXT("最大允许长度应有效"),
+		UMetaDataOfAssetsBFL::IsNameValid(MaxLengthName));
+	TestFalse(
+		TEXT("超过最大允许长度应无效"),
+		UMetaDataOfAssetsBFL::IsNameValid(TooLongName));
 
 	return true;
 }

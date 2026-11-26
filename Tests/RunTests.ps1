@@ -1,10 +1,7 @@
-# Copyright 2026 ljc. All rights reserved.
+﻿# Copyright 2026 ljc. All rights reserved.
 
 # 运行示例：
-# powershell -ExecutionPolicy Bypass -File .\Tests\RunTests.ps1 `
-#     -EngineRoot "E:\UE_5.5" `
-#     -ProjectPath "E:\UE5_ProjectFile\InventoryProject\InventoryProject.uproject" `
-#	  -TestFilter "MetaDataOfAssets.Unit"
+# powershell -ExecutionPolicy Bypass -File .\Tests\RunTests.ps1 -EngineRoot "引擎安装路径" -TestFilter "MetaDataOfAssets.Unit"
 
 # [CmdletBinding()] 启用 PowerShell 通用参数和更严格的脚本绑定行为
 [CmdletBinding()]

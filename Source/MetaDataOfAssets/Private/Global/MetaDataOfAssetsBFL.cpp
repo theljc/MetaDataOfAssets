@@ -4,24 +4,41 @@
 #include "EditorAssetLibrary.h"
 
 
-bool UMetaDataOfAssetsBFL::IsStringBlank(const FString& InStr)
+bool UMetaDataOfAssetsBFL::IsNameValid(const FString& InStr)
 {
+	if (InStr.IsEmpty()
+		|| IsStringOutOfNameSize(InStr)
+		|| !IsStringCharValid(InStr)) return false;
+
+	return true;
+}
+
+bool UMetaDataOfAssetsBFL::IsStringOutOfNameSize(const FString& InStr)
+{
+	return InStr.Len() > NAME_SIZE - 1;
+}
+
+bool UMetaDataOfAssetsBFL::IsStringCharValid(const FString& InStr)
+{
+	// 遍历字符串
 	for (const TCHAR Char : InStr)
 	{
-		// IsWhitespace 会判断"空格"等特殊字符
-		if (!FChar::IsWhitespace(Char))
+		// 有效字符为：大小写字母、数字、下划线
+		const bool bIsUppercaseLetter = Char >= 'A' && Char <= 'Z';
+		const bool bIsLowercaseLetter = Char >= 'a' && Char <= 'z';
+		const bool bIsDigit = Char >= '0' && Char <= '9';
+		const bool bIsUnderscore = Char == '_';
+
+		if (!bIsUppercaseLetter &&
+			!bIsLowercaseLetter &&
+			!bIsDigit &&
+			!bIsUnderscore)
 		{
 			return false;
 		}
 	}
-	
-	return true;
-}
 
-bool UMetaDataOfAssetsBFL::IsNameBlank(const FName& InName)
-{
-	const FString NameStr = InName.ToString();
-	return InName.IsNone() || IsStringBlank(NameStr);
+	return true;
 }
 
 TArray<FName> UMetaDataOfAssetsBFL::CalcIntersectionOfMetaData(const TArray<UObject*>& InAssets)
