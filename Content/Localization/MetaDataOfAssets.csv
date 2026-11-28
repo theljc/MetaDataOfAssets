@@ -58,3 +58,6 @@ Select source assets,Select source assets
 Select target assets,Select target assets
 There is an empty key in the added data row,There is an empty key in the added data row
 0,0
+"The key can only consist of uppercase and lowercase letters, numbers or underscores
+The length cannot exceed 1024 characters","The key can only consist of uppercase and lowercase letters, numbers or underscores
+The length cannot exceed 1024 characters"
